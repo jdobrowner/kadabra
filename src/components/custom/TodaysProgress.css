@@ -1,0 +1,67 @@
+@import '../../styles/gradients.css';
+
+.progress-container {
+  position: relative;
+}
+
+/* Apply gradient to Progress fill - Reshaped uses CSS modules with hashed class names */
+/* Target the value div inside the progressbar, accounting for View wrapper */
+.progress-container div[role="progressbar"] > div[class*="value"] {
+  background: linear-gradient(135deg, #5a77eb 0%, #8b5cf6 40%, #a855f7 100%) !important;
+  transition: width 0.5s ease, background 0.4s ease;
+}
+
+.progress-container--animating div[role="progressbar"] > div[class*="value"] {
+  animation: progressGradientPulse 0.9s ease;
+}
+
+.progress-icon {
+  z-index: 1;
+  pointer-events: none;
+}
+
+.progress-icon-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.progress-icon-circle--animating {
+  animation: progressIconPulse 0.9s ease;
+}
+
+.progress-icon-circle svg {
+  width: 12px;
+  height: 12px;
+}
+
+@keyframes progressGradientPulse {
+  0% {
+    background: linear-gradient(135deg, #5a77eb 0%, #8b5cf6 40%, #a855f7 100%);
+  }
+  50% {
+    background: linear-gradient(135deg, #7f96ff 0%, #a782ff 40%, #c78aff 100%);
+  }
+  100% {
+    background: linear-gradient(135deg, #5a77eb 0%, #8b5cf6 40%, #a855f7 100%);
+  }
+}
+
+@keyframes progressIconPulse {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+

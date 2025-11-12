@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1762335793488,
+      "tag": "0000_lowly_sharon_ventura",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1762783358259,
+      "tag": "0001_cheerful_khan",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1762900000000,
+      "tag": "0002_configurable_teams_and_boards",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,0 +1,525 @@
+{
+  "info": {
+    "name": "Kadabra Demo API",
+    "description": "Complete API collection for testing Kadabra Demo endpoints. Execute requests in order (01-07) for proper test flow.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "kadabra-demo"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Get Google OAuth URL",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/auth/google/authorize?redirectUrl={{redirect_url}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "google", "authorize"],
+              "query": [
+                {
+                  "key": "redirectUrl",
+                  "value": "{{redirect_url}}",
+                  "description": "Optional: Where to redirect after OAuth (defaults to frontend callback)"
+                }
+              ]
+            },
+            "description": "Initiates Google OAuth flow. Returns a redirect URL to Google's OAuth consent screen."
+          },
+          "response": []
+        },
+        {
+          "name": "Google OAuth Callback",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/auth/google/callback?code={{oauth_code}}&state={{state}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "google", "callback"],
+              "query": [
+                {
+                  "key": "code",
+                  "value": "{{oauth_code}}",
+                  "description": "Authorization code from Google OAuth"
+                },
+                {
+                  "key": "state",
+                  "value": "{{state}}",
+                  "description": "Optional: State parameter (can include invitation token)"
+                }
+              ]
+            },
+            "description": "Handles Google OAuth callback. This is typically called automatically by Google after user authorization. Redirects to frontend with JWT token."
+          },
+          "response": []
+        }
+      ],
+      "description": "Google OAuth authentication endpoints"
+    },
+    {
+      "name": "Test Scenarios (Execute in Order)",
+      "item": [
+        {
+          "name": "01_At-Risk Customer (Churn)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"email\",\n  \"content\": \"I've been a customer for 3 years and I'm extremely frustrated. The service has been down multiple times this month, your support team hasn't responded to my last 3 emails, and now I'm being charged incorrectly. I'm seriously considering canceling my subscription and switching to a competitor. This is completely unacceptable and I need immediate resolution or I'm done.\",\n  \"metadata\": {\n    \"subject\": \"URGENT: Service Issues and Billing Problems - Considering Cancellation\",\n    \"from\": \"angry.customer@techcorp.com\",\n    \"to\": \"support@company.com\",\n    \"date\": \"2025-11-06T10:00:00Z\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ingest"]
+            },
+            "description": "Tests at-risk badge detection. Customer expressing frustration, multiple complaints, and threatening cancellation. Expected badge: 'at-risk'"
+          },
+          "response": []
+        },
+        {
+          "name": "02_Opportunity Customer (Upgrade)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"email\",\n  \"content\": \"Hi, I'm currently on your Professional plan and I'm interested in upgrading to Enterprise. We've been growing our team and need the advanced features like SSO, dedicated support, and custom integrations. Can someone schedule a call to discuss the upgrade process, pricing, and migration timeline? We're ready to move forward this month.\",\n  \"metadata\": {\n    \"subject\": \"Upgrade Inquiry - Professional to Enterprise\",\n    \"from\": \"growth@startup.io\",\n    \"to\": \"sales@company.com\",\n    \"date\": \"2025-11-06T11:00:00Z\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ingest"]
+            },
+            "description": "Tests opportunity badge detection. Customer interested in upgrading plan and ready to purchase. Expected badge: 'opportunity'"
+          },
+          "response": []
+        },
+        {
+          "name": "03_Lead Customer (New Interest)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"email\",\n  \"content\": \"Hello, I'm the CEO of Acme Corporation and we're looking for a solution to manage our customer communications. I came across your platform and it looks interesting. Could someone schedule a demo call with me? We're evaluating options for our 50-person team and would like to see how your product works before making a decision.\",\n  \"metadata\": {\n    \"subject\": \"Demo Request - New Customer Inquiry\",\n    \"from\": \"ceo@acmecorp.com\",\n    \"to\": \"sales@company.com\",\n    \"date\": \"2025-11-06T12:00:00Z\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ingest"]
+            },
+            "description": "Tests lead badge detection. New potential customer requesting demo and information. Expected badge: 'lead'"
+          },
+          "response": []
+        },
+        {
+          "name": "04_Follow-Up Customer (Simple Question)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"email\",\n  \"content\": \"Hi, quick question - where can I find the API documentation? I'm trying to integrate with our system and need to check the authentication requirements. Thanks!\",\n  \"metadata\": {\n    \"subject\": \"Question: API Documentation\",\n    \"from\": \"developer@existingcustomer.com\",\n    \"to\": \"support@company.com\",\n    \"date\": \"2025-11-06T13:00:00Z\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ingest"]
+            },
+            "description": "Tests follow-up badge detection. Existing customer with routine question that needs a response. Expected badge: 'follow-up'"
+          },
+          "response": []
+        },
+        {
+          "name": "05_No-Action Customer (Closing Comment)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"email\",\n  \"content\": \"Thanks for your help! The issue has been resolved and everything is working perfectly now. I appreciate the quick response. Have a great day!\",\n  \"metadata\": {\n    \"subject\": \"Re: Issue Resolved - Thank You\",\n    \"from\": \"satisfied@customer.com\",\n    \"to\": \"support@company.com\",\n    \"date\": \"2025-11-06T14:00:00Z\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ingest"]
+            },
+            "description": "Tests no-action badge detection. Customer confirming resolution and thanking support. No action needed. Expected badge: 'no-action'"
+          },
+          "response": []
+        },
+        {
+          "name": "06_Customer Message 1 (Grouping Test)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"email\",\n  \"content\": \"Hi, I'm interested in learning more about your enterprise features. Can someone send me pricing information?\",\n  \"metadata\": {\n    \"subject\": \"Enterprise Pricing Inquiry\",\n    \"from\": \"buyer@testcompany.com\",\n    \"to\": \"sales@company.com\",\n    \"date\": \"2025-11-06T15:00:00Z\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ingest"]
+            },
+            "description": "First message from a customer. This customer will send a second message (07) to test that messages are properly grouped by customer."
+          },
+          "response": []
+        },
+        {
+          "name": "07_Customer Message 2 (Grouping Test)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"email\",\n  \"content\": \"Follow-up on my previous email - I also need to know about your security certifications and compliance features. We're in healthcare and need HIPAA compliance. Can we schedule a call to discuss this week?\",\n  \"metadata\": {\n    \"subject\": \"Re: Enterprise Pricing Inquiry - Security Questions\",\n    \"from\": \"buyer@testcompany.com\",\n    \"to\": \"sales@company.com\",\n    \"date\": \"2025-11-06T16:00:00Z\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ingest"]
+            },
+            "description": "Second message from the same customer (buyer@testcompany.com). Should be grouped with message 06 under the same customer record. Verify in UI that both conversations appear for the same customer."
+          },
+          "response": []
+        }
+      ],
+      "description": "Main test scenarios covering all badge types and customer grouping. Execute in order (01-07)."
+    },
+    {
+      "name": "Error Handling Tests",
+      "item": [
+        {
+          "name": "Ingest - Invalid API Key",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "invalid-key-12345"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"email\",\n  \"content\": \"Test content\",\n  \"metadata\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ingest"]
+            },
+            "description": "Tests error handling with invalid API key. Should return 401 Unauthorized."
+          },
+          "response": []
+        },
+        {
+          "name": "Ingest - Missing API Key",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"email\",\n  \"content\": \"Test content\",\n  \"metadata\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ingest"]
+            },
+            "description": "Tests error handling with missing API key. Should return 401 Unauthorized."
+          },
+          "response": []
+        },
+        {
+          "name": "Ingest - Invalid Channel",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"invalid-channel\",\n  \"content\": \"Test content\",\n  \"metadata\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ingest"]
+            },
+            "description": "Tests validation - should return 400 Bad Request for invalid channel type."
+          },
+          "response": []
+        }
+      ],
+      "description": "Error handling and validation tests"
+    },
+    {
+      "name": "Additional Examples",
+      "item": [
+        {
+          "name": "Ingest SMS",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"sms\",\n  \"content\": \"Hey, when will my order ship? I placed it 3 days ago and haven't received any tracking info.\",\n  \"metadata\": {\n    \"from\": \"+1234567890\",\n    \"to\": \"+1987654321\",\n    \"date\": \"2025-11-06T14:20:00Z\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ingest"]
+            },
+            "description": "Ingests an SMS communication."
+          },
+          "response": []
+        },
+        {
+          "name": "Ingest Phone Call (Transcribed)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"phone\",\n  \"content\": \"Agent: Thank you for calling, how can I help you today?\\nCustomer: Hi, I need to cancel my subscription. I've been trying to do it online but the website isn't working.\\nAgent: I'm sorry to hear that. Can I get your account information?\\nCustomer: Sure, my email is john.doe@example.com.\\nAgent: I see your account. I can help you cancel that right now. Is there a specific reason you're canceling?\\nCustomer: I'm just not using the service anymore.\\nAgent: I understand. I've processed the cancellation. You'll receive a confirmation email shortly. Is there anything else I can help with?\\nCustomer: No, that's all. Thank you.\\nAgent: You're welcome. Have a great day!\",\n  \"metadata\": {\n    \"from\": \"+1234567890\",\n    \"to\": \"+1987654321\",\n    \"date\": \"2025-11-06T16:45:00Z\",\n    \"duration\": 180\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ingest"]
+            },
+            "description": "Ingests a transcribed phone call. The content should be the full transcript of the conversation."
+          },
+          "response": []
+        },
+        {
+          "name": "Ingest Voice Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"voice-message\",\n  \"content\": \"Hi, this is Sarah calling about my recent order. I received the wrong item and need to return it. My order number is 12345. Please call me back at 555-1234. Thanks!\",\n  \"metadata\": {\n    \"from\": \"+1234567890\",\n    \"to\": \"+1987654321\",\n    \"date\": \"2025-11-06T18:00:00Z\",\n    \"duration\": 45\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ingest",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ingest"]
+            },
+            "description": "Ingests a voice message transcript."
+          },
+          "response": []
+        }
+      ],
+      "description": "Additional channel examples for reference"
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string",
+      "description": "Base URL for the API server (default: localhost:3000)"
+    },
+    {
+      "key": "api_key",
+      "value": "",
+      "type": "string",
+      "description": "Your API key (get from Settings → API Keys in the UI)"
+    },
+    {
+      "key": "redirect_url",
+      "value": "http://localhost:5173/auth/callback",
+      "type": "string",
+      "description": "OAuth redirect URL"
+    },
+    {
+      "key": "oauth_code",
+      "value": "",
+      "type": "string",
+      "description": "OAuth authorization code (from Google redirect)"
+    },
+    {
+      "key": "state",
+      "value": "",
+      "type": "string",
+      "description": "OAuth state parameter"
+    }
+  ]
+}

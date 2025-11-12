@@ -1,0 +1,15 @@
+/* Badge styling - bolder font weight and more prominent borders */
+
+/* Make badge text bolder and borders more prominent */
+.custom-badge div {
+  font-weight: 600 !important;
+  border-width: 1.5px !important;
+}
+
+/* Smaller text for small badges */
+.custom-badge[data-size="small"] div {
+  font-size: 10px !important;
+  line-height: 14px !important;
+  padding: 1px 4px !important;
+}
+

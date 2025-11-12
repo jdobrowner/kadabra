@@ -1,0 +1,49 @@
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: var(--header-height, 64px);
+  height: calc(100vh - var(--header-height, 64px));
+  border-right: 1px solid var(--rs-color-border-neutral-faded);
+  z-index: 90;
+  overflow: hidden;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  /* Background color - using explicit fallback colors */
+  background-color: #fafafa !important;
+}
+
+[data-rs-color-mode="dark"] .sidebar {
+  background-color: #1a1a1a !important;
+}
+
+/* Only apply transitions after initial render */
+.sidebar.sidebar-transitions {
+  transition: width 0.3s ease-in-out;
+}
+
+.sidebar-open {
+  width: 220px;
+}
+
+.sidebar-closed {
+  width: 54px;
+  cursor: pointer;
+}
+
+/* Hover effect for sidebar buttons - more visible background color change */
+.sidebar button[data-rs-button] {
+  transition: background-color 0.2s ease;
+}
+
+.sidebar button[data-rs-button]:hover:not([data-rs-variant="solid"]) {
+  background-color: color-mix(in srgb, var(--rs-color-neutral-base) 15%, transparent 85%) !important;
+}
+
+[data-rs-color-mode="dark"] .sidebar button[data-rs-button]:hover:not([data-rs-variant="solid"]) {
+  background-color: color-mix(in srgb, var(--rs-color-neutral-base) 20%, transparent 80%) !important;
+}
+
+.sidebar button[data-rs-button][data-rs-variant="solid"]:hover {
+  opacity: 0.9;
+}
+
+

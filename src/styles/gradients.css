@@ -1,0 +1,10 @@
+/* Gradient styles - shared across components */
+
+.gradient-purple {
+  background: linear-gradient(135deg, #5a77eb 0%, #8b5cf6 40%, #a855f7 100%) !important;
+}
+
+.gradient-purple-hover {
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #9333ea 100%) !important;
+}
+

@@ -1,0 +1,107 @@
+.ai-agent-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-agent-panel__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.ai-agent-panel__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  max-height: 40vh;
+  max-height: min(40vh, 320px);
+}
+
+.ai-agent-panel__list-scroll {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 4px;
+}
+
+.ai-agent-panel__chat {
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.ai-agent-panel__chat.is-active {
+  background-color: var(--rs-color-background-primary-faded);
+  border: 1px solid var(--rs-color-border-primary);
+}
+
+.ai-agent-panel__chat:not(.is-active):hover {
+  background-color: var(--rs-color-background-neutral-faded);
+}
+
+.ai-agent-panel__thread {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.ai-agent-panel__messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 4px;
+}
+
+.ai-agent-panel__message {
+  max-width: 85%;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
+}
+
+.ai-agent-panel__message--user {
+  margin-left: auto;
+  background-color: var(--rs-color-background-primary);
+  color: var(--rs-color-on-background-primary);
+}
+
+.ai-agent-panel__message--assistant {
+  background-color: var(--rs-color-background-neutral);
+}
+
+.ai-agent-panel__composer {
+  margin-top: 12px;
+}
+
+.ai-agent-panel__empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ai-agent-panel__divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--rs-color-border-neutral-faded);
+}
+
+.ai-agent-panel__message-metadata {
+  font-size: 12px;
+  color: var(--rs-color-foreground-neutral-faded);
+}
+

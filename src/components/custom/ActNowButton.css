@@ -1,0 +1,41 @@
+@import '../../styles/gradients.css';
+
+/* Need !important because Reshaped Button uses CSS custom properties 
+   and high-specificity selectors that override regular CSS */
+.act-now-button {
+  border: none !important;
+  color: var(--rs-color-white) !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  transition: all 0.2s ease;
+}
+
+/* Ensure icon color is also pure white */
+.act-now-button svg {
+  color: var(--rs-color-white) !important;
+  fill: var(--rs-color-white) !important;
+}
+
+.act-now-button {
+  background: linear-gradient(135deg, #5a77eb 0%, #8b5cf6 40%, #a855f7 100%) !important;
+}
+
+.act-now-button:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #9333ea 100%) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.act-now-button:focus-visible {
+  background: linear-gradient(135deg, #5a77eb 0%, #8b5cf6 40%, #a855f7 100%) !important;
+}
+
+.act-now-button:active:not(:disabled):not([aria-disabled="true"]) {
+  transform: translateY(0);
+}
+
+.act-now-button-icon-only {
+  padding-left: var(--rs-spacing-3);
+  padding-right: var(--rs-spacing-3);
+}
+

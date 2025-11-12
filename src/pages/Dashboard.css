@@ -1,0 +1,35 @@
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+.dashboard-left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dashboard-right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dashboard-sparkle-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-sparkle-icon svg {
+  fill: url(#dashboard-gradient-purple);
+}
+
+/* Responsive: stack columns on smaller screens */
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

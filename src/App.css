@@ -1,0 +1,60 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.app-layout {
+  margin-left: 220px; /* Default to sidebar open width */
+  margin-top: var(--header-height, 64px); /* Account for fixed header */
+  min-height: calc(100vh - var(--header-height, 64px));
+  width: calc(100% - 220px); /* Ensure full width minus sidebar */
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+}
+
+/* Only apply transitions after initial render */
+.app-layout.sidebar-transitions {
+  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+/* Adjust layout when sidebar is closed */
+.app-layout.sidebar-closed {
+  margin-left: 54px;
+  width: calc(100% - 54px);
+}
+
+.app-main {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  background-color: var(--rs-color-background-page);
+}
+
+/* Add global padding for all screens */
+.app-content {
+  padding: 48px;
+  background-color: var(--rs-color-background-page);
+  flex: 1;
+  min-width: 0;
+}
+
+.app-ai-sidebar {
+  width: 360px;
+  flex-shrink: 0;
+  padding: 48px 32px 48px 32px;
+  border-left: 1px solid var(--rs-color-border-neutral-faded);
+  background-color: var(--rs-color-background-page);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.app-ai-sidebar > .rs-view {
+  flex: 1;
+}
+

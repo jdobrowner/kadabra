@@ -1,0 +1,70 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #ffffff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Custom heading sizes - use theme tokens so they stay in sync */
+[data-rs-theme~="kadabra"] h1 {
+  font-size: var(--rs-font-size-title-1);
+  line-height: var(--rs-line-height-title-1);
+  font-weight: var(--rs-font-weight-title-1);
+  font-family: var(--rs-font-family-title-1);
+}
+
+[data-rs-theme~="kadabra"] h2 {
+  font-size: var(--rs-font-size-title-2);
+  line-height: var(--rs-line-height-title-2);
+  font-weight: var(--rs-font-weight-title-2);
+  font-family: var(--rs-font-family-title-2);
+}
+
+[data-rs-theme~="kadabra"] h3 {
+  font-size: var(--rs-font-size-title-3);
+  line-height: var(--rs-line-height-title-3);
+  font-weight: var(--rs-font-weight-title-3);
+  font-family: var(--rs-font-family-title-3);
+}
+
+[data-rs-theme~="kadabra"] h4 {
+  font-size: var(--rs-font-size-title-4);
+  line-height: var(--rs-line-height-title-4);
+  font-weight: var(--rs-font-weight-title-4);
+  font-family: var(--rs-font-family-title-4);
+}
+
+[data-rs-theme~="kadabra"] h5 {
+  font-size: var(--rs-font-size-title-5);
+  line-height: var(--rs-line-height-title-5);
+  font-weight: var(--rs-font-weight-title-5);
+  font-family: var(--rs-font-family-title-5);
+}
+

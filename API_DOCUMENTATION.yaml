@@ -1,0 +1,647 @@
+openapi: 3.0.3
+info:
+  title: Kadabra Demo API
+  description: |
+    API for the Kadabra Demo application - a customer communication management system with AI-powered analysis.
+    
+    The API provides endpoints for:
+    - Communication ingestion (email, SMS, phone calls, voice messages)
+    - Google OAuth authentication
+    - Customer and conversation management
+    - Action plan tracking
+    
+    ## Authentication
+    
+    The API supports two authentication methods:
+    
+    1. **API Key Authentication** - For programmatic access (e.g., `/api/ingest`)
+       - Use the `X-API-Key` header
+       - API keys are scoped to organizations
+       - Create keys via the UI (Settings → API Keys) or tRPC
+    
+    2. **JWT Token Authentication** - For user sessions (tRPC endpoints)
+       - Use the `Authorization: Bearer <token>` header
+       - Tokens are obtained via Google OAuth flow
+       - See `/api/auth/google/authorize` endpoint
+    
+    ## Rate Limiting
+    
+    - API Key endpoints: 100 requests per minute per API key
+    - LLM endpoints: 20 requests per minute per organization
+    - Rate limit headers are included in responses: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`
+  
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@example.com
+
+servers:
+  - url: http://localhost:5173
+    description: Local development server
+  - url: https://your-domain.com
+    description: Production server (update with your domain)
+
+tags:
+  - name: Communication Ingestion
+    description: Endpoints for ingesting and analyzing communications
+  - name: Authentication
+    description: Google OAuth authentication endpoints
+  - name: Customers
+    description: Customer management (tRPC endpoints)
+  - name: Action Plans
+    description: Action plan management (tRPC endpoints)
+  - name: Conversations
+    description: Conversation management (tRPC endpoints)
+
+paths:
+  /api/ingest:
+    post:
+      tags:
+        - Communication Ingestion
+      summary: Ingest and analyze communication
+      description: |
+        Ingests incoming communications (email, SMS, transcribed calls, voice messages), 
+        analyzes them with an LLM, and creates database records.
+        
+        **Process:**
+        1. Validates required fields and channel type
+        2. Analyzes communication using OpenAI GPT-4o-mini
+        3. Matches or creates customer record
+        4. Creates conversation record with AI-generated insights
+        5. Creates action plan if recommended by LLM
+        
+        **Customer Matching:**
+        - Email (case-insensitive)
+        - Phone number (normalized)
+        - Name + Company (fuzzy matching)
+      operationId: ingestCommunication
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngestRequest'
+            examples:
+              email:
+                summary: Email ingestion
+                value:
+                  channel: email
+                  content: "Hi, I am having issues with my billing. The charge on my card is incorrect and I need this resolved ASAP. Please contact me."
+                  metadata:
+                    subject: "Billing Issue - Urgent"
+                    from: "customer@example.com"
+                    to: "support@company.com"
+                    date: "2024-01-15T10:30:00Z"
+              sms:
+                summary: SMS thread ingestion
+                value:
+                  channel: sms
+                  content: "Customer: Hi, I want to cancel my subscription\nAgent: I am sorry to hear that. Can you tell me why?\nCustomer: The service is too expensive and I am not using it much"
+                  metadata:
+                    from: "+1234567890"
+                    to: "+0987654321"
+                    date: "2024-01-15T14:00:00Z"
+                    messageCount: 3
+              phone:
+                summary: Transcribed phone call
+                value:
+                  channel: phone
+                  content: "Agent: Hello, thank you for calling. How can I help you today?\nCustomer: Hi, I am interested in your premium plan. Can you tell me more about the features?"
+                  metadata:
+                    from: "+1234567890"
+                    to: "+0987654321"
+                    date: "2024-01-15T09:00:00Z"
+                    duration: 15
+      responses:
+        '200':
+          description: Communication ingested successfully
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: 100
+              description: Rate limit for API key requests per minute
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: 99
+              description: Remaining requests in current window
+            X-RateLimit-Reset:
+              schema:
+                type: integer
+                example: 1642248000
+              description: Unix timestamp when rate limit resets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngestResponse'
+              example:
+                success: true
+                customerId: "customer-1234567890-abc123"
+                conversationId: "conversation-1234567890-xyz789"
+                actionPlanId: "action-plan-1234567890-def456"
+        '400':
+          description: Bad request - validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                missingFields:
+                  summary: Missing required fields
+                  value:
+                    error: "Missing required fields: channel, content"
+                invalidChannel:
+                  summary: Invalid channel
+                  value:
+                    error: "Invalid channel. Must be one of: phone, email, sms, voice-message"
+        '401':
+          description: Unauthorized - missing or invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                missingKey:
+                  summary: Missing API key
+                  value:
+                    error: "Missing X-API-Key header"
+                invalidKey:
+                  summary: Invalid API key
+                  value:
+                    error: "Invalid or expired API key"
+        '404':
+          description: Organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Organization not found"
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                example: 60
+              description: Seconds to wait before retrying
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: 100
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: 0
+            X-RateLimit-Reset:
+              schema:
+                type: integer
+                example: 1642248060
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+              example:
+                error: "Rate limit exceeded"
+                message: "Too many requests. Please try again later."
+                retryAfter: 60
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "LLM analysis failed"
+                details: "OpenAI API error: Rate limit exceeded"
+
+  /api/auth/google/authorize:
+    get:
+      tags:
+        - Authentication
+      summary: Initiate Google OAuth flow
+      description: |
+        Redirects the user to Google's OAuth consent screen.
+        After authorization, Google redirects to `/api/auth/google/callback`.
+        
+        **Query Parameters:**
+        - `redirect` (optional): URL to redirect to after successful authentication
+        - `invitation` (optional): Invitation token for accepting invitations
+      operationId: initiateGoogleOAuth
+      parameters:
+        - name: redirect
+          in: query
+          description: URL to redirect to after authentication
+          required: false
+          schema:
+            type: string
+            format: uri
+          example: "http://localhost:5173/dashboard"
+        - name: invitation
+          in: query
+          description: Invitation token (if accepting an invitation)
+          required: false
+          schema:
+            type: string
+          example: "inv-abc123xyz789"
+      responses:
+        '302':
+          description: Redirect to Google OAuth consent screen
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+                example: "https://accounts.google.com/o/oauth2/v2/auth?client_id=..."
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/auth/google/callback:
+    get:
+      tags:
+        - Authentication
+      summary: Google OAuth callback handler
+      description: |
+        Handles the OAuth callback from Google. Exchanges authorization code for user info,
+        creates/updates user, and redirects to frontend with JWT token.
+        
+        **Note:** This endpoint is typically called by Google, not directly by clients.
+      operationId: handleGoogleOAuthCallback
+      parameters:
+        - name: code
+          in: query
+          description: Authorization code from Google
+          required: true
+          schema:
+            type: string
+        - name: error
+          in: query
+          description: Error code from Google (if authorization failed)
+          required: false
+          schema:
+            type: string
+        - name: state
+          in: query
+          description: State parameter (can contain redirect URL or invitation token)
+          required: false
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Redirect to frontend with token
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+                example: "http://localhost:5173/auth/callback?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        '400':
+          description: Bad request - OAuth error or missing code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                missingCode:
+                  summary: Missing authorization code
+                  value:
+                    error: "Authorization code not provided"
+                oauthError:
+                  summary: OAuth error
+                  value:
+                    error: "OAuth authentication failed"
+                    details: "access_denied"
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: |
+        API key for programmatic access. 
+        Create keys via the UI (Settings → API Keys) or tRPC endpoint.
+        Format: `kad_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        JWT token for user authentication. 
+        Obtained via Google OAuth flow.
+        Format: `Bearer <token>`
+
+  schemas:
+    IngestRequest:
+      type: object
+      required:
+        - channel
+        - content
+      properties:
+        channel:
+          type: string
+          enum: [phone, email, sms, voice-message]
+          description: Communication channel type
+          example: email
+        content:
+          type: string
+          description: Full text content (transcript, email body, SMS thread)
+          minLength: 1
+          example: "Hi, I am having issues with my billing. The charge on my card is incorrect and I need this resolved ASAP."
+        metadata:
+          type: object
+          description: Optional additional metadata
+          properties:
+            subject:
+              type: string
+              description: Email subject (for email channel)
+              example: "Billing Issue - Urgent"
+            from:
+              type: string
+              description: Sender email/phone
+              example: "customer@example.com"
+            to:
+              type: string
+              description: Recipient email/phone
+              example: "support@company.com"
+            date:
+              type: string
+              format: date-time
+              description: ISO 8601 date string
+              example: "2024-01-15T10:30:00Z"
+            duration:
+              type: number
+              description: Duration in minutes (for calls)
+              example: 15
+            messageCount:
+              type: integer
+              description: Number of messages in thread (for email/SMS)
+              example: 3
+            messages:
+              type: array
+              description: Structured message format (optional)
+              items:
+                $ref: '#/components/schemas/Message'
+      example:
+        channel: email
+        content: "Hi, I am having issues with my billing."
+        metadata:
+          subject: "Billing Issue"
+          from: "customer@example.com"
+          to: "support@company.com"
+          date: "2024-01-15T10:30:00Z"
+
+    IngestResponse:
+      type: object
+      required:
+        - success
+        - customerId
+        - conversationId
+      properties:
+        success:
+          type: boolean
+          example: true
+        customerId:
+          type: string
+          description: ID of the created or matched customer
+          example: "customer-1234567890-abc123"
+        conversationId:
+          type: string
+          description: ID of the created conversation
+          example: "conversation-1234567890-xyz789"
+        actionPlanId:
+          type: string
+          nullable: true
+          description: ID of the created action plan (if LLM recommended one)
+          example: "action-plan-1234567890-def456"
+
+    Message:
+      type: object
+      required:
+        - role
+        - content
+        - timestamp
+      properties:
+        role:
+          type: string
+          enum: [assistant, customer, agent]
+          description: Message sender role
+        content:
+          type: string
+          description: Message content
+        timestamp:
+          type: string
+          format: date-time
+          description: Message timestamp
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: "Missing required fields: channel, content"
+        details:
+          type: string
+          description: Additional error details (optional)
+          example: "OpenAI API error: Rate limit exceeded"
+
+    RateLimitError:
+      type: object
+      required:
+        - error
+        - message
+        - retryAfter
+      properties:
+        error:
+          type: string
+          example: "Rate limit exceeded"
+        message:
+          type: string
+          example: "Too many requests. Please try again later."
+        retryAfter:
+          type: integer
+          description: Seconds to wait before retrying
+          example: 60
+
+    CommunicationChannel:
+      type: string
+      enum: [phone, email, sms, voice-message]
+      description: Supported communication channels
+
+    BadgeType:
+      type: string
+      enum: [at-risk, opportunity, lead, follow-up, no-action]
+      description: Action plan badge types
+      example: at-risk
+
+    Sentiment:
+      type: string
+      enum: [positive, neutral, negative, mixed]
+      description: Sentiment analysis result
+
+    ActionPlanStatus:
+      type: string
+      enum: [active, completed, canceled]
+      description: Action plan status
+      example: active
+
+    ActionItemType:
+      type: string
+      enum: [email, call, task, text]
+      description: Action item type
+
+    ActionItemStatus:
+      type: string
+      enum: [pending, completed]
+      description: Action item status
+
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "customer-123"
+        name:
+          type: string
+          example: "John Doe"
+        companyName:
+          type: string
+          example: "Acme Corp"
+        email:
+          type: string
+          format: email
+          nullable: true
+          example: "john@acme.com"
+        phone:
+          type: string
+          nullable: true
+          example: "+1234567890"
+        riskScore:
+          type: integer
+          minimum: 0
+          maximum: 100
+          nullable: true
+          description: Churn risk score (0-100)
+          example: 75
+        opportunityScore:
+          type: integer
+          minimum: 0
+          maximum: 100
+          nullable: true
+          description: Sales opportunity score (0-100)
+          example: 60
+        avatar:
+          type: string
+          format: uri
+          example: "https://ui-avatars.com/api/?name=John+Doe"
+
+    Conversation:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "conversation-123"
+        customerId:
+          type: string
+          example: "customer-123"
+        channel:
+          $ref: '#/components/schemas/CommunicationChannel'
+        date:
+          type: string
+          format: date-time
+          example: "2024-01-15T10:30:00Z"
+        duration:
+          type: number
+          nullable: true
+          description: Duration in minutes
+          example: 15
+        messageCount:
+          type: integer
+          nullable: true
+          description: Number of messages in thread
+          example: 3
+        transcript:
+          type: string
+          description: Full transcript
+        summary:
+          type: string
+          nullable: true
+          description: AI-generated summary
+        sentiment:
+          $ref: '#/components/schemas/Sentiment'
+        intent:
+          type: string
+          nullable: true
+          description: Customer intent
+          example: "Billing inquiry"
+        createdAt:
+          type: string
+          format: date-time
+
+    ActionPlan:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "action-plan-123"
+        customerId:
+          type: string
+          example: "customer-123"
+        badge:
+          $ref: '#/components/schemas/BadgeType'
+        whatToDo:
+          type: string
+          description: Recommended action
+          example: "Create a Case for billing issue"
+        whyStrategy:
+          type: string
+          description: Rationale for recommendation
+          example: "Customer shows signs of frustration with billing"
+        status:
+          $ref: '#/components/schemas/ActionPlanStatus'
+        actionItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionItem'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+          nullable: true
+        canceledAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    ActionItem:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "action-item-123"
+        type:
+          $ref: '#/components/schemas/ActionItemType'
+        title:
+          type: string
+          example: "Send follow-up email"
+        description:
+          type: string
+          example: "Send email to customer confirming billing correction"
+        status:
+          $ref: '#/components/schemas/ActionItemStatus'
+

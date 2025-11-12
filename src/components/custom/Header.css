@@ -1,0 +1,60 @@
+@import '../../styles/gradients.css';
+
+:root {
+  --header-height: 54px;
+}
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100%;
+  border-bottom: 1px solid var(--rs-color-border-neutral);
+  /* Background color - using explicit fallback colors */
+  background-color: #fafafa !important;
+}
+
+[data-rs-color-mode="dark"] .app-header {
+  background-color: #1a1919 !important;
+}
+
+.header-title {
+  font-family: "Fredoka", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  font-size: 24px !important;
+  letter-spacing: 0.5px;
+  margin: 0;
+  background: linear-gradient(135deg, #5a77eb 0%, #8b5cf6 40%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-icon svg {
+  fill: url(#header-gradient-purple);
+}
+
+.header-right-container .header-icon-button {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-right-container .header-icon-button svg {
+  fill: color-mix(in srgb, var(--rs-color-foreground-neutral) 50%, var(--rs-color-foreground-neutral-faded) 50%) !important;
+}
