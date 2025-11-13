@@ -94,4 +94,22 @@
   fill: #000000 !important;
 }
 
+/* Ensure all sidebar icons maintain consistent horizontal position */
+.sidebar button[data-rs-button] {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* When sidebar is closed, ensure icons stay left-aligned */
+.sidebar.sidebar-closed button[data-rs-button] {
+  justify-content: flex-start !important;
+  padding-left: 12px !important;
+}
+
+/* Ensure icon containers maintain position */
+.sidebar button[data-rs-button] [class*="_icon_"],
+.sidebar button[data-rs-button] svg {
+  flex-shrink: 0;
+}
+
 

@@ -66,6 +66,13 @@ export function Sidebar() {
   useEffect(() => {
     const appLayout = document.querySelector('.app-layout')
     const header = document.querySelector('.app-header')
+    const body = document.body
+    
+    // Ensure body never has these classes
+    if (body) {
+      body.classList.remove('sidebar-transitions', 'sidebar-closed')
+    }
+    
     if (appLayout) {
       if (hasRendered) {
         appLayout.classList.add('sidebar-transitions')
@@ -83,6 +90,13 @@ export function Sidebar() {
         if (header) {
           header.classList.add('sidebar-closed')
         }
+      }
+    }
+    
+    // Cleanup function to remove classes from body if they somehow get added
+    return () => {
+      if (body) {
+        body.classList.remove('sidebar-transitions', 'sidebar-closed')
       }
     }
   }, [isOpen, hasRendered])
@@ -111,98 +125,88 @@ export function Sidebar() {
         }}
       >
         {/* Logo section - spark icon, wordmark, and panel toggle */}
-        <View
-          direction="row"
-          gap={2}
-          align="center"
-          attributes={{
-            style: {
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: '0 8px',
-              marginBottom: '8px',
-              width: '100%',
-            },
-          }}
-        >
-          {isOpen ? (
-            <>
-              {/* When open: Spark icon + KADABRA wordmark on left */}
-              <View
-                direction="row"
-                gap={2}
-                align="center"
-                attributes={{
-                  style: {
-                    flex: '0 0 auto',
-                  },
-                }}
-              >
-                <Icon
-                  svg={<Sparkle weight="fill" />}
-                  size={6}
-                  className="sidebar-logo-icon"
-                  attributes={{
-                    style: {
-                      color: '#000000',
-                      fill: '#000000',
-                    },
-                  }}
-                />
-                <h1
-                  style={{
-                    fontFamily: '"Fredoka", sans-serif',
-                    fontOpticalSizing: 'auto',
-                    fontWeight: 400,
-                    fontStyle: 'normal',
-                    fontVariationSettings: '"wdth" 100',
-                    fontSize: '24px',
-                    letterSpacing: '0.5px',
-                    margin: 0,
-                    color: '#000000',
-                  }}
-                >
-                  KADABRA
-                </h1>
-              </View>
-              {/* Panel toggle button - right aligned */}
-              <Button
-                size="large"
-                variant="ghost"
-                icon={<SidebarSimple weight="bold" />}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setIsOpen(!isOpen)
-                }}
-                attributes={{
-                  'aria-label': 'Close sidebar',
-                  style: {
-                    width: 'auto',
-                    marginLeft: 'auto',
-                  },
-                }}
+        {isOpen ? (
+          <View
+            direction="row"
+            gap={2}
+            align="center"
+            attributes={{
+              style: {
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                width: '100%',
+                marginBottom: '8px',
+              },
+            }}
+          >
+            {/* Spark icon + KADABRA wordmark - styled like other sidebar items */}
+            <View
+              direction="row"
+              gap={2}
+              align="center"
+              attributes={{
+                style: {
+                  flex: 1,
+                  justifyContent: 'flex-start',
+                  paddingLeft: '12px', // Consistent horizontal position with other icons
+                },
+              }}
+            >
+              <Icon
+                svg={<Sparkle weight="bold" />}
+                size={5}
+                className="sidebar-logo-icon"
               />
-            </>
-          ) : (
-            /* When closed: Spark icon centered, acts as toggle */
+              <Text variant="body-2" weight="medium" attributes={{
+                style: {
+                  fontFamily: '"Courier New", monospace',
+                  fontSize: '22px',
+                  fontWeight: 600,
+                  color: '#000000',
+                },
+              }}>
+                KADABRA
+              </Text>
+            </View>
+            {/* Panel toggle button - inline to the right */}
             <Button
               size="large"
               variant="ghost"
-              icon={<Sparkle weight="fill" />}
+              icon={<SidebarSimple weight="bold" />}
               onClick={(e) => {
                 e.stopPropagation()
                 setIsOpen(!isOpen)
               }}
               attributes={{
-                'aria-label': 'Open sidebar',
+                'aria-label': 'Close sidebar',
                 style: {
-                  width: '100%',
-                  justifyContent: 'center',
+                  width: 'auto',
+                  flexShrink: 0,
                 },
               }}
             />
-          )}
-        </View>
+          </View>
+        ) : (
+          /* When closed: Spark icon aligned with other icons, acts as toggle */
+          <Button
+            size="large"
+            variant="ghost"
+            icon={<Sparkle weight="bold" />}
+            onClick={(e) => {
+              e.stopPropagation()
+              setIsOpen(!isOpen)
+            }}
+            attributes={{
+              'aria-label': 'Open sidebar',
+              style: {
+                width: 'auto',
+                justifyContent: 'flex-start',
+                marginBottom: '8px',
+                paddingLeft: '12px', // Consistent horizontal position
+              },
+            }}
+          />
+        )}
 
         {/* Dashboard button - left aligned */}
             <Button
@@ -219,11 +223,16 @@ export function Sidebar() {
               width: 'auto',
               justifyContent: 'flex-start',
               gap: isOpen ? '4px' : '0',
+              paddingLeft: '12px', // Consistent horizontal position
             },
           }}
         >
           {isOpen && (
-            <Text variant="body-2" weight="medium">
+            <Text variant="body-2" weight="medium" attributes={{
+              style: {
+                fontSize: '16px',
+              },
+            }}>
               Dashboard
             </Text>
           )}
@@ -246,11 +255,16 @@ export function Sidebar() {
                 width: 'auto',
                 justifyContent: 'flex-start',
                 gap: isOpen ? '4px' : '0',
+                paddingLeft: '12px', // Consistent horizontal position
                 },
               }}
             >
               {isOpen && (
-                <Text variant="body-2" weight="medium">
+                <Text variant="body-2" weight="medium" attributes={{
+                  style: {
+                    fontSize: '16px',
+                  },
+                }}>
                   {item.label}
                 </Text>
               )}
@@ -283,11 +297,16 @@ export function Sidebar() {
                 width: 'auto',
                   justifyContent: 'flex-start',
                 gap: isOpen ? '4px' : '0',
+                paddingLeft: '12px', // Consistent horizontal position
                 },
               }}
             >
             {isOpen && (
-              <Text variant="body-2" weight="medium">
+              <Text variant="body-2" weight="medium" attributes={{
+                style: {
+                  fontSize: '16px',
+                },
+              }}>
                 Notifications
               </Text>
             )}
@@ -308,11 +327,16 @@ export function Sidebar() {
                 width: 'auto',
                 justifyContent: 'flex-start',
                 gap: isOpen ? '4px' : '0',
+                paddingLeft: '12px', // Consistent horizontal position
                 },
               }}
           >
             {isOpen && (
-              <Text variant="body-2" weight="medium">
+              <Text variant="body-2" weight="medium" attributes={{
+                style: {
+                  fontSize: '16px',
+                },
+              }}>
                 Settings
               </Text>
           )}
