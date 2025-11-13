@@ -60,18 +60,20 @@ export default function Dashboard() {
       {/* Page Header */}
       <View direction="column" gap={6} attributes={{ style: { marginBottom: '24px' } }}>
         <PageHeader />
-        <WelcomeStats
-          customersAnalyzed={customersAnalyzed}
-          actionPlansCreated={actionPlansCreated}
-          urgentActionPlans={urgentActionPlans}
-        />
       </View>
 
       <div className="dashboard-grid">
-        {/* Left Column - 2x width */}
-        <div className="dashboard-left-column">
+        {/* Row 1: Stats Cards - 3 columns */}
+        <div className="dashboard-stats-row">
+          <WelcomeStats
+            customersAnalyzed={customersAnalyzed}
+            actionPlansCreated={actionPlansCreated}
+            urgentActionPlans={urgentActionPlans}
+          />
+        </div>
 
-          {/* Customer Triage Leaderboard Card */}
+        {/* Row 2: Triage Leaderboard - 2 columns */}
+        <div className="dashboard-triage-card">
           <ContainerCard padding={6}>
             <View direction="column" gap={4}>
               <View direction="column" gap={2}>
@@ -114,9 +116,13 @@ export default function Dashboard() {
           </ContainerCard>
         </div>
 
-        {/* Right Column - 1x width */}
+        {/* Row 2: Right Column - 1 column (Calendar) */}
         <div className="dashboard-right-column">
           <MiniCalendar />
+        </div>
+
+        {/* Row 3: Kanban - 1 column (positioned in 3rd column) */}
+        <div className="dashboard-kanban-card">
           <MiniKanban />
         </div>
       </div>

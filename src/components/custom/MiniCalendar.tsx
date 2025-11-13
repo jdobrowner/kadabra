@@ -1,6 +1,6 @@
 import { Text, View } from 'reshaped'
 import { ContainerCard } from './ContainerCard'
-import { ElevatedCard } from './ElevatedCard'
+import { RowCard } from './RowCard'
 import { Calendar } from '@phosphor-icons/react'
 import { useCalendarStore } from '../../store/useCalendarStore'
 import { useEffect } from 'react'
@@ -33,11 +33,12 @@ export function MiniCalendar({ onEventClick }: MiniCalendarProps) {
             No events scheduled for today
           </Text>
         ) : (
-          <View direction="column" gap={3}>
-            {todayEvents.slice(0, 5).map(event => (
-              <ElevatedCard
+          <View direction="column" gap={0}>
+            {todayEvents.slice(0, 5).map((event, index) => (
+              <RowCard
                 key={event.id}
-                padding={3}
+                padding={4}
+                noBorderBottom={index === Math.min(todayEvents.length - 1, 4)}
                 onClick={onEventClick ? () => onEventClick(event.id) : undefined}
               >
                 <View direction="column" gap={1}>
@@ -57,7 +58,7 @@ export function MiniCalendar({ onEventClick }: MiniCalendarProps) {
                     {event.goal}
                   </Text>
                 </View>
-              </ElevatedCard>
+              </RowCard>
             ))}
           </View>
         )}

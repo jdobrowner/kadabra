@@ -1,19 +1,32 @@
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  grid-auto-rows: min-content;
 }
 
-.dashboard-left-column {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+/* Row 1: Stats cards span all 3 columns */
+.dashboard-stats-row {
+  grid-column: 1 / -1;
+  grid-row: 1;
 }
 
+/* Row 2-3: Triage leaderboard spans 2 columns and 2 rows */
+.dashboard-triage-card {
+  grid-column: 1 / 3;
+  grid-row: 2 / 4;
+}
+
+/* Row 2: Calendar in 3rd column */
 .dashboard-right-column {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  grid-column: 3;
+  grid-row: 2;
+}
+
+/* Row 3: Kanban in 3rd column (directly under calendar) */
+.dashboard-kanban-card {
+  grid-column: 3;
+  grid-row: 3;
 }
 
 .dashboard-sparkle-icon {
@@ -30,6 +43,13 @@
 @media (max-width: 900px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
+  }
+
+  .dashboard-stats-row,
+  .dashboard-triage-card,
+  .dashboard-right-column,
+  .dashboard-kanban-card {
+    grid-column: 1;
   }
 }
 
