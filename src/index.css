@@ -74,8 +74,71 @@ body {
 }
 
 /* Button styling - pill-shaped and bold text */
+/* Target all button elements for pill shape and CSS variable overrides */
 [data-rs-theme~="kadabra"] button[data-rs-button],
-[data-rs-theme~="kadabra"] [data-rs-button] {
-  font-weight: 700 !important; /* Bold text for all buttons */
+[data-rs-theme~="kadabra"] [data-rs-button],
+[data-rs-theme~="kadabra"] a[data-rs-button] {
+  border-radius: 999px !important; /* Pill-shaped buttons */
+  --rs-button-radius: 999px !important; /* Override CSS variable set by size classes */
+}
+
+/* Override the radius-medium variable that size classes reference */
+[data-rs-theme~="kadabra"] {
+  --rs-radius-medium: 999px !important;
+}
+
+/* Target Reshaped's text span class specifically - this is what actually works */
+/* Reshaped buttons use nested spans with CSS module classes like _text_1vxzk_1 */
+[data-rs-theme~="kadabra"] [class*="_text_"] {
+  font-size: 16px !important; /* Match ActNowButton font size */
+  font-weight: 700 !important; /* Bold text (bolder than ActNowButton's 600) */
+}
+
+/* Primary button - black background with white text */
+/* Target buttons with color="primary" prop */
+[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="solid"][class*="--color-primary"],
+[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="solid"][class*="--color-primary"],
+[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="solid"][class*="--color-primary"] {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+  --rs-button-background-color: #000000 !important;
+  --rs-button-foreground-color: #ffffff !important;
+  --rs-button-color: #ffffff !important;
+}
+
+/* Sidebar active buttons - black background with white text */
+/* Override Reshaped's CSS variables for sidebar buttons with --color-neutral */
+.sidebar [class*="_root_"][class*="--variant-solid"][class*="--color-neutral"],
+.sidebar button[class*="--variant-solid"][class*="--color-neutral"],
+.sidebar [class*="--variant-solid"][class*="--color-neutral"] {
+  --rs-button-background-color: #000000 !important;
+  --rs-button-foreground-color: #ffffff !important;
+  --rs-color-background-neutral: #000000 !important;
+  --rs-color-on-background-neutral: #ffffff !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Ensure sidebar button text and icons are white */
+.sidebar [class*="--variant-solid"][class*="--color-neutral"] [class*="_text_"],
+.sidebar [class*="--variant-solid"][class*="--color-neutral"] [class*="_text_"] *,
+.sidebar [class*="--variant-solid"][class*="--color-neutral"] svg {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+/* Ensure text and icons are white in primary buttons */
+[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="solid"] *,
+[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="solid"] *,
+[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="solid"] * {
+  color: #ffffff !important;
+}
+
+[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="solid"] svg,
+[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="solid"] svg,
+[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="solid"] svg {
+  fill: #ffffff !important;
+  color: #ffffff !important;
 }
 

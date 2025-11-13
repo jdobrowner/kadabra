@@ -25,18 +25,51 @@
 }
 
 /* Active state - black background with white text/icon */
-.sidebar button[data-rs-button][data-rs-variant="solid"] {
+/* Sidebar buttons use --color-neutral when active, not --color-primary */
+/* Override Reshaped's CSS variables - these are what actually control the button colors */
+/* Target the specific class combination that Reshaped uses with maximum specificity */
+.sidebar button[class*="_root_"][class*="--variant-solid"][class*="--color-neutral"],
+.sidebar [class*="_root_"][class*="--variant-solid"][class*="--color-neutral"],
+.sidebar button[class*="--variant-solid"][class*="--color-neutral"],
+.sidebar [class*="--variant-solid"][class*="--color-neutral"] {
+  /* Override the CSS variables that Reshaped uses - these must be set on the element */
+  /* Note: CSS custom properties cascade, so we need high specificity */
+  --rs-button-background-color: #000000 !important;
+  --rs-button-foreground-color: #ffffff !important;
+  --rs-color-background-neutral: #000000 !important;
+  --rs-color-on-background-neutral: #ffffff !important;
+  /* Also set direct properties as fallback - these use the variables above */
   background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+}
+
+/* Target all child elements including nested spans, divs, and icons */
+.sidebar button[data-rs-button][data-rs-variant="solid"] *,
+.sidebar button[data-rs-button][class*="--variant-solid"] *,
+.sidebar [data-rs-button][data-rs-variant="solid"] *,
+.sidebar [data-rs-button][class*="--variant-solid"] * {
   color: #ffffff !important;
 }
 
+/* Target SVG icons specifically */
 .sidebar button[data-rs-button][data-rs-variant="solid"] svg,
-.sidebar button[data-rs-button][data-rs-variant="solid"] [data-rs-icon] {
+.sidebar button[data-rs-button][class*="--variant-solid"] svg,
+.sidebar [data-rs-button][data-rs-variant="solid"] svg,
+.sidebar [data-rs-button][class*="--variant-solid"] svg {
   color: #ffffff !important;
   fill: #ffffff !important;
 }
 
-.sidebar button[data-rs-button][data-rs-variant="solid"] [data-rs-text] {
+/* Target Reshaped's text span and nested divs */
+.sidebar button[data-rs-button][data-rs-variant="solid"] [class*="_text_"],
+.sidebar button[data-rs-button][class*="--variant-solid"] [class*="_text_"],
+.sidebar [data-rs-button][data-rs-variant="solid"] [class*="_text_"],
+.sidebar [data-rs-button][class*="--variant-solid"] [class*="_text_"],
+.sidebar button[data-rs-button][data-rs-variant="solid"] [class*="_text_"] div,
+.sidebar button[data-rs-button][class*="--variant-solid"] [class*="_text_"] div,
+.sidebar [data-rs-button][data-rs-variant="solid"] [class*="_text_"] div,
+.sidebar [data-rs-button][class*="--variant-solid"] [class*="_text_"] div {
   color: #ffffff !important;
 }
 

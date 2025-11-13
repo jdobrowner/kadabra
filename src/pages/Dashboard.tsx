@@ -99,7 +99,7 @@ export default function Dashboard() {
               </View>
 
               <Link to="/triage" style={{ width: '100%' }}>
-                <Button attributes={{ style: { width: '100%' } }} size="large" variant="solid">
+                <Button attributes={{ style: { width: '100%' } }} size="large" variant="solid" color="primary">
                   View All →
                 </Button>
               </Link>

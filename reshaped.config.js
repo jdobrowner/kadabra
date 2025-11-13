@@ -103,7 +103,7 @@ const config = {
       // Border radius - pill-shaped buttons
       radius: {
         small: { px: 4 },
-        medium: { px: 6 },
+        medium: { px: 999 }, // Pill-shaped buttons (used by button size classes)
         large: { px: 999 } // Pill-shaped buttons
       },
     },

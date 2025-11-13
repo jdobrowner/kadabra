@@ -1,9 +1,34 @@
-/* Badge styling - bolder font weight and more prominent borders */
+/* Badge styling - filled with pale colors */
 
-/* Make badge text bolder and borders more prominent */
+/* Make badge text bolder */
 .custom-badge div {
   font-weight: 600 !important;
-  border-width: 1.5px !important;
+}
+
+/* Pale color backgrounds for badges */
+.custom-badge[data-rs-color="primary"] {
+  background-color: rgba(90, 88, 242, 0.15) !important;
+  color: rgba(90, 88, 242, 0.9) !important;
+}
+
+.custom-badge[data-rs-color="critical"] {
+  background-color: rgba(234, 0, 30, 0.15) !important;
+  color: rgba(234, 0, 30, 0.9) !important;
+}
+
+.custom-badge[data-rs-color="positive"] {
+  background-color: rgba(4, 132, 75, 0.15) !important;
+  color: rgba(4, 132, 75, 0.9) !important;
+}
+
+.custom-badge[data-rs-color="warning"] {
+  background-color: rgba(250, 204, 21, 0.15) !important;
+  color: rgba(123, 99, 5, 0.9) !important;
+}
+
+.custom-badge[data-rs-color="neutral"] {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  color: rgba(0, 0, 0, 0.7) !important;
 }
 
 /* Smaller text for small badges */

@@ -56,7 +56,7 @@ export function CustomBadge({
     <Badge
       className="custom-badge"
       color={color}
-      variant="outline"
+      variant="solid"
       rounded
       size={size}
       icon={size === 'small' ? undefined : BoldIcon}
