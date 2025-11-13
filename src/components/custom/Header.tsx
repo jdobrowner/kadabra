@@ -1,11 +1,13 @@
 import { View, Icon, Avatar, DropdownMenu, Text } from 'reshaped'
-import { Sparkle, Moon, Sun, SignOut } from '@phosphor-icons/react'
+import { Sparkle, Moon, Sun, SignOut, ToggleLeft, ToggleRight } from '@phosphor-icons/react'
 import { TodaysProgress } from './TodaysProgress'
 import { useAuthStore } from '../../store/useAuthStore'
 import { useTheme } from 'reshaped'
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import './Header.css'
-import { LOCAL_STORAGE_KEYS, setStoredValue } from '../../utils/storage'
+import { LOCAL_STORAGE_KEYS, setStoredValue, getStoredValue } from '../../utils/storage'
+import { isMockEnabled } from '../../lib/config'
 
 export interface HeaderProps {
   userAvatar?: string
@@ -20,13 +22,27 @@ export function Header({
   const { colorMode, setColorMode } = useTheme()
   const navigate = useNavigate()
   const isDark = colorMode === 'dark'
+  const [demoMode, setDemoMode] = useState(() => getStoredValue<boolean>(LOCAL_STORAGE_KEYS.demoMode, false))
   
   const displayAvatar = userAvatar || user?.avatar
   const displayName = userName || user?.name
 
+  // Sync with isMockEnabled on mount
+  useEffect(() => {
+    setDemoMode(isMockEnabled)
+  }, [])
+
   const handleLogout = () => {
     logout()
     navigate('/signin')
+  }
+
+  const handleToggleDemoMode = () => {
+    const newValue = !demoMode
+    setDemoMode(newValue)
+    setStoredValue(LOCAL_STORAGE_KEYS.demoMode, newValue)
+    // Reload the page to apply the change
+    window.location.reload()
   }
 
   return (
@@ -98,6 +114,23 @@ export function Header({
                     <Text>
                       {isDark ? 'Light Mode' : 'Dark Mode'}
                     </Text>
+                  </View>
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={handleToggleDemoMode}>
+                  <View direction="row" gap={2} align="center" attributes={{ style: { justifyContent: 'space-between', width: '100%' } }}>
+                    <View direction="row" gap={2} align="center">
+                      <Icon
+                        svg={demoMode ? <ToggleRight weight="fill" /> : <ToggleLeft weight="fill" />}
+                        size={5}
+                        color={demoMode ? 'primary' : 'neutral-faded'}
+                      />
+                      <Text>Demo Mode</Text>
+                    </View>
+                    {demoMode && (
+                      <Text variant="caption-1" color="primary">
+                        ON
+                      </Text>
+                    )}
                   </View>
                 </DropdownMenu.Item>
                 <DropdownMenu.Item onClick={handleLogout}>

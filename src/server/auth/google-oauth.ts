@@ -5,28 +5,53 @@ import { eq } from 'drizzle-orm'
 import type { User, Org } from '../trpc/context'
 import { signToken } from './jwt'
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || ''
-const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || ''
-const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI || 'http://localhost:3000/api/auth/google/callback'
-
-// Validate required environment variables
-if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
-  console.warn('⚠️  Google OAuth credentials not configured. Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET environment variables.')
+// Lazy getters for environment variables to ensure dotenv has loaded
+function getGoogleClientId(): string {
+  return process.env.GOOGLE_CLIENT_ID || ''
 }
 
-// Create OAuth2 client
-export const googleOAuthClient = new OAuth2Client(
-  GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET,
-  GOOGLE_REDIRECT_URI
-)
+function getGoogleClientSecret(): string {
+  return process.env.GOOGLE_CLIENT_SECRET || ''
+}
+
+function getGoogleRedirectUri(): string {
+  return process.env.GOOGLE_REDIRECT_URI || 'http://localhost:3000/api/auth/google/callback'
+}
+
+// Lazy getter for OAuth2 client
+let _googleOAuthClient: OAuth2Client | null = null
+
+function getGoogleOAuthClient(): OAuth2Client {
+  if (!_googleOAuthClient) {
+    const clientId = getGoogleClientId()
+    const clientSecret = getGoogleClientSecret()
+    const redirectUri = getGoogleRedirectUri()
+    
+    // Validate required environment variables
+    if (!clientId || !clientSecret) {
+      console.warn('⚠️  Google OAuth credentials not configured. Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET environment variables.')
+    }
+    
+    _googleOAuthClient = new OAuth2Client(
+      clientId,
+      clientSecret,
+      redirectUri
+    )
+  }
+  return _googleOAuthClient
+}
+
+export const googleOAuthClient = getGoogleOAuthClient()
 
 /**
  * Get Google OAuth authorization URL
  * @param invitationToken - Optional invitation token to pass through OAuth flow
  */
 export function getGoogleAuthUrl(invitationToken?: string): string {
-  if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
+  const clientId = getGoogleClientId()
+  const clientSecret = getGoogleClientSecret()
+  
+  if (!clientId || !clientSecret) {
     throw new Error('Google OAuth credentials not configured. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET environment variables.')
   }
 
@@ -35,7 +60,8 @@ export function getGoogleAuthUrl(invitationToken?: string): string {
     'https://www.googleapis.com/auth/userinfo.profile',
   ]
 
-  return googleOAuthClient.generateAuthUrl({
+  const client = getGoogleOAuthClient()
+  return client.generateAuthUrl({
     access_type: 'offline',
     scope: scopes,
     prompt: 'consent',
@@ -54,14 +80,17 @@ export async function handleGoogleCallback(
   db: Database,
   invitationToken?: string
 ): Promise<{ token: string; user: User; org: Org; invitationAccepted?: boolean }> {
+  const client = getGoogleOAuthClient()
+  const clientId = getGoogleClientId()
+  
   // Exchange code for tokens
-  const { tokens } = await googleOAuthClient.getToken(code)
-  googleOAuthClient.setCredentials(tokens)
+  const { tokens } = await client.getToken(code)
+  client.setCredentials(tokens)
 
   // Get user info from Google
-  const ticket = await googleOAuthClient.verifyIdToken({
+  const ticket = await client.verifyIdToken({
     idToken: tokens.id_token!,
-    audience: GOOGLE_CLIENT_ID,
+    audience: clientId,
   })
 
   const payload = ticket.getPayload()

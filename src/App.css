@@ -8,7 +8,7 @@
 
 .app-layout {
   margin-left: 220px; /* Default to sidebar open width */
-  margin-top: var(--header-height, 64px); /* Account for fixed header */
+  padding-top: var(--header-height, 64px); /* Account for fixed header */
   min-height: calc(100vh - var(--header-height, 64px));
   width: calc(100% - 220px); /* Ensure full width minus sidebar */
   position: relative;

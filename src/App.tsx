@@ -5,7 +5,6 @@ import { Sidebar } from './components/custom/Sidebar'
 import { Loading } from './components/custom/Loading'
 import ProtectedRoute from './components/ProtectedRoute'
 import { StoreSubscriptions } from './components/StoreSubscriptions'
-import { MockModeBanner } from './components/custom/MockModeBanner'
 import HomePage from './pages/HomePage'
 import ComponentsPage from './pages/ComponentsPage'
 import CustomComponentsPage from './pages/CustomComponentsPage'
@@ -23,7 +22,6 @@ import SignIn from './pages/SignIn'
 import OAuthCallback from './pages/OAuthCallback'
 import Settings from './pages/Settings'
 import { useAuthStore } from './store/useAuthStore'
-import { isMockEnabled } from './lib/config'
 import './App.css'
 import { AIAgentSidebar } from './components/custom/AIAgentPanel/index'
 
@@ -47,8 +45,6 @@ function AppContent() {
     <>
       {/* Background subscription component - updates stores on database changes */}
       {isAuthenticated && <StoreSubscriptions />}
-      
-      {isMockEnabled && <MockModeBanner />}
       
         {isAuthenticated && (
         <>

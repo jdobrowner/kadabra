@@ -2,6 +2,7 @@ const isBrowser = typeof window !== 'undefined'
 
 export const LOCAL_STORAGE_KEYS = Object.freeze({
   colorMode: 'kadabra:color-mode',
+  demoMode: 'kadabra:demo-mode',
 })
 
 export function getStoredValue<T>(key: string, fallback: T): T {
