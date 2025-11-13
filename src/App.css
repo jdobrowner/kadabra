@@ -24,8 +24,8 @@
 
 /* Adjust layout when sidebar is closed */
 .app-layout.sidebar-closed {
-  margin-left: 54px;
-  width: calc(100% - 54px); /* Ensure full width minus closed sidebar */
+  margin-left: 64px; /* Match new sidebar closed width */
+  width: calc(100% - 64px); /* Ensure full width minus closed sidebar */
 }
 
 .app-main {

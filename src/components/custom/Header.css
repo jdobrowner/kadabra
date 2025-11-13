@@ -20,8 +20,8 @@
 
 /* Adjust header when sidebar is closed */
 .app-header.sidebar-closed {
-  left: 54px;
-  width: calc(100% - 54px);
+  left: 64px; /* Match new sidebar closed width */
+  width: calc(100% - 64px);
 }
 
 .header-title {

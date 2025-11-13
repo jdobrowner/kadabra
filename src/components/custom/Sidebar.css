@@ -19,7 +19,7 @@
 }
 
 .sidebar-closed {
-  width: 54px;
+  width: 64px; /* Slightly wider to better center icons */
   cursor: pointer;
 }
 
@@ -86,6 +86,11 @@
   opacity: 0.9;
 }
 
+/* Logo container - grid structure managed in JSX */
+.sidebar-logo-container {
+  display: grid !important;
+}
+
 /* Make spark icon black in sidebar logo */
 .sidebar button[aria-label="Open sidebar"] svg,
 .sidebar button[aria-label="Close sidebar"] svg,
@@ -100,10 +105,90 @@
   align-items: center !important;
 }
 
-/* When sidebar is closed, ensure icons stay left-aligned */
-.sidebar.sidebar-closed button[data-rs-button] {
+/* Logo button special handling */
+.sidebar .sidebar-logo-button {
   justify-content: flex-start !important;
   padding-left: 12px !important;
+}
+
+/* Logo button when closed - make it square like other buttons */
+.sidebar-closed .sidebar-logo-button {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  padding: 0 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  justify-content: center !important;
+}
+
+/* When sidebar is open, all buttons are left-aligned with padding */
+.sidebar.sidebar-open button[data-rs-button]:not(.sidebar-logo-button) {
+  justify-content: flex-start !important;
+  padding-left: 12px !important;
+  width: auto !important;
+}
+
+/* When sidebar is closed, center all buttons horizontally and make them square */
+.sidebar.sidebar-closed button[data-rs-button] {
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 0 !important;
+  width: 48px !important; /* Square width */
+  height: 48px !important; /* Square height - matches width */
+  min-width: 48px !important;
+  min-height: 48px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border-radius: 8px !important; /* Slightly rounded corners */
+}
+
+/* Override Reshaped's internal button structure for centering and square shape */
+.sidebar.sidebar-closed button[data-rs-button] > span[data-rs-aligner-target] {
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  min-width: 0 !important;
+}
+
+/* Target the inner content wrapper */
+.sidebar.sidebar-closed button[data-rs-button] > span[data-rs-aligner-target] > span {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+/* Ensure icon containers are centered in closed mode */
+.sidebar.sidebar-closed button[data-rs-button] [class*="_icon_"] {
+  flex-shrink: 0;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.sidebar.sidebar-closed button[data-rs-button] svg {
+  flex-shrink: 0;
+  margin: 0 !important;
+  display: block !important;
+}
+
+/* Ensure active buttons in closed mode are perfectly centered */
+.sidebar.sidebar-closed button[data-rs-button][data-rs-variant="solid"] > span[data-rs-aligner-target] {
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.sidebar.sidebar-closed button[data-rs-button][data-rs-variant="solid"] > span[data-rs-aligner-target] > span {
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 /* Ensure icon containers maintain position */
@@ -111,5 +196,6 @@
 .sidebar button[data-rs-button] svg {
   flex-shrink: 0;
 }
+
 
 

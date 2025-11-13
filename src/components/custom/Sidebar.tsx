@@ -125,38 +125,36 @@ export function Sidebar() {
         }}
       >
         {/* Logo section - spark icon, wordmark, and panel toggle */}
-        {isOpen ? (
-          <View
-            direction="row"
-            gap={2}
-            align="center"
+        {/* Use fixed height container with CSS Grid to prevent layout shifts */}
+        <div
+          className="sidebar-logo-container"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: isOpen ? '1fr auto' : '1fr',
+            alignItems: 'center',
+            width: '100%',
+            height: '48px', // Fixed height to prevent jumps
+            marginBottom: '-8px', // Negative margin to cancel out View gap
+            position: 'relative',
+          }}
+        >
+          {/* Spark icon + KADABRA wordmark */}
+          <Button
+            size="large"
+            variant="ghost"
+            icon={<Sparkle weight="bold" />}
+            onClick={(e) => {
+              e.stopPropagation()
+              if (!isOpen) {
+                setIsOpen(true)
+              }
+            }}
             attributes={{
-              style: {
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: '100%',
-                marginBottom: '8px',
-              },
+              'aria-label': isOpen ? 'Logo' : 'Open sidebar',
+              className: 'sidebar-logo-button',
             }}
           >
-            {/* Spark icon + KADABRA wordmark - styled like other sidebar items */}
-            <View
-              direction="row"
-              gap={2}
-              align="center"
-              attributes={{
-                style: {
-                  flex: 1,
-                  justifyContent: 'flex-start',
-                  paddingLeft: '12px', // Consistent horizontal position with other icons
-                },
-              }}
-            >
-              <Icon
-                svg={<Sparkle weight="bold" />}
-                size={5}
-                className="sidebar-logo-icon"
-              />
+            {isOpen && (
               <Text variant="body-2" weight="medium" attributes={{
                 style: {
                   fontFamily: '"Courier New", monospace',
@@ -167,46 +165,25 @@ export function Sidebar() {
               }}>
                 KADABRA
               </Text>
-            </View>
-            {/* Panel toggle button - inline to the right */}
+            )}
+          </Button>
+          {/* Panel toggle button - conditionally rendered */}
+          {isOpen && (
             <Button
               size="large"
               variant="ghost"
               icon={<SidebarSimple weight="bold" />}
               onClick={(e) => {
                 e.stopPropagation()
-                setIsOpen(!isOpen)
+                setIsOpen(false)
               }}
               attributes={{
                 'aria-label': 'Close sidebar',
-                style: {
-                  width: 'auto',
-                  flexShrink: 0,
-                },
+                className: 'sidebar-panel-toggle',
               }}
             />
-          </View>
-        ) : (
-          /* When closed: Spark icon aligned with other icons, acts as toggle */
-          <Button
-            size="large"
-            variant="ghost"
-            icon={<Sparkle weight="bold" />}
-            onClick={(e) => {
-              e.stopPropagation()
-              setIsOpen(!isOpen)
-            }}
-            attributes={{
-              'aria-label': 'Open sidebar',
-              style: {
-                width: 'auto',
-                justifyContent: 'flex-start',
-                marginBottom: '8px',
-                paddingLeft: '12px', // Consistent horizontal position
-              },
-            }}
-          />
-        )}
+          )}
+        </div>
 
         {/* Dashboard button - left aligned */}
             <Button
@@ -219,12 +196,6 @@ export function Sidebar() {
               }}
           attributes={{
             'aria-label': 'Dashboard',
-            style: {
-              width: 'auto',
-              justifyContent: 'flex-start',
-              gap: isOpen ? '4px' : '0',
-              paddingLeft: '12px', // Consistent horizontal position
-            },
           }}
         >
           {isOpen && (
@@ -251,12 +222,6 @@ export function Sidebar() {
               }}
               attributes={{
                 'aria-label': item.label,
-                style: {
-                width: 'auto',
-                justifyContent: 'flex-start',
-                gap: isOpen ? '4px' : '0',
-                paddingLeft: '12px', // Consistent horizontal position
-                },
               }}
             >
               {isOpen && (
@@ -293,12 +258,6 @@ export function Sidebar() {
               }}
               attributes={{
               'aria-label': 'Notifications',
-                style: {
-                width: 'auto',
-                  justifyContent: 'flex-start',
-                gap: isOpen ? '4px' : '0',
-                paddingLeft: '12px', // Consistent horizontal position
-                },
               }}
             >
             {isOpen && (
@@ -323,12 +282,6 @@ export function Sidebar() {
               }}
               attributes={{
                 'aria-label': 'Settings',
-                style: {
-                width: 'auto',
-                justifyContent: 'flex-start',
-                gap: isOpen ? '4px' : '0',
-                paddingLeft: '12px', // Consistent horizontal position
-                },
               }}
           >
             {isOpen && (
