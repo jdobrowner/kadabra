@@ -4,6 +4,7 @@ import { View } from 'reshaped'
 export interface ContainerCardProps {
   children: React.ReactNode
   padding?: number
+  backgroundColor?: string
   className?: string
   attributes?: React.HTMLAttributes<HTMLDivElement>
 }
@@ -11,6 +12,7 @@ export interface ContainerCardProps {
 export function ContainerCard({
   children,
   padding = 6,
+  backgroundColor = '#ffffff',
   className,
   attributes
 }: ContainerCardProps) {
@@ -23,7 +25,7 @@ export function ContainerCard({
         ...attributes,
         style: {
           padding: paddingValue,
-          backgroundColor: '#ffffff',
+          backgroundColor: backgroundColor,
           borderRadius: '30px',
           border: 'none',
           boxShadow: 'none',

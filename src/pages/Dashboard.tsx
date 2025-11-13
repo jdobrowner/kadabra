@@ -1,5 +1,6 @@
 import { Container, View, Button, Text, Icon } from 'reshaped'
 import { WelcomeStats } from '../components/custom/WelcomeStats'
+import { PageHeader } from '../components/custom/PageHeader'
 import { CustomerCardHorizontal } from '../components/custom/CustomerCardHorizontal'
 import { MiniCalendar } from '../components/custom/MiniCalendar'
 import { MiniKanban } from '../components/custom/MiniKanban'
@@ -55,14 +56,20 @@ export default function Dashboard() {
           </linearGradient>
         </defs>
       </svg>
+      
+      {/* Page Header */}
+      <View direction="column" gap={6} attributes={{ style: { marginBottom: '24px' } }}>
+        <PageHeader />
+        <WelcomeStats
+          customersAnalyzed={customersAnalyzed}
+          actionPlansCreated={actionPlansCreated}
+          urgentActionPlans={urgentActionPlans}
+        />
+      </View>
+
       <div className="dashboard-grid">
         {/* Left Column - 2x width */}
         <div className="dashboard-left-column">
-          <WelcomeStats
-            customersAnalyzed={customersAnalyzed}
-            actionPlansCreated={actionPlansCreated}
-            urgentActionPlans={urgentActionPlans}
-          />
 
           {/* Customer Triage Leaderboard Card */}
           <ContainerCard padding={6}>
