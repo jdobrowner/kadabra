@@ -5,11 +5,11 @@ const config = {
     kadabra: {
       // Customize Reshaped's semantic tokens
       color: {
-        // Brand colors - override Reshaped's primary colors (lower contrast dark mode)
-        foregroundPrimary: { hex: "#0176d3", hexDark: "#7ab3f5" },
-        borderPrimary: { hex: "#0176d3", hexDark: "#5aa3f0" },
-        backgroundPrimary: { hex: "#0176d3", hexDark: "#1e4a72" },
-        backgroundPrimaryFaded: { hex: "#e5f3ff", hexDark: "#0d2a40" },
+        // Brand colors - override Reshaped's primary colors (black primary for buttons)
+        foregroundPrimary: { hex: "#ffffff", hexDark: "#ffffff" }, // White text on black buttons
+        borderPrimary: { hex: "#000000", hexDark: "#ffffff" },
+        backgroundPrimary: { hex: "#000000", hexDark: "#ffffff" }, // Black primary buttons
+        backgroundPrimaryFaded: { hex: "#f5f5f5", hexDark: "#2d2d2d" },
         
         // Semantic colors (lower contrast dark mode)
         foregroundPositive: { hex: "#04844b", hexDark: "#7dd4a5" },
@@ -100,11 +100,11 @@ const config = {
         base: { px: 4 }
       },
       
-      // Border radius
+      // Border radius - pill-shaped buttons
       radius: {
         small: { px: 4 },
         medium: { px: 6 },
-        large: { px: 8 }
+        large: { px: 999 } // Pill-shaped buttons
       },
     },
   },

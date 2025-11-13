@@ -23,9 +23,10 @@ export function ContainerCard({
         ...attributes,
         style: {
           padding: paddingValue,
-          backgroundColor: 'var(--rs-color-background-neutral-faded)',
-          borderRadius: 0,
+          backgroundColor: '#ffffff',
+          borderRadius: '30px',
           border: 'none',
+          boxShadow: 'none',
           ...attributes?.style
         },
         className: className

@@ -6,13 +6,8 @@
   border-right: 1px solid var(--rs-color-border-neutral-faded);
   z-index: 90;
   overflow: hidden;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-  /* Background color - using explicit fallback colors */
-  background-color: #fafafa !important;
-}
-
-[data-rs-color-mode="dark"] .sidebar {
-  background-color: #1a1a1a !important;
+  /* Transparent background */
+  background: transparent !important;
 }
 
 /* Only apply transitions after initial render */
@@ -29,20 +24,33 @@
   cursor: pointer;
 }
 
-/* Hover effect for sidebar buttons - more visible background color change */
+/* Active state - black background with white text/icon */
+.sidebar button[data-rs-button][data-rs-variant="solid"] {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.sidebar button[data-rs-button][data-rs-variant="solid"] svg,
+.sidebar button[data-rs-button][data-rs-variant="solid"] [data-rs-icon] {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+.sidebar button[data-rs-button][data-rs-variant="solid"] [data-rs-text] {
+  color: #ffffff !important;
+}
+
+/* Hover effect for sidebar buttons */
 .sidebar button[data-rs-button] {
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .sidebar button[data-rs-button]:hover:not([data-rs-variant="solid"]) {
-  background-color: color-mix(in srgb, var(--rs-color-neutral-base) 15%, transparent 85%) !important;
-}
-
-[data-rs-color-mode="dark"] .sidebar button[data-rs-button]:hover:not([data-rs-variant="solid"]) {
-  background-color: color-mix(in srgb, var(--rs-color-neutral-base) 20%, transparent 80%) !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
 .sidebar button[data-rs-button][data-rs-variant="solid"]:hover {
+  background-color: #000000 !important;
   opacity: 0.9;
 }
 

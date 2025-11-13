@@ -11,6 +11,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Design system variables */
+  --app-gradient-background: linear-gradient(129deg, rgb(244 242 247) 30%, rgb(238 234 247) 80%, rgb(225 228 243) 100%);
+  --row-card-border-color: rgba(0, 0, 0, 0.05);
 }
 
 * {
@@ -25,6 +29,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: var(--app-gradient-background);
 }
 
 #root {
@@ -66,5 +71,11 @@ body {
   line-height: var(--rs-line-height-title-5);
   font-weight: var(--rs-font-weight-title-5);
   font-family: var(--rs-font-family-title-5);
+}
+
+/* Button styling - pill-shaped and bold text */
+[data-rs-theme~="kadabra"] button[data-rs-button],
+[data-rs-theme~="kadabra"] [data-rs-button] {
+  font-weight: 700 !important; /* Bold text for all buttons */
 }
 

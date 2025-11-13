@@ -1,6 +1,6 @@
 import type React from 'react'
 import { Text, View } from 'reshaped'
-import { ElevatedCard } from './ElevatedCard'
+import { RowCard } from './RowCard'
 import { CustomBadge } from './Badge'
 import { ActNowButton } from './ActNowButton'
 import { CommunicationChannels, type Communication } from './CommunicationChannels'
@@ -17,6 +17,7 @@ export interface CustomerCardHorizontalProps {
   avatar: string
   actionPlanId?: string | null
   onActNow?: (actionPlanId: string, customerId: string) => void
+  noBorderBottom?: boolean
 }
 
 function getBadgeColor(badge: CustomerCardHorizontalProps['badge']): 'primary' | 'critical' | 'positive' | 'warning' | 'neutral' | null {
@@ -61,7 +62,8 @@ export function CustomerCardHorizontal({
   topic,
   avatar,
   actionPlanId,
-  onActNow
+  onActNow,
+  noBorderBottom = false
 }: CustomerCardHorizontalProps) {
   const badgeColor = getBadgeColor(badge)
   const badgeLabel = getBadgeLabel(badge)
@@ -76,7 +78,7 @@ export function CustomerCardHorizontal({
     : undefined
 
   return (
-    <ElevatedCard padding={8}>
+    <RowCard padding={8} noBorderBottom={noBorderBottom}>
       <View direction="row" gap={6} align="center" attributes={{ style: { justifyContent: 'space-between', alignItems: 'center' } }}>
         <View direction="row" gap={4} align="center" attributes={{ style: { flex: '0 0 auto', minWidth: 0 } }}>
           <AvatarWithInitials src={avatar} alt={name} name={name} size={12} />
@@ -114,6 +116,6 @@ export function CustomerCardHorizontal({
           </View>
         )}
       </View>
-    </ElevatedCard>
+    </RowCard>
   )
 }

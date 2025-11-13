@@ -12,12 +12,8 @@
   z-index: 100;
   width: 100%;
   border-bottom: 1px solid var(--rs-color-border-neutral);
-  /* Background color - using explicit fallback colors */
-  background-color: #fafafa !important;
-}
-
-[data-rs-color-mode="dark"] .app-header {
-  background-color: #1a1919 !important;
+  /* Transparent background */
+  background: transparent !important;
 }
 
 .header-title {

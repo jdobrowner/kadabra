@@ -31,13 +31,14 @@
   display: flex;
   flex: 1;
   align-items: stretch;
-  background-color: var(--rs-color-background-page);
+  background: var(--app-gradient-background);
+  min-height: 100vh;
 }
 
 /* Add global padding for all screens */
 .app-content {
   padding: 48px;
-  background-color: var(--rs-color-background-page);
+  background: transparent;
   flex: 1;
   min-width: 0;
 }
@@ -47,7 +48,7 @@
   flex-shrink: 0;
   padding: 48px 32px 48px 32px;
   border-left: 1px solid var(--rs-color-border-neutral-faded);
-  background-color: var(--rs-color-background-page);
+  background: transparent;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

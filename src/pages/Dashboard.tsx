@@ -80,7 +80,7 @@ export default function Dashboard() {
               </View>
 
               <View direction="column" gap={3}>
-                {previewCustomers.map(customer => (
+                {previewCustomers.map((customer, index) => (
                   <CustomerCardHorizontal
                     key={customer.id}
                     id={customer.id}
@@ -93,6 +93,7 @@ export default function Dashboard() {
                     avatar={customer.avatar}
                     actionPlanId={customer.actionPlan?.id || undefined}
                     onActNow={handleActNow}
+                    noBorderBottom={index === previewCustomers.length - 1}
                   />
                 ))}
               </View>
