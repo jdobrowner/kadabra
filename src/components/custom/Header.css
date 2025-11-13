@@ -7,13 +7,21 @@
 .app-header {
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
+  left: 220px; /* Start to the right of sidebar */
   z-index: 100;
-  width: 100%;
-  border-bottom: 1px solid var(--rs-color-border-neutral);
+  width: calc(100% - 220px);
   /* Transparent background */
   background: transparent !important;
+}
+
+.app-header.sidebar-transitions {
+  transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+/* Adjust header when sidebar is closed */
+.app-header.sidebar-closed {
+  left: 54px;
+  width: calc(100% - 54px);
 }
 
 .header-title {
@@ -25,10 +33,7 @@
   font-size: 24px !important;
   letter-spacing: 0.5px;
   margin: 0;
-  background: linear-gradient(135deg, #5a77eb 0%, #8b5cf6 40%, #a855f7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #000000; /* Black color */
 }
 
 .header-icon {
@@ -38,7 +43,8 @@
 }
 
 .header-icon svg {
-  fill: url(#header-gradient-purple);
+  fill: #000000; /* Black color */
+  color: #000000;
 }
 
 .header-right-container .header-icon-button {

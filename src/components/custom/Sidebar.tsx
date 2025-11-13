@@ -11,6 +11,7 @@ import {
   Calendar,
   Upload,
   Bell,
+  Sparkle,
 } from '@phosphor-icons/react'
 import { useAuthStore } from '../../store/useAuthStore'
 import './Sidebar.css'
@@ -64,14 +65,24 @@ export function Sidebar() {
   // Sync sidebar state with app layout class for layout adjustments
   useEffect(() => {
     const appLayout = document.querySelector('.app-layout')
+    const header = document.querySelector('.app-header')
     if (appLayout) {
       if (hasRendered) {
         appLayout.classList.add('sidebar-transitions')
+        if (header) {
+          header.classList.add('sidebar-transitions')
+        }
       }
       if (isOpen) {
         appLayout.classList.remove('sidebar-closed')
+        if (header) {
+          header.classList.remove('sidebar-closed')
+        }
       } else {
         appLayout.classList.add('sidebar-closed')
+        if (header) {
+          header.classList.add('sidebar-closed')
+        }
       }
     }
   }, [isOpen, hasRendered])
@@ -99,23 +110,99 @@ export function Sidebar() {
           },
         }}
       >
-        {/* Panel toggle button - right aligned */}
-        <Button
-          size="large"
-          variant="ghost"
-          icon={<SidebarSimple weight="bold" />}
-          onClick={(e) => {
-            e.stopPropagation()
-            setIsOpen(!isOpen)
+        {/* Logo section - spark icon, wordmark, and panel toggle */}
+        <View
+          direction="row"
+          gap={2}
+          align="center"
+          attributes={{
+            style: {
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '0 8px',
+              marginBottom: '8px',
+              width: '100%',
+            },
           }}
-            attributes={{
-            'aria-label': isOpen ? 'Close sidebar' : 'Open sidebar',
-              style: {
-              width: 'auto',
-              alignSelf: 'flex-end',
-              },
-            }}
-        />
+        >
+          {isOpen ? (
+            <>
+              {/* When open: Spark icon + KADABRA wordmark on left */}
+              <View
+                direction="row"
+                gap={2}
+                align="center"
+                attributes={{
+                  style: {
+                    flex: '0 0 auto',
+                  },
+                }}
+              >
+                <Icon
+                  svg={<Sparkle weight="fill" />}
+                  size={6}
+                  className="sidebar-logo-icon"
+                  attributes={{
+                    style: {
+                      color: '#000000',
+                      fill: '#000000',
+                    },
+                  }}
+                />
+                <h1
+                  style={{
+                    fontFamily: '"Fredoka", sans-serif',
+                    fontOpticalSizing: 'auto',
+                    fontWeight: 400,
+                    fontStyle: 'normal',
+                    fontVariationSettings: '"wdth" 100',
+                    fontSize: '24px',
+                    letterSpacing: '0.5px',
+                    margin: 0,
+                    color: '#000000',
+                  }}
+                >
+                  KADABRA
+                </h1>
+              </View>
+              {/* Panel toggle button - right aligned */}
+              <Button
+                size="large"
+                variant="ghost"
+                icon={<SidebarSimple weight="bold" />}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIsOpen(!isOpen)
+                }}
+                attributes={{
+                  'aria-label': 'Close sidebar',
+                  style: {
+                    width: 'auto',
+                    marginLeft: 'auto',
+                  },
+                }}
+              />
+            </>
+          ) : (
+            /* When closed: Spark icon centered, acts as toggle */
+            <Button
+              size="large"
+              variant="ghost"
+              icon={<Sparkle weight="fill" />}
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsOpen(!isOpen)
+              }}
+              attributes={{
+                'aria-label': 'Open sidebar',
+                style: {
+                  width: '100%',
+                  justifyContent: 'center',
+                },
+              }}
+            />
+          )}
+        </View>
 
         {/* Dashboard button - left aligned */}
             <Button

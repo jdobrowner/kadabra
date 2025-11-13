@@ -63,18 +63,12 @@ export function Header({
         attributes={{ 
           style: { 
             width: '100%',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
             padding: '2px 16px',
             height: 'var(--header-height)',
           } 
         }}
       >
-        <View direction="row" gap={3} align="center">
-          <div className="header-icon">
-            <Icon svg={<Sparkle weight="fill" />} size={6} />
-          </div>
-          <h1 className="header-title">KADABRA</h1>
-        </View>
         <View direction="row" gap={6} align="center" attributes={{ style: { minWidth: 0, flexShrink: 0 } }}>
           <TodaysProgress />
           {displayAvatar && (

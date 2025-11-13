@@ -1,9 +1,8 @@
 .sidebar {
   position: fixed;
   left: 0;
-  top: var(--header-height, 64px);
-  height: calc(100vh - var(--header-height, 64px));
-  border-right: 1px solid var(--rs-color-border-neutral-faded);
+  top: 0;
+  height: 100vh;
   z-index: 90;
   overflow: hidden;
   /* Transparent background */
@@ -85,6 +84,14 @@
 .sidebar button[data-rs-button][data-rs-variant="solid"]:hover {
   background-color: #000000 !important;
   opacity: 0.9;
+}
+
+/* Make spark icon black in sidebar logo */
+.sidebar button[aria-label="Open sidebar"] svg,
+.sidebar button[aria-label="Close sidebar"] svg,
+.sidebar .sidebar-logo-icon svg {
+  color: #000000 !important;
+  fill: #000000 !important;
 }
 
 
