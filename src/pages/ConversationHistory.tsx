@@ -1,6 +1,7 @@
 import { Container, View, Button, Text } from 'reshaped'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft } from '@phosphor-icons/react'
+import { PageHeader } from '../components/custom/PageHeader'
 import { ConversationTimeline } from '../components/custom/ConversationTimeline'
 import { ActionPlanCard } from '../components/custom/ActionPlanCard'
 import { useCustomersStore } from '../store/useCustomersStore'
@@ -70,14 +71,10 @@ export default function ConversationHistory() {
           </Button>
         </Link>
 
-        <View>
-          <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 'bold', marginBottom: '8px' }}>
-            Conversation History
-          </h1>
-          <p style={{ margin: 0, color: 'var(--rs-color-neutral-faded)', fontSize: '14px' }}>
-            Complete communication history with {customerName ?? 'this customer'}
-          </p>
-        </View>
+        <PageHeader
+          title="Conversation History"
+          subtitle={`Complete communication history with ${customerName ?? 'this customer'}`}
+        />
 
         {actionPlan && customer && (
           <ActionPlanCard

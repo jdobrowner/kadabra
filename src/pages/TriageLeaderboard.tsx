@@ -1,6 +1,7 @@
 import { Container, View, Grid, Text } from 'reshaped'
 import { FilterBox } from '../components/custom/FilterBox'
 import { CustomerCard } from '../components/custom/CustomerCard'
+import { PageHeader } from '../components/custom/PageHeader'
 import { useCustomersStore } from '../store/useCustomersStore'
 import type { CustomerBadgeFilter, CustomerAssigneeFilter, CustomerTimeframeFilter, CustomerSortOption } from '../store/useCustomersStore'
 import { useEffect, useCallback } from 'react'
@@ -37,14 +38,10 @@ export default function TriageLeaderboard() {
   return (
     <Container>
       <View direction="column" gap={6}>
-        <View>
-          <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 'bold', marginBottom: '8px' }}>
-            Call Triage Leaderboard
-          </h1>
-          <p style={{ margin: 0, color: 'var(--rs-color-neutral-faded)', fontSize: '14px' }}>
-            Prioritize customer calls by urgency and opportunity to maximize your team's impact
-          </p>
-        </View>
+        <PageHeader
+          title="Call Triage Leaderboard"
+          subtitle="Prioritize customer calls by urgency and opportunity to maximize your team's impact"
+        />
 
         <FilterBox
           priorityFilter={customersFilters.badge}

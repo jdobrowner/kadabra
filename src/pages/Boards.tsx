@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Container, View, Text } from 'reshaped'
+import { Container, View } from 'reshaped'
+import { PageHeader } from '../components/custom/PageHeader'
 import { BoardsDirectory, BoardWorkspace } from '../components/boards'
 import { useBoardsStore } from '../store/useBoardsStore'
 import { useTeamsStore } from '../store/useTeamsStore'
@@ -86,14 +87,10 @@ export default function BoardsPage() {
   return (
     <Container width="wide">
       <View direction="column" gap={6}>
-        <View direction="column" gap={2}>
-          <Text variant="title-2" weight="bold">
-            Boards workspace
-          </Text>
-          <Text variant="body-2" color="neutral-faded">
-            Route action plans to the right teams and track progress across dedicated boards.
-          </Text>
-        </View>
+        <PageHeader
+          title="Boards workspace"
+          subtitle="Route action plans to the right teams and track progress across dedicated boards."
+        />
 
         <View
           direction="row"

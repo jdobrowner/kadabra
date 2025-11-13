@@ -2,6 +2,7 @@ import { Container, View, Card, Text, Select, Button } from 'reshaped'
 import { MagnifyingGlass, Funnel } from '@phosphor-icons/react'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { PageHeader } from '../components/custom/PageHeader'
 import { useSearchStore } from '../store/useSearchStore'
 
 export default function HistoricSearch() {
@@ -44,14 +45,10 @@ export default function HistoricSearch() {
   return (
     <Container>
       <View direction="column" gap={6}>
-        <View>
-          <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 'bold', marginBottom: '8px' }}>
-            Historic Search
-          </h1>
-          <p style={{ margin: 0, color: 'var(--rs-color-neutral-faded)', fontSize: '14px' }}>
-            Search through all customers, conversations, and action plans
-          </p>
-        </View>
+        <PageHeader
+          title="Historic Search"
+          subtitle="Search through all customers, conversations, and action plans"
+        />
 
         {/* Search and Filters */}
         <Card padding={6}>

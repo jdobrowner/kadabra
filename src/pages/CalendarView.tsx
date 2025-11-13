@@ -1,18 +1,15 @@
-import { Container, View, Text } from 'reshaped'
+import { Container, View } from 'reshaped'
+import { PageHeader } from '../components/custom/PageHeader'
 import { MiniCalendar } from '../components/custom/MiniCalendar'
 
 export default function CalendarView() {
   return (
     <Container width="large">
       <View direction="column" gap={6}>
-        <View direction="column" gap={2}>
-          <Text variant="title-2" weight="bold">
-            Calendar
-          </Text>
-          <Text variant="body-2" color="neutral-faded">
-            View your scheduled events
-          </Text>
-        </View>
+        <PageHeader
+          title="Calendar"
+          subtitle="View your scheduled events"
+        />
         <MiniCalendar />
       </View>
     </Container>

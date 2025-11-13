@@ -1,8 +1,8 @@
-import { Text, View, Icon } from 'reshaped'
-import { HandWavingIcon } from '@phosphor-icons/react'
+import { Text, View } from 'reshaped'
 import { useAuthStore } from '../../store/useAuthStore'
 
 export interface PageHeaderProps {
+  title?: string
   userName?: string
   subtitle?: string
   greeting?: string
@@ -16,23 +16,29 @@ function getGreeting(): string {
 }
 
 export function PageHeader({
+  title,
   userName,
-  subtitle = "Here's what's happening with your customer interactions today.",
+  subtitle,
   greeting
 }: PageHeaderProps) {
   const { user } = useAuthStore()
   const displayName = userName || user?.name || 'User'
   const displayGreeting = greeting || getGreeting()
+  
+  // If title is provided, use it. Otherwise, use greeting format
+  const displayTitle = title || `${displayGreeting}, ${displayName.split(' ')[0]}!`
+  const displaySubtitle = subtitle || (title ? undefined : "Here's what's happening with your customer interactions today.")
 
   return (
     <View direction="column" gap={2}>
-      <View direction="row" gap={2} align="center">
-        <Icon svg={<HandWavingIcon weight='fill' />} size={5} />
-        <h3 style={{ margin: 0 }}>{displayGreeting}, {displayName.split(' ')[0]}!</h3>
-      </View>
-      <Text variant="body-2" color="neutral-faded">
-        {subtitle}
-      </Text>
+      <h1 style={{ margin: 0, fontSize: '32px', fontWeight: 700, lineHeight: '1.2' }}>
+        {displayTitle}
+      </h1>
+      {displaySubtitle && (
+        <Text variant="body-1" color="neutral-faded" attributes={{ style: { fontSize: '18px' } }}>
+          {displaySubtitle}
+        </Text>
+      )}
     </View>
   )
 }

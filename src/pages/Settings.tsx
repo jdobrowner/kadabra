@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { Container, View, Text, Tabs } from 'reshaped'
+import { Container, View, Tabs } from 'reshaped'
 import { Gear, Users, Envelope, Key, UsersThree, SquaresFour, GitBranch } from '@phosphor-icons/react'
+import { PageHeader } from '../components/custom/PageHeader'
 import { useAuthStore } from '../store/useAuthStore'
 import GeneralTab from '../components/settings/GeneralTab'
 import UsersTab from '../components/settings/UsersTab'
@@ -46,16 +47,14 @@ export default function Settings() {
   return (
     <Container width="large">
       <View direction="column" gap={6}>
-        <View direction="column" gap={2}>
-          <Text variant="title-2" weight="bold">
-            Settings
-          </Text>
-          <Text variant="body-2" color="neutral-faded">
-            {isAdmin
+        <PageHeader
+          title="Settings"
+          subtitle={
+            isAdmin
               ? 'Manage your preferences and organization settings'
-              : 'Manage your preferences'}
-          </Text>
-        </View>
+              : 'Manage your preferences'
+          }
+        />
 
         <Tabs value={currentTab} onChange={handleTabChange}>
           <Tabs.List>
