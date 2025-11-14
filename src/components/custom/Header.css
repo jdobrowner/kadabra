@@ -10,8 +10,8 @@
   left: 220px; /* Start to the right of sidebar */
   z-index: 100;
   width: calc(100% - 220px);
-  /* App background color */
-  background: var(--rs-color-background-page) !important;
+  /* Vertical gradient from opaque to transparent (fade at bottom) */
+  background: linear-gradient(to bottom, var(--rs-color-background-page) 0%, var(--rs-color-background-page) 30%, transparent 100%) !important;
 }
 
 .app-header.sidebar-transitions {
