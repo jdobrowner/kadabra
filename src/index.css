@@ -12,38 +12,21 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Design system variables */
-  --app-background-color: #f8f3f7; /* Light purple background */
-  --row-card-border-color: rgba(22, 21, 21, 0.05); /* Use #161515 instead of pure black */
-  --card-background-color: #fffdfe; /* Light cards in light mode */
-  --card-border-color: #f6f1f1; /* Light mode card border */
-}
-
-/* Dark mode background and cards */
-[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] {
-  --app-background-color: #161515; /* Dark background */
-  --card-background-color: #1c1c1c; /* Dark cards */
-  --row-card-border-color: rgba(255, 255, 255, 0.1); /* Lighter border in dark mode */
-  --card-border-color: #141414; /* Dark mode card border */
+  /* Design system variables - now using Reshaped theme tokens */
+  --app-background-color: var(--rs-color-background-page, #f8f3f7);
+  --row-card-border-color: var(--rs-color-border-neutral-faded, rgba(22, 21, 21, 0.05));
+  --card-background-color: var(--rs-color-background-neutral, #fffdfe);
+  --card-border-color: var(--rs-color-border-neutral, #f6f1f1);
 }
 
 /* Override Reshaped Card CSS variables to match Dashboard cards */
 [data-rs-theme~="kadabra"] {
-  /* Card background and border variables */
-  --rs-card-background-color: var(--card-background-color, #fffdfe) !important;
-  --rs-card-border-color: var(--card-border-color, #f6f1f1) !important;
+  /* Card background and border variables - use Reshaped tokens */
+  --rs-card-background-color: var(--rs-color-background-neutral) !important;
+  --rs-card-border-color: var(--rs-color-border-neutral) !important;
 }
 
-[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] {
-  --rs-card-background-color: var(--card-background-color, #1c1c1c) !important;
-  --rs-card-border-color: #141414 !important;
-}
-
-/* Ensure Reshaped Card components use dark mode card color */
-[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [data-rs-card],
-[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="_card_"] {
-  background-color: var(--card-background-color) !important;
-}
+/* Reshaped Card components automatically use theme tokens for dark mode */
 
 /* Style Reshaped Card components to match ContainerCard styling */
 [data-rs-theme~="kadabra"] [data-rs-card],
@@ -54,24 +37,12 @@
 [data-rs-theme~="kadabra"] [class*="card"][class*="_root_"],
 [data-rs-theme~="kadabra"] [class*="_root_"][class*="card"] {
   border-radius: 30px !important;
-  border: 1px solid var(--card-border-color, #f6f1f1) !important;
+  border: 1px solid var(--rs-color-border-neutral) !important;
   box-shadow: none !important;
-  background-color: var(--card-background-color, #fffdfe) !important;
-  --rs-color-background-neutral: var(--card-background-color, #fffdfe) !important;
+  background-color: var(--rs-color-background-neutral) !important;
 }
 
-/* Dark mode card styling */
-[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [data-rs-card],
-[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="_card_"][class*="_root_"],
-[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="_root_"][class*="_card_"],
-[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="Card"][class*="_root_"],
-[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="_root_"][class*="Card"],
-[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="card"][class*="_root_"],
-[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="_root_"][class*="card"] {
-  border-color: #141414 !important;
-  background-color: var(--card-background-color, #1c1c1c) !important;
-  --rs-color-background-neutral: var(--card-background-color, #1c1c1c) !important;
-}
+/* Dark mode card styling - Reshaped tokens handle dark mode automatically */
 
 /* Override Reshaped shadow variables to use dark gray instead of pure black */
 [data-rs-theme~="kadabra"] {
@@ -79,11 +50,7 @@
   --rs-shadow-overlay: 0px 5px 10px 0px rgba(22, 21, 21, 0.05), 0px 15px 25px 0px rgba(22, 21, 21, 0.07) !important;
 }
 
-/* Override Reshaped border colors to use dark gray instead of pure black */
-[data-rs-theme~="kadabra"] {
-  --rs-color-border-neutral: rgba(22, 21, 21, 0.12) !important; /* Use #161515 instead of pure black */
-  --rs-color-border-neutral-faded: rgba(22, 21, 21, 0.08) !important; /* Use #161515 instead of pure black */
-}
+/* Border colors are now defined in reshaped.config.js and automatically handle light/dark mode */
 
 * {
   margin: 0;
@@ -97,7 +64,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background: var(--app-background-color, #f8f3f7);
+  background: var(--rs-color-background-page, #f8f3f7);
 }
 
 #root {
@@ -156,50 +123,31 @@ body {
 }
 
 /* Primary button - dark gray background with soft white text */
-/* Target buttons with color="primary" prop */
+/* Target buttons with color="primary" prop - use Reshaped theme tokens */
 [data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="solid"][class*="--color-primary"],
 [data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="solid"][class*="--color-primary"],
 [data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="solid"][class*="--color-primary"] {
-  background-color: #1c1c1c !important;
-  color: #f8f3f7 !important;
-  border-color: #1c1c1c !important;
-  --rs-button-background-color: #1c1c1c !important;
-  --rs-button-foreground-color: #f8f3f7 !important;
-  --rs-button-color: #f8f3f7 !important;
+  background-color: var(--rs-color-background-primary) !important;
+  color: var(--rs-color-foreground-primary) !important;
+  border-color: var(--rs-color-background-primary) !important;
+  --rs-button-background-color: var(--rs-color-background-primary) !important;
+  --rs-button-foreground-color: var(--rs-color-foreground-primary) !important;
+  --rs-button-color: var(--rs-color-foreground-primary) !important;
 }
 
-/* Sidebar active buttons - dark gray background with soft white text */
-/* Override Reshaped's CSS variables for sidebar buttons with --color-neutral */
-.sidebar [class*="_root_"][class*="--variant-solid"][class*="--color-neutral"],
-.sidebar button[class*="--variant-solid"][class*="--color-neutral"],
-.sidebar [class*="--variant-solid"][class*="--color-neutral"] {
-  --rs-button-background-color: #1c1c1c !important;
-  --rs-button-foreground-color: #f8f3f7 !important;
-  --rs-color-background-neutral: #1c1c1c !important;
-  --rs-color-on-background-neutral: #f8f3f7 !important;
-  background-color: #1c1c1c !important;
-  color: #f8f3f7 !important;
+/* Sidebar active buttons - handled in Sidebar.css using Reshaped theme tokens */
+
+/* Ensure text and icons use theme tokens in primary buttons */
+[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="solid"][class*="--color-primary"] *,
+[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="solid"][class*="--color-primary"] *,
+[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="solid"][class*="--color-primary"] * {
+  color: var(--rs-color-foreground-primary) !important;
 }
 
-/* Ensure sidebar button text and icons are soft white */
-.sidebar [class*="--variant-solid"][class*="--color-neutral"] [class*="_text_"],
-.sidebar [class*="--variant-solid"][class*="--color-neutral"] [class*="_text_"] *,
-.sidebar [class*="--variant-solid"][class*="--color-neutral"] svg {
-  color: #f8f3f7 !important;
-  fill: #f8f3f7 !important;
-}
-
-/* Ensure text and icons are soft white in primary buttons */
-[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="solid"] *,
-[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="solid"] *,
-[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="solid"] * {
-  color: #f8f3f7 !important;
-}
-
-[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="solid"] svg,
-[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="solid"] svg,
-[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="solid"] svg {
-  fill: #f8f3f7 !important;
-  color: #f8f3f7 !important;
+[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="solid"][class*="--color-primary"] svg,
+[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="solid"][class*="--color-primary"] svg,
+[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="solid"][class*="--color-primary"] svg {
+  fill: var(--rs-color-foreground-primary) !important;
+  color: var(--rs-color-foreground-primary) !important;
 }
 

@@ -13,18 +13,18 @@ export interface ContainerCardProps {
 // Helper function to calculate a slightly darker border color from a background color
 function getBorderColor(backgroundColor?: string): string {
   if (!backgroundColor) {
-    return 'var(--card-border-color, #f6f1f1)' // Use CSS variable for light/dark mode
+    return 'var(--rs-color-border-neutral)' // Use Reshaped theme token
   }
   
-  // If it's a CSS variable or the default whiteish color, use the CSS variable border
-  // CSS variable will automatically change in dark mode
-  if (backgroundColor.includes('var(') || backgroundColor === '#fffdfe' || backgroundColor === 'var(--card-background-color, #fffdfe)') {
-    return 'var(--card-border-color, #f6f1f1)'
+  // If it's a CSS variable or the default whiteish color, use the Reshaped border token
+  // Reshaped tokens automatically handle light/dark mode
+  if (backgroundColor.includes('var(') || backgroundColor === '#fffdfe' || backgroundColor === 'var(--rs-color-background-neutral)' || backgroundColor === 'var(--card-background-color, #fffdfe)') {
+    return 'var(--rs-color-border-neutral)'
   }
   
-  // For dark mode card color, use dark mode border
+  // For dark mode card color, use Reshaped dark mode border token
   if (backgroundColor === '#1c1c1c') {
-    return '#141414'
+    return 'var(--rs-color-border-neutral)' // Reshaped handles dark mode automatically
   }
   
   // Parse rgba color and darken it slightly
@@ -44,13 +44,12 @@ function getBorderColor(backgroundColor?: string): string {
     return `rgba(${darkerR}, ${darkerG}, ${darkerB}, ${alpha})`
   }
   
-  // Fallback for hex colors
+  // Fallback for hex colors - use Reshaped token
   if (backgroundColor.startsWith('#')) {
-    // Simple darkening for hex colors
-    return 'var(--card-border-color, #f6f1f1)' // Fallback to CSS variable
+    return 'var(--rs-color-border-neutral)' // Use Reshaped theme token
   }
   
-  return 'var(--card-border-color, #f6f1f1)' // Default border using CSS variable
+  return 'var(--rs-color-border-neutral)' // Default border using Reshaped theme token
 }
 
 export function ContainerCard({
@@ -64,8 +63,8 @@ export function ContainerCard({
   // Convert padding number to CSS value (Reshaped uses spacing scale)
   const paddingValue = typeof padding === 'number' ? `${padding * 4}px` : padding
   
-  // Use CSS variable for default, or provided backgroundColor
-  const finalBackgroundColor = backgroundColor || 'var(--card-background-color, #fffdfe)'
+  // Use Reshaped theme token for default, or provided backgroundColor
+  const finalBackgroundColor = backgroundColor || 'var(--rs-color-background-neutral)'
   
   // Calculate border color if not provided
   // CSS variable will automatically handle light/dark mode

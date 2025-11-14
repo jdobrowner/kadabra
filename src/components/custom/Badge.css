@@ -13,56 +13,57 @@
 }
 
 /* Override Reshaped's CSS variables for badge colors */
+/* Use Reshaped faded background colors with custom foreground colors for better contrast */
 /* Primary (blue) - pale blue background with darker blue text/icon */
 .custom-badge[data-rs-color="primary"],
 .custom-badge[data-rs-color="primary"][class*="_root_"],
 .custom-badge[class*="--color-primary"] {
-  --rs-color-background-positive: rgba(59, 130, 246, 0.12) !important;
-  --rs-color-on-background-positive: rgb(37, 99, 235) !important;
-  --rs-color-background-primary: rgba(59, 130, 246, 0.12) !important;
+  --rs-color-background-primary: var(--rs-color-background-primary-faded) !important;
   --rs-color-on-background-primary: rgb(37, 99, 235) !important;
-  background: var(--rs-color-background-primary) !important;
-  color: var(--rs-color-on-background-primary) !important;
+  background: var(--rs-color-background-primary-faded) !important;
+  color: rgb(37, 99, 235) !important;
 }
 
 /* Critical (red) - pale red background with darker red text/icon - matches "At-Risk" badge */
 .custom-badge[data-rs-color="critical"],
 .custom-badge[data-rs-color="critical"][class*="_root_"],
 .custom-badge[class*="--color-critical"] {
-  --rs-color-background-critical: rgba(239, 68, 68, 0.15) !important;
+  --rs-color-background-critical: var(--rs-color-background-critical-faded) !important;
   --rs-color-on-background-critical: rgb(220, 38, 38) !important;
-  background: var(--rs-color-background-critical) !important;
-  color: var(--rs-color-on-background-critical) !important;
+  background: var(--rs-color-background-critical-faded) !important;
+  color: rgb(220, 38, 38) !important;
 }
 
 /* Positive (green) - pale green background with darker green text/icon - matches "Potential Lead" badge */
 .custom-badge[data-rs-color="positive"],
 .custom-badge[data-rs-color="positive"][class*="_root_"],
 .custom-badge[class*="--color-positive"] {
-  --rs-color-background-positive: rgba(34, 197, 94, 0.15) !important;
+  --rs-color-background-positive: var(--rs-color-background-positive-faded) !important;
   --rs-color-on-background-positive: rgb(22, 163, 74) !important;
-  background: var(--rs-color-background-positive) !important;
-  color: var(--rs-color-on-background-positive) !important;
+  background: var(--rs-color-background-positive-faded) !important;
+  color: rgb(22, 163, 74) !important;
 }
 
 /* Warning (yellow/orange) - pale yellow background with darker orange text/icon */
 .custom-badge[data-rs-color="warning"],
 .custom-badge[data-rs-color="warning"][class*="_root_"],
 .custom-badge[class*="--color-warning"] {
+  /* Use custom rgba for warning as Reshaped may not have warning-faded */
   --rs-color-background-warning: rgba(251, 191, 36, 0.15) !important;
   --rs-color-on-background-warning: rgb(217, 119, 6) !important;
-  background: var(--rs-color-background-warning) !important;
-  color: var(--rs-color-on-background-warning) !important;
+  background: rgba(251, 191, 36, 0.15) !important;
+  color: rgb(217, 119, 6) !important;
 }
 
 /* Neutral (gray) - pale gray background with darker gray text/icon */
 .custom-badge[data-rs-color="neutral"],
 .custom-badge[data-rs-color="neutral"][class*="_root_"],
 .custom-badge[class*="--color-neutral"] {
-  --rs-color-background-neutral: rgba(22, 21, 21, 0.08) !important; /* Use #161515 instead of pure black */
-  --rs-color-on-background-neutral: rgba(22, 21, 21, 0.75) !important; /* Use #161515 instead of pure black */
-  background: var(--rs-color-background-neutral) !important;
-  color: var(--rs-color-on-background-neutral) !important;
+  --rs-color-background-neutral: var(--rs-color-background-neutral-faded) !important;
+  --rs-color-on-background-neutral: var(--rs-color-foreground-neutral) !important;
+  background: var(--rs-color-background-neutral-faded) !important;
+  color: var(--rs-color-foreground-neutral) !important;
+  opacity: 0.75;
 }
 
 /* Ensure all nested elements inherit the color */

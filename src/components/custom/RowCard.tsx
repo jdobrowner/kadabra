@@ -27,7 +27,7 @@ export function RowCard({
     paddingLeft: 0,
     paddingRight: 0,
     backgroundColor: 'transparent',
-    borderBottom: noBorderBottom ? 'none' : `1px solid var(--row-card-border-color)`,
+    borderBottom: noBorderBottom ? 'none' : `1px solid var(--rs-color-border-neutral-faded)`,
     cursor: onClick ? 'pointer' : 'default',
     transition: onClick ? 'opacity 0.2s ease' : undefined,
     ...attributes?.style

@@ -4,7 +4,7 @@
    and high-specificity selectors that override regular CSS */
 .act-now-button {
   border: none !important;
-  color: #f8f3f7 !important; /* Soft white instead of pure white */
+  color: var(--rs-color-foreground-primary) !important;
   font-weight: 600 !important;
   font-size: 16px !important;
   transition: all 0.2s ease;
@@ -12,8 +12,8 @@
 
 /* Ensure icon color is also soft white */
 .act-now-button svg {
-  color: #f8f3f7 !important; /* Soft white instead of pure white */
-  fill: #f8f3f7 !important; /* Soft white instead of pure white */
+  color: var(--rs-color-foreground-primary) !important;
+  fill: var(--rs-color-foreground-primary) !important;
 }
 
 .act-now-button {
@@ -23,7 +23,7 @@
 .act-now-button:hover:not(:disabled):not([aria-disabled="true"]) {
   background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #9333ea 100%) !important;
   transform: translateY(-1px);
-  box-shadow: 0 4px 6px -1px rgba(22, 21, 21, 0.1), 0 2px 4px -1px rgba(22, 21, 21, 0.06); /* Use #161515 instead of pure black */
+  box-shadow: 0 4px 6px -1px rgba(22, 21, 21, 0.1), 0 2px 4px -1px rgba(22, 21, 21, 0.06);
 }
 
 .act-now-button:focus-visible {

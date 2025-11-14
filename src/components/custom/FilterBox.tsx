@@ -42,7 +42,7 @@ export function FilterBox({
       borderColor: isActive ? 'var(--rs-color-border-primary)' : 'var(--rs-color-border-neutral-faded)',
       backgroundColor: isActive ? 'var(--rs-color-background-primary-faded)' : 'transparent',
       color: isActive ? 'var(--rs-color-foreground-primary)' : undefined,
-      boxShadow: isActive ? '0 1px 2px rgba(16, 24, 40, 0.08)' : 'none',
+      boxShadow: isActive ? '0 1px 2px rgba(22, 21, 21, 0.08)' : 'none',
       fontWeight: isActive ? 600 : undefined,
       transition: 'background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease',
     },

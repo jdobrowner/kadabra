@@ -21,17 +21,20 @@ const config = {
         backgroundCriticalFaded: { hex: "#f8d7da", hexDark: "#5a1a20" },
         
         // Neutral colors - primary and secondary text colors
-        foregroundNeutral: { hex: "#161515", hexDark: "#f8f3f7" }, // Primary text color
+        foregroundNeutral: { hex: "#161515", hexDark: "#d8d4d4" }, // Primary text color
         foregroundNeutralFaded: { hex: "#706e6b", hexDark: "#b5b5b5" }, // Secondary text color
         backgroundNeutral: { hex: "#fffdfe", hexDark: "#1c1c1c" }, // Card backgrounds - matches Dashboard cards
         backgroundNeutralFaded: { hex: "#f8f9fa", hexDark: "#2d2d2d" },
+        // Border colors - custom card borders
+        borderNeutral: { hex: "#f6f1f1", hexDark: "#141414" }, // Card border color
+        borderNeutralFaded: { hex: "rgba(22, 21, 21, 0.05)", hexDark: "rgba(255, 255, 255, 0.1)" }, // Row card border color
         // Card backgrounds - using #fffdfe instead of pure white
         backgroundBase: { hex: "#fffdfe", hexDark: "#1c1c1c" },
         backgroundElevationBase: { hex: "#fffdfe", hexDark: "#1c1c1c" },
         backgroundElevationRaised: { hex: "#fffdfe", hexDark: "#1c1c1c" },
         backgroundElevationOverlay: { hex: "#fffdfe", hexDark: "#1c1c1c" },
-        // Main content area background
-        backgroundPage: { hex: "#fffdfe", hexDark: "#141414" },
+        // Main content area background - app background color
+        backgroundPage: { hex: "#f8f3f7", hexDark: "#161515" },
       },
       
       // Typography - customize font families

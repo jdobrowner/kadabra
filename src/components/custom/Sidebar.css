@@ -33,14 +33,14 @@
 .sidebar [class*="--variant-solid"][class*="--color-neutral"] {
   /* Override the CSS variables that Reshaped uses - these must be set on the element */
   /* Note: CSS custom properties cascade, so we need high specificity */
-  --rs-button-background-color: #1c1c1c !important;
-  --rs-button-foreground-color: #f8f3f7 !important;
-  --rs-color-background-neutral: #1c1c1c !important;
-  --rs-color-on-background-neutral: #f8f3f7 !important;
+  --rs-button-background-color: var(--rs-color-background-primary) !important;
+  --rs-button-foreground-color: var(--rs-color-foreground-primary) !important;
+  --rs-color-background-neutral: var(--rs-color-background-primary) !important;
+  --rs-color-on-background-neutral: var(--rs-color-foreground-primary) !important;
   /* Also set direct properties as fallback - these use the variables above */
-  background-color: #1c1c1c !important;
-  color: #f8f3f7 !important;
-  border-color: #1c1c1c !important;
+  background-color: var(--rs-color-background-primary) !important;
+  color: var(--rs-color-foreground-primary) !important;
+  border-color: var(--rs-color-background-primary) !important;
 }
 
 /* Target all child elements including nested spans, divs, and icons */
@@ -48,7 +48,7 @@
 .sidebar button[data-rs-button][class*="--variant-solid"] *,
 .sidebar [data-rs-button][data-rs-variant="solid"] *,
 .sidebar [data-rs-button][class*="--variant-solid"] * {
-  color: #f8f3f7 !important;
+  color: var(--rs-color-foreground-primary) !important;
 }
 
 /* Target SVG icons specifically */
@@ -56,8 +56,8 @@
 .sidebar button[data-rs-button][class*="--variant-solid"] svg,
 .sidebar [data-rs-button][data-rs-variant="solid"] svg,
 .sidebar [data-rs-button][class*="--variant-solid"] svg {
-  color: #f8f3f7 !important;
-  fill: #f8f3f7 !important;
+  color: var(--rs-color-foreground-primary) !important;
+  fill: var(--rs-color-foreground-primary) !important;
 }
 
 /* Target Reshaped's text span and nested divs */
@@ -69,7 +69,7 @@
 .sidebar button[data-rs-button][class*="--variant-solid"] [class*="_text_"] div,
 .sidebar [data-rs-button][data-rs-variant="solid"] [class*="_text_"] div,
 .sidebar [data-rs-button][class*="--variant-solid"] [class*="_text_"] div {
-  color: #f8f3f7 !important;
+  color: var(--rs-color-foreground-primary) !important;
 }
 
 /* Hover effect for sidebar buttons */
@@ -78,11 +78,11 @@
 }
 
 .sidebar button[data-rs-button]:hover:not([data-rs-variant="solid"]) {
-  background-color: rgba(28, 28, 28, 0.05) !important; /* Use #1c1c1c instead of pure black */
+  background-color: var(--rs-color-background-primary-faded) !important;
 }
 
 .sidebar button[data-rs-button][data-rs-variant="solid"]:hover {
-  background-color: #1c1c1c !important;
+  background-color: var(--rs-color-background-primary) !important;
   opacity: 0.9;
 }
 
@@ -95,8 +95,8 @@
 .sidebar button[aria-label="Open sidebar"] svg,
 .sidebar button[aria-label="Close sidebar"] svg,
 .sidebar .sidebar-logo-icon svg {
-  color: #1c1c1c !important;
-  fill: #1c1c1c !important;
+  color: var(--rs-color-background-primary) !important;
+  fill: var(--rs-color-background-primary) !important;
 }
 
 /* Ensure all sidebar icons maintain consistent horizontal position */
