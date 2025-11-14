@@ -14,7 +14,7 @@
 /* Row 2-3: Triage leaderboard spans 2 columns and 2 rows */
 .dashboard-triage-card {
   grid-column: 1 / 3;
-  grid-row: 2 / 4;
+  grid-row: 2 / 5;
 }
 
 /* Row 2: Calendar in 3rd column */
