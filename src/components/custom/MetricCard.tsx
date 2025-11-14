@@ -39,7 +39,7 @@ export function MetricCard({
   return (
     <ContainerCard 
       padding={5}
-      backgroundColor={backgroundColor || '#ffffff'}
+      backgroundColor={backgroundColor || 'var(--card-background-color, #ffffff)'}
       attributes={{
         onClick: onClick,
         onMouseEnter: handleMouseEnter,

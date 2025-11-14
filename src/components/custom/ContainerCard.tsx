@@ -12,12 +12,15 @@ export interface ContainerCardProps {
 export function ContainerCard({
   children,
   padding = 6,
-  backgroundColor = '#ffffff',
+  backgroundColor,
   className,
   attributes
 }: ContainerCardProps) {
   // Convert padding number to CSS value (Reshaped uses spacing scale)
   const paddingValue = typeof padding === 'number' ? `${padding * 4}px` : padding
+  
+  // Use CSS variable for default, or provided backgroundColor
+  const finalBackgroundColor = backgroundColor || 'var(--card-background-color, #ffffff)'
 
   return (
     <View
@@ -25,7 +28,7 @@ export function ContainerCard({
         ...attributes,
         style: {
           padding: paddingValue,
-          backgroundColor: backgroundColor,
+          backgroundColor: finalBackgroundColor,
           borderRadius: '30px',
           border: 'none',
           boxShadow: 'none',

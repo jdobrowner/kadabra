@@ -13,8 +13,22 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* Design system variables */
-  --app-gradient-background: linear-gradient(129deg, rgb(244 242 247) 30%, rgb(238 234 247) 80%, rgb(225 228 243) 100%);
+  --app-background-color: #f8f3f7; /* Light purple background */
   --row-card-border-color: rgba(0, 0, 0, 0.05);
+  --card-background-color: #ffffff; /* White cards in light mode */
+}
+
+/* Dark mode background and cards */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] {
+  --app-background-color: #161515; /* Dark background */
+  --card-background-color: #1c1c1c; /* Dark cards */
+  --row-card-border-color: rgba(255, 255, 255, 0.1); /* Lighter border in dark mode */
+}
+
+/* Ensure Reshaped Card components use dark mode card color */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [data-rs-card],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="_card_"] {
+  background-color: var(--card-background-color) !important;
 }
 
 * {
@@ -29,7 +43,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background: var(--app-gradient-background);
+  background: var(--app-background-color, #f8f3f7);
 }
 
 #root {
