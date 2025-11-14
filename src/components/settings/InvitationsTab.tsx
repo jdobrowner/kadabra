@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { View, Text, Button, Table, Icon, Badge } from 'reshaped'
+import { View, Text, Button, Table, Icon } from 'reshaped'
+import { CustomBadge } from '../custom/Badge'
 import { Plus, Trash, Copy, EnvelopeSimple, XCircle } from '@phosphor-icons/react'
 import { useInvitationsStore } from '../../store/useInvitationsStore'
 
@@ -260,9 +261,9 @@ export default function InvitationsTab() {
                     </Text>
                   </Table.Cell>
                   <Table.Cell>
-                    <Badge color={getStatusColor(invitation.status)}>
+                    <CustomBadge color={getStatusColor(invitation.status)}>
                       {invitation.status}
-                    </Badge>
+                    </CustomBadge>
                   </Table.Cell>
                   <Table.Cell>
                     <Text variant="body-2" color="neutral-faded">

@@ -1,34 +1,83 @@
-/* Badge styling - filled with pale colors */
+/* Badge styling - filled with pale colors matching design system */
 
 /* Make badge text bolder */
-.custom-badge div {
+.custom-badge div,
+.custom-badge span {
   font-weight: 600 !important;
 }
 
-/* Pale color backgrounds for badges */
-.custom-badge[data-rs-color="primary"] {
-  background-color: rgba(90, 88, 242, 0.15) !important;
-  color: rgba(90, 88, 242, 0.9) !important;
+/* Ensure icons inherit the text color */
+.custom-badge svg {
+  color: inherit !important;
+  fill: currentColor !important;
 }
 
-.custom-badge[data-rs-color="critical"] {
-  background-color: rgba(234, 0, 30, 0.15) !important;
-  color: rgba(234, 0, 30, 0.9) !important;
+/* Override Reshaped's CSS variables for badge colors */
+/* Primary (blue) - pale blue background with darker blue text/icon */
+.custom-badge[data-rs-color="primary"],
+.custom-badge[data-rs-color="primary"][class*="_root_"],
+.custom-badge[class*="--color-primary"] {
+  --rs-color-background-positive: rgba(59, 130, 246, 0.12) !important;
+  --rs-color-on-background-positive: rgb(37, 99, 235) !important;
+  --rs-color-background-primary: rgba(59, 130, 246, 0.12) !important;
+  --rs-color-on-background-primary: rgb(37, 99, 235) !important;
+  background: var(--rs-color-background-primary) !important;
+  color: var(--rs-color-on-background-primary) !important;
 }
 
-.custom-badge[data-rs-color="positive"] {
-  background-color: rgba(4, 132, 75, 0.15) !important;
-  color: rgba(4, 132, 75, 0.9) !important;
+/* Critical (red) - pale red background with darker red text/icon - matches "At-Risk" badge */
+.custom-badge[data-rs-color="critical"],
+.custom-badge[data-rs-color="critical"][class*="_root_"],
+.custom-badge[class*="--color-critical"] {
+  --rs-color-background-critical: rgba(239, 68, 68, 0.15) !important;
+  --rs-color-on-background-critical: rgb(220, 38, 38) !important;
+  background: var(--rs-color-background-critical) !important;
+  color: var(--rs-color-on-background-critical) !important;
 }
 
-.custom-badge[data-rs-color="warning"] {
-  background-color: rgba(250, 204, 21, 0.15) !important;
-  color: rgba(123, 99, 5, 0.9) !important;
+/* Positive (green) - pale green background with darker green text/icon - matches "Potential Lead" badge */
+.custom-badge[data-rs-color="positive"],
+.custom-badge[data-rs-color="positive"][class*="_root_"],
+.custom-badge[class*="--color-positive"] {
+  --rs-color-background-positive: rgba(34, 197, 94, 0.15) !important;
+  --rs-color-on-background-positive: rgb(22, 163, 74) !important;
+  background: var(--rs-color-background-positive) !important;
+  color: var(--rs-color-on-background-positive) !important;
 }
 
-.custom-badge[data-rs-color="neutral"] {
-  background-color: rgba(0, 0, 0, 0.08) !important;
-  color: rgba(0, 0, 0, 0.7) !important;
+/* Warning (yellow/orange) - pale yellow background with darker orange text/icon */
+.custom-badge[data-rs-color="warning"],
+.custom-badge[data-rs-color="warning"][class*="_root_"],
+.custom-badge[class*="--color-warning"] {
+  --rs-color-background-warning: rgba(251, 191, 36, 0.15) !important;
+  --rs-color-on-background-warning: rgb(217, 119, 6) !important;
+  background: var(--rs-color-background-warning) !important;
+  color: var(--rs-color-on-background-warning) !important;
+}
+
+/* Neutral (gray) - pale gray background with darker gray text/icon */
+.custom-badge[data-rs-color="neutral"],
+.custom-badge[data-rs-color="neutral"][class*="_root_"],
+.custom-badge[class*="--color-neutral"] {
+  --rs-color-background-neutral: rgba(0, 0, 0, 0.08) !important;
+  --rs-color-on-background-neutral: rgba(0, 0, 0, 0.75) !important;
+  background: var(--rs-color-background-neutral) !important;
+  color: var(--rs-color-on-background-neutral) !important;
+}
+
+/* Ensure all nested elements inherit the color */
+.custom-badge[data-rs-color="primary"] *,
+.custom-badge[data-rs-color="critical"] *,
+.custom-badge[data-rs-color="positive"] *,
+.custom-badge[data-rs-color="warning"] *,
+.custom-badge[data-rs-color="neutral"] *,
+.custom-badge[class*="--color-primary"] *,
+.custom-badge[class*="--color-critical"] *,
+.custom-badge[class*="--color-positive"] *,
+.custom-badge[class*="--color-warning"] *,
+.custom-badge[class*="--color-neutral"] * {
+  color: inherit !important;
+  fill: currentColor !important;
 }
 
 /* Smaller text for small badges */

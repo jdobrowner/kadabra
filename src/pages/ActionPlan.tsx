@@ -1,4 +1,4 @@
-import { Container, View, Button, Card, Text, Badge, Loader } from 'reshaped'
+import { Container, View, Button, Card, Text, Loader } from 'reshaped'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, Lightbulb, Phone, User, Copy, CheckCircle, Plus } from '@phosphor-icons/react'
 import { useAppStore } from '../store/useAppStore'
@@ -508,9 +508,9 @@ export default function ActionPlan() {
                     </View>
                     <View direction="column" gap={1}>
                       <Text variant="caption-1" color="neutral-faded">Sentiment</Text>
-                      <Badge color={lastConversation.sentiment === 'negative' ? 'critical' : lastConversation.sentiment === 'positive' ? 'positive' : 'neutral'}>
+                      <CustomBadge color={lastConversation.sentiment === 'negative' ? 'critical' : lastConversation.sentiment === 'positive' ? 'positive' : 'neutral'}>
                         {lastConversation.sentiment || 'Neutral'}
-                      </Badge>
+                      </CustomBadge>
                     </View>
                   </View>
                   
@@ -611,9 +611,9 @@ export default function ActionPlan() {
                 </View>
                 <View direction="column" gap={1}>
                   <Text variant="caption-1" color="neutral-faded">Priority</Text>
-                  <Badge color={actionPlan.badge === 'at-risk' ? 'critical' : 'warning'}>
+                  <CustomBadge color={actionPlan.badge === 'at-risk' ? 'critical' : 'warning'}>
                     High
-                  </Badge>
+                  </CustomBadge>
                 </View>
                 <View direction="column" gap={1}>
                   <Text variant="caption-1" color="neutral-faded">Origin</Text>
@@ -652,7 +652,7 @@ export default function ActionPlan() {
               </Button>
             )}
             {actionPlan.status === 'completed' && !isUpdatingStatus && (
-              <Badge color="positive">Completed</Badge>
+              <CustomBadge color="positive">Completed</CustomBadge>
             )}
           </View>
         </Card>
