@@ -1,5 +1,4 @@
-import { Text, View } from 'reshaped'
-import { ContainerCard } from './ContainerCard'
+import { Text, View, Card } from 'reshaped'
 import { ElevatedCard } from './ElevatedCard'
 import { Columns } from '@phosphor-icons/react'
 import { useMemo } from 'react'
@@ -27,7 +26,7 @@ export function MiniKanban({ onTaskClick }: MiniKanbanProps) {
   )
 
   return (
-    <ContainerCard padding={6}>
+    <Card padding={6}>
       <View direction="column" gap={4}>
         <View direction="row" gap={2} align="center">
           <Columns size={20} weight="bold" />
@@ -88,7 +87,7 @@ export function MiniKanban({ onTaskClick }: MiniKanbanProps) {
           ))}
         </View>
       </View>
-    </ContainerCard>
+    </Card>
   )
 }
 

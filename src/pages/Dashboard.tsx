@@ -1,10 +1,9 @@
-import { Container, View, Button, Text, Icon } from 'reshaped'
+import { Container, View, Button, Text, Icon, Card } from 'reshaped'
 import { WelcomeStats } from '../components/custom/WelcomeStats'
 import { PageHeader } from '../components/custom/PageHeader'
 import { CustomerCardHorizontal } from '../components/custom/CustomerCardHorizontal'
 import { MiniCalendar } from '../components/custom/MiniCalendar'
 import { MiniKanban } from '../components/custom/MiniKanban'
-import { ContainerCard } from '../components/custom/ContainerCard'
 import { useDashboardStore } from '../store/useDashboardStore'
 import { useCustomersStore } from '../store/useCustomersStore'
 import { Link, useNavigate } from 'react-router-dom'
@@ -74,7 +73,7 @@ export default function Dashboard() {
 
         {/* Row 2: Triage Leaderboard - 2 columns */}
         <div className="dashboard-triage-card">
-          <ContainerCard padding={6}>
+          <Card padding={6}>
             <View direction="column" gap={4}>
               <View direction="column" gap={2}>
                 <View direction="row" gap={2} align="center">
@@ -113,7 +112,7 @@ export default function Dashboard() {
                 </Button>
               </Link>
             </View>
-          </ContainerCard>
+          </Card>
         </div>
 
         {/* Row 2: Right Column - 1 column (Calendar) */}

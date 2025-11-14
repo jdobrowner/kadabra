@@ -1,7 +1,6 @@
-import { Text, View, Icon } from 'reshaped'
+import { Text, View, Icon, Card } from 'reshaped'
 import type React from 'react'
 import type { Icon as PhosphorIcon } from '@phosphor-icons/react'
-import { ContainerCard } from './ContainerCard'
 
 export interface MetricCardProps {
   value: string | number
@@ -37,14 +36,14 @@ export function MetricCard({
   }
 
   return (
-    <ContainerCard 
+    <Card 
       padding={5}
-      backgroundColor={backgroundColor || 'var(--rs-color-background-neutral)'}
       attributes={{
         onClick: onClick,
         onMouseEnter: handleMouseEnter,
         onMouseLeave: handleMouseLeave,
         style: {
+          backgroundColor: backgroundColor || 'var(--rs-color-background-neutral)',
           cursor: onClick ? 'pointer' : 'default',
           transition: onClick ? 'opacity 0.2s ease' : undefined
         }
@@ -85,7 +84,7 @@ export function MetricCard({
           )}
         </View>
       </View>
-    </ContainerCard>
+    </Card>
   )
 }
 
