@@ -32,7 +32,7 @@
   display: flex;
   flex: 1;
   align-items: stretch;
-  background: var(--rs-color-background-page, #f8f3f7);
+  background: var(--rs-color-background-page, #f2efef);
   min-height: 100vh;
 }
 

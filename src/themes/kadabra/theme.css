@@ -86,7 +86,7 @@
 --rs-radius-small: 4px;
 --rs-radius-medium: 30px;
 --rs-radius-large: 30px;
---rs-color-foreground-primary: #f8f3f7;
+--rs-color-foreground-primary: #f2efef;
 --rs-color-brand: #5a58f2;
 --rs-color-white: #ffffff;
 --rs-color-black: #000000;
@@ -114,9 +114,9 @@
 			}
 		
 			[data-rs-theme~="kadabra"][data-rs-color-mode="light"] {
-					--rs-color-background-primary: #1c1c1c;
+					--rs-color-background-primary: #202020;
 --rs-color-background-primary-faded: #f5f5f5;
---rs-color-border-primary: #1c1c1c;
+--rs-color-border-primary: #202020;
 --rs-color-border-primary-faded: #dedcfb;
 --rs-color-background-critical: #ea001e;
 --rs-color-background-critical-faded: #f8d7da;
@@ -136,7 +136,7 @@
 --rs-color-background-neutral: #fffdfe;
 --rs-color-background-neutral-faded: #f8f9fa;
 --rs-color-border-neutral: #f6f1f1;
---rs-color-border-neutral-faded: rgba(22, 21, 21, 0.05);
+--rs-color-border-neutral-faded: #f2edf1;
 --rs-color-foreground-neutral: #161515;
 --rs-color-foreground-neutral-faded: #706e6b;
 --rs-color-background-disabled: #eceef2;
@@ -146,7 +146,7 @@
 --rs-color-background-elevation-base: #fffdfe;
 --rs-color-background-elevation-raised: #fffdfe;
 --rs-color-background-elevation-overlay: #fffdfe;
---rs-color-background-page: #f8f3f7;
+--rs-color-background-page: #f2efef;
 --rs-color-background-page-faded: #f9f9fb;
 --rs-color-background-base: #fffdfe;
 --rs-color-on-background-primary: oklch(1 0 0);
@@ -191,22 +191,22 @@
 --rs-color-border-positive: #21ab6b;
 --rs-color-border-positive-faded: #264431;
 --rs-color-foreground-positive: #7dd4a5;
---rs-color-background-neutral: #1c1c1c;
+--rs-color-background-neutral: #202020;
 --rs-color-background-neutral-faded: #2d2d2d;
 --rs-color-border-neutral: #141414;
---rs-color-border-neutral-faded: rgba(255, 255, 255, 0.1);
+--rs-color-border-neutral-faded: #292929;
 --rs-color-foreground-neutral: #d8d4d4;
 --rs-color-foreground-neutral-faded: #b5b5b5;
 --rs-color-background-disabled: #1e212a;
 --rs-color-background-disabled-faded: #171921;
 --rs-color-border-disabled: #262a34;
 --rs-color-foreground-disabled: #434959;
---rs-color-background-elevation-base: #1c1c1c;
---rs-color-background-elevation-raised: #1c1c1c;
---rs-color-background-elevation-overlay: #1c1c1c;
+--rs-color-background-elevation-base: #202020;
+--rs-color-background-elevation-raised: #202020;
+--rs-color-background-elevation-overlay: #202020;
 --rs-color-background-page: #161515;
 --rs-color-background-page-faded: #111319;
---rs-color-background-base: #1c1c1c;
+--rs-color-background-base: #202020;
 --rs-color-on-background-primary: oklch(0 0 0);
 --rs-color-rgb-background-primary: 255, 255, 255;
 --rs-color-rgb-background-primary-faded: 45.0075, 45.0075, 45.0075;

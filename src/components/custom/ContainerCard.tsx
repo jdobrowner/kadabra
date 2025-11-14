@@ -23,7 +23,7 @@ function getBorderColor(backgroundColor?: string): string {
   }
   
   // For dark mode card color, use Reshaped dark mode border token
-  if (backgroundColor === '#1c1c1c') {
+  if (backgroundColor === '#202020') {
     return 'var(--rs-color-border-neutral)' // Reshaped handles dark mode automatically
   }
   

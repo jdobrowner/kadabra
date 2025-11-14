@@ -213,7 +213,7 @@
   },
   "color": {
     "backgroundPrimary": {
-      "hex": "#1c1c1c",
+      "hex": "#202020",
       "hexDark": "#ffffff"
     },
     "backgroundPrimaryFaded": {
@@ -221,7 +221,7 @@
       "hexDark": "#2d2d2d"
     },
     "borderPrimary": {
-      "hex": "#1c1c1c",
+      "hex": "#202020",
       "hexDark": "#ffffff"
     },
     "borderPrimaryFaded": {
@@ -229,8 +229,8 @@
       "hexDark": "#323164"
     },
     "foregroundPrimary": {
-      "hex": "#f8f3f7",
-      "hexDark": "#f8f3f7"
+      "hex": "#f2efef",
+      "hexDark": "#f2efef"
     },
     "backgroundCritical": {
       "hex": "#ea001e",
@@ -294,7 +294,7 @@
     },
     "backgroundNeutral": {
       "hex": "#fffdfe",
-      "hexDark": "#1c1c1c"
+      "hexDark": "#202020"
     },
     "backgroundNeutralFaded": {
       "hex": "#f8f9fa",
@@ -305,7 +305,7 @@
       "hexDark": "#141414"
     },
     "borderNeutralFaded": {
-      "hex": "rgba(22, 21, 21, 0.05)",
+      "hex": "#292929",
       "hexDark": "rgba(255, 255, 255, 0.1)"
     },
     "foregroundNeutral": {
@@ -334,18 +334,18 @@
     },
     "backgroundElevationBase": {
       "hex": "#fffdfe",
-      "hexDark": "#1c1c1c"
+      "hexDark": "#202020"
     },
     "backgroundElevationRaised": {
       "hex": "#fffdfe",
-      "hexDark": "#1c1c1c"
+      "hexDark": "#202020"
     },
     "backgroundElevationOverlay": {
       "hex": "#fffdfe",
-      "hexDark": "#1c1c1c"
+      "hexDark": "#202020"
     },
     "backgroundPage": {
-      "hex": "#f8f3f7",
+      "hex": "#f2efef",
       "hexDark": "#161515"
     },
     "backgroundPageFaded": {
@@ -363,7 +363,7 @@
     },
     "backgroundBase": {
       "hex": "#fffdfe",
-      "hexDark": "#1c1c1c"
+      "hexDark": "#202020"
     },
     "onBackgroundPrimary": {
       "oklch": {

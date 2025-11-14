@@ -13,8 +13,8 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* Design system variables - now using Reshaped theme tokens */
-  --app-background-color: var(--rs-color-background-page, #f8f3f7);
-  --row-card-border-color: var(--rs-color-border-neutral-faded, rgba(22, 21, 21, 0.05));
+  --app-background-color: var(--rs-color-background-page, #f2efef);
+  --row-card-border-color: var(--rs-color-border-neutral-faded, #292929);
   --card-background-color: var(--rs-color-background-neutral, #fffdfe);
   --card-border-color: var(--rs-color-border-neutral, #f6f1f1);
 }
@@ -46,8 +46,8 @@
 
 /* Override Reshaped shadow variables to use dark gray instead of pure black */
 [data-rs-theme~="kadabra"] {
-  --rs-shadow-raised: 0px 1px 5px -4px rgba(22, 21, 21, 0.5), 0px 4px 8px 0px rgba(22, 21, 21, 0.05) !important;
-  --rs-shadow-overlay: 0px 5px 10px 0px rgba(22, 21, 21, 0.05), 0px 15px 25px 0px rgba(22, 21, 21, 0.07) !important;
+  --rs-shadow-raised: 0px 1px 5px -4px rgba(22, 21, 21, 0.5), 0px 4px 8px 0px #292929 !important;
+  --rs-shadow-overlay: 0px 5px 10px 0px #292929, 0px 15px 25px 0px rgba(22, 21, 21, 0.07) !important;
 }
 
 /* Border colors are now defined in reshaped.config.js and automatically handle light/dark mode */
@@ -64,7 +64,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background: var(--rs-color-background-page, #f8f3f7);
+  background: var(--rs-color-background-page, #f2efef);
 }
 
 #root {
