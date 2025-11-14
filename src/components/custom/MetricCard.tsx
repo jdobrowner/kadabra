@@ -10,6 +10,7 @@ export interface MetricCardProps {
   iconColor?: string
   iconWeight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone'
   backgroundColor?: string
+  borderColor?: string
   onClick?: () => void
 }
 
@@ -21,6 +22,7 @@ export function MetricCard({
   iconColor,
   iconWeight = 'regular',
   backgroundColor,
+  borderColor,
   onClick 
 }: MetricCardProps) {
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -44,6 +46,7 @@ export function MetricCard({
         onMouseLeave: handleMouseLeave,
         style: {
           backgroundColor: backgroundColor || 'var(--rs-color-background-neutral)',
+          borderColor: borderColor,
           cursor: onClick ? 'pointer' : 'default',
           transition: onClick ? 'opacity 0.2s ease' : undefined
         }

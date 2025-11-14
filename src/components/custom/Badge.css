@@ -14,24 +14,44 @@
 
 /* Override Reshaped's CSS variables for badge colors */
 /* Use Reshaped faded background colors with custom foreground colors for better contrast */
-/* Primary (blue) - pale blue background with darker blue text/icon */
+/* Primary (blue) - pale blue background with darker blue text/icon - matches WelcomeStats blue */
 .custom-badge[data-rs-color="primary"],
 .custom-badge[data-rs-color="primary"][class*="_root_"],
 .custom-badge[class*="--color-primary"] {
-  --rs-color-background-primary: var(--rs-color-background-primary-faded) !important;
-  --rs-color-on-background-primary: rgb(37, 99, 235) !important;
-  background: var(--rs-color-background-primary-faded) !important;
-  color: rgb(37, 99, 235) !important;
+  --rs-color-background-primary: rgba(59, 130, 246, 0.1) !important;
+  --rs-color-on-background-primary: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+  color: #3b82f6 !important;
 }
 
-/* Critical (red) - pale red background with darker red text/icon - matches "At-Risk" badge */
+/* Dark mode: Less contrasted blue badges */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[data-rs-color="primary"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[data-rs-color="primary"][class*="_root_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[class*="--color-primary"] {
+  --rs-color-background-primary: rgba(59, 130, 246, 0.08) !important;
+  --rs-color-on-background-primary: rgba(59, 130, 246, 0.7) !important;
+  background: rgba(59, 130, 246, 0.08) !important;
+  color: rgba(59, 130, 246, 0.7) !important;
+}
+
+/* Critical (red) - pale red background with darker red text/icon - matches WelcomeStats red */
 .custom-badge[data-rs-color="critical"],
 .custom-badge[data-rs-color="critical"][class*="_root_"],
 .custom-badge[class*="--color-critical"] {
-  --rs-color-background-critical: var(--rs-color-background-critical-faded) !important;
-  --rs-color-on-background-critical: rgb(220, 38, 38) !important;
-  background: var(--rs-color-background-critical-faded) !important;
-  color: rgb(220, 38, 38) !important;
+  --rs-color-background-critical: rgba(239, 68, 68, 0.1) !important;
+  --rs-color-on-background-critical: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #ef4444 !important;
+}
+
+/* Dark mode: Less contrasted red badges */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[data-rs-color="critical"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[data-rs-color="critical"][class*="_root_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[class*="--color-critical"] {
+  --rs-color-background-critical: rgba(239, 68, 68, 0.08) !important;
+  --rs-color-on-background-critical: rgba(239, 68, 68, 0.7) !important;
+  background: rgba(239, 68, 68, 0.08) !important;
+  color: rgba(239, 68, 68, 0.7) !important;
 }
 
 /* Positive (green) - pale green background with darker green text/icon - matches "Potential Lead" badge */
@@ -42,6 +62,16 @@
   --rs-color-on-background-positive: rgb(22, 163, 74) !important;
   background: var(--rs-color-background-positive-faded) !important;
   color: rgb(22, 163, 74) !important;
+}
+
+/* Dark mode: Less contrasted green badges */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[data-rs-color="positive"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[data-rs-color="positive"][class*="_root_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[class*="--color-positive"] {
+  --rs-color-background-positive: rgba(22, 163, 74, 0.08) !important;
+  --rs-color-on-background-positive: rgba(22, 163, 74, 0.7) !important;
+  background: rgba(22, 163, 74, 0.08) !important;
+  color: rgba(22, 163, 74, 0.7) !important;
 }
 
 /* Warning (yellow/orange) - pale yellow background with darker orange text/icon */
@@ -55,6 +85,16 @@
   color: rgb(217, 119, 6) !important;
 }
 
+/* Dark mode: Less contrasted warning badges */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[data-rs-color="warning"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[data-rs-color="warning"][class*="_root_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[class*="--color-warning"] {
+  --rs-color-background-warning: rgba(251, 191, 36, 0.08) !important;
+  --rs-color-on-background-warning: rgba(217, 119, 6, 0.7) !important;
+  background: rgba(251, 191, 36, 0.08) !important;
+  color: rgba(217, 119, 6, 0.7) !important;
+}
+
 /* Neutral (gray) - pale gray background with darker gray text/icon */
 .custom-badge[data-rs-color="neutral"],
 .custom-badge[data-rs-color="neutral"][class*="_root_"],
@@ -64,6 +104,13 @@
   background: var(--rs-color-background-neutral-faded) !important;
   color: var(--rs-color-foreground-neutral) !important;
   opacity: 0.75;
+}
+
+/* Dark mode: Less contrasted neutral badges */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[data-rs-color="neutral"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[data-rs-color="neutral"][class*="_root_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[class*="--color-neutral"] {
+  opacity: 0.5 !important;
 }
 
 /* Ensure all nested elements inherit the color */
