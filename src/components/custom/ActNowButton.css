@@ -4,16 +4,17 @@
    and high-specificity selectors that override regular CSS */
 .act-now-button {
   border: none !important;
-  color: var(--rs-color-foreground-primary) !important;
+  border-radius: 12px !important;
+  color: var(--rs-color-background-neutral) !important;
   font-weight: 600 !important;
   font-size: 16px !important;
   transition: all 0.2s ease;
 }
 
-/* Ensure icon color is also soft white */
+/* Ensure icon color matches card background color */
 .act-now-button svg {
-  color: var(--rs-color-foreground-primary) !important;
-  fill: var(--rs-color-foreground-primary) !important;
+  color: var(--rs-color-background-neutral) !important;
+  fill: var(--rs-color-background-neutral) !important;
 }
 
 .act-now-button {
