@@ -23,13 +23,13 @@ const config = {
         // Neutral colors - primary and secondary text colors
         foregroundNeutral: { hex: "#161515", hexDark: "#f8f3f7" }, // Primary text color
         foregroundNeutralFaded: { hex: "#706e6b", hexDark: "#b5b5b5" }, // Secondary text color
-        backgroundNeutral: { hex: "#fffdfe", hexDark: "#1a1a1a" }, // Card backgrounds
+        backgroundNeutral: { hex: "#fffdfe", hexDark: "#1c1c1c" }, // Card backgrounds - matches Dashboard cards
         backgroundNeutralFaded: { hex: "#f8f9fa", hexDark: "#2d2d2d" },
         // Card backgrounds - using #fffdfe instead of pure white
-        backgroundBase: { hex: "#fffdfe", hexDark: "#161616" },
-        backgroundElevationBase: { hex: "#fffdfe", hexDark: "#161616" },
-        backgroundElevationRaised: { hex: "#fffdfe", hexDark: "#161616" },
-        backgroundElevationOverlay: { hex: "#fffdfe", hexDark: "#161616" },
+        backgroundBase: { hex: "#fffdfe", hexDark: "#1c1c1c" },
+        backgroundElevationBase: { hex: "#fffdfe", hexDark: "#1c1c1c" },
+        backgroundElevationRaised: { hex: "#fffdfe", hexDark: "#1c1c1c" },
+        backgroundElevationOverlay: { hex: "#fffdfe", hexDark: "#1c1c1c" },
         // Main content area background
         backgroundPage: { hex: "#fffdfe", hexDark: "#141414" },
       },
@@ -99,11 +99,11 @@ const config = {
         base: { px: 4 }
       },
       
-      // Border radius - pill-shaped buttons
+      // Border radius - rounded corners
       radius: {
         small: { px: 4 },
-        medium: { px: 999 }, // Pill-shaped buttons (used by button size classes)
-        large: { px: 999 } // Pill-shaped buttons
+        medium: { px: 30 }, // Rounded corners for buttons and cards
+        large: { px: 30 } // Rounded corners
       },
       
       // Shadow configuration - use dark gray instead of pure black

@@ -37,7 +37,7 @@ export function FilterBox({
   }
   const getToggleButtonAttributes = (isActive: boolean) => ({
     style: {
-      borderRadius: '999px',
+      borderRadius: '30px',
       border: '1px solid',
       borderColor: isActive ? 'var(--rs-color-border-primary)' : 'var(--rs-color-border-neutral-faded)',
       backgroundColor: isActive ? 'var(--rs-color-background-primary-faded)' : 'transparent',

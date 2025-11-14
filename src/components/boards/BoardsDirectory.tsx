@@ -214,7 +214,7 @@ export function BoardsDirectory({ boards, teams, selectedBoardId, loading, onSel
                           gap: '6px',
                           fontSize: '12px',
                           padding: '4px 8px',
-                          borderRadius: '999px',
+                          borderRadius: '30px',
                           backgroundColor: 'var(--rs-color-background-neutral-stronger)',
                           color: 'var(--rs-color-foreground-neutral-stronger)',
                         }}
@@ -229,7 +229,7 @@ export function BoardsDirectory({ boards, teams, selectedBoardId, loading, onSel
                           gap: '6px',
                           fontSize: '12px',
                           padding: '4px 8px',
-                          borderRadius: '999px',
+                          borderRadius: '30px',
                           backgroundColor: 'var(--rs-color-background-neutral-stronger)',
                           color: 'var(--rs-color-foreground-neutral-stronger)',
                         }}
@@ -244,7 +244,7 @@ export function BoardsDirectory({ boards, teams, selectedBoardId, loading, onSel
                             gap: '6px',
                             fontSize: '12px',
                             padding: '4px 8px',
-                            borderRadius: '999px',
+                            borderRadius: '30px',
                             backgroundColor: 'var(--rs-color-background-success-faded)',
                             color: 'var(--rs-color-foreground-success-stronger)',
                           }}

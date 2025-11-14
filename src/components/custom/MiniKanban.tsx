@@ -45,7 +45,7 @@ export function MiniKanban({ onTaskClick }: MiniKanbanProps) {
                     style: {
                       width: '8px',
                       height: '8px',
-                      borderRadius: '999px',
+                      borderRadius: '30px',
                       backgroundColor: column.accentColor,
                     },
                   }}

@@ -205,10 +205,10 @@
       "px": 4
     },
     "medium": {
-      "px": 999
+      "px": 30
     },
     "large": {
-      "px": 999
+      "px": 30
     }
   },
   "color": {
@@ -294,7 +294,7 @@
     },
     "backgroundNeutral": {
       "hex": "#fffdfe",
-      "hexDark": "#1a1a1a"
+      "hexDark": "#1c1c1c"
     },
     "backgroundNeutralFaded": {
       "hex": "#f8f9fa",
@@ -334,15 +334,15 @@
     },
     "backgroundElevationBase": {
       "hex": "#fffdfe",
-      "hexDark": "#161616"
+      "hexDark": "#1c1c1c"
     },
     "backgroundElevationRaised": {
       "hex": "#fffdfe",
-      "hexDark": "#161616"
+      "hexDark": "#1c1c1c"
     },
     "backgroundElevationOverlay": {
       "hex": "#fffdfe",
-      "hexDark": "#161616"
+      "hexDark": "#1c1c1c"
     },
     "backgroundPage": {
       "hex": "#fffdfe",
@@ -363,7 +363,7 @@
     },
     "backgroundBase": {
       "hex": "#fffdfe",
-      "hexDark": "#161616"
+      "hexDark": "#1c1c1c"
     },
     "onBackgroundPrimary": {
       "oklch": {
@@ -469,7 +469,7 @@
     },
     "rgbBackgroundNeutral": {
       "hex": "255, 253.011, 254.00549999999998",
-      "hexDark": "26.009999999999998, 26.009999999999998, 26.009999999999998"
+      "hexDark": "27.999, 27.999, 27.999"
     },
     "rgbBackgroundNeutralFaded": {
       "hex": "247.9875, 249.00750000000002, 250.002",
@@ -485,15 +485,15 @@
     },
     "rgbBackgroundElevationBase": {
       "hex": "255, 253.011, 254.00549999999998",
-      "hexDark": "22.0065, 22.0065, 22.0065"
+      "hexDark": "27.999, 27.999, 27.999"
     },
     "rgbBackgroundElevationRaised": {
       "hex": "255, 253.011, 254.00549999999998",
-      "hexDark": "22.0065, 22.0065, 22.0065"
+      "hexDark": "27.999, 27.999, 27.999"
     },
     "rgbBackgroundElevationOverlay": {
       "hex": "255, 253.011, 254.00549999999998",
-      "hexDark": "22.0065, 22.0065, 22.0065"
+      "hexDark": "27.999, 27.999, 27.999"
     },
     "rgbBackgroundPage": {
       "hex": "255, 253.011, 254.00549999999998",
@@ -519,7 +519,7 @@
     },
     "rgbBackgroundBase": {
       "hex": "255, 253.011, 254.00549999999998",
-      "hexDark": "22.0065, 22.0065, 22.0065"
+      "hexDark": "27.999, 27.999, 27.999"
     }
   },
   "duration": {

@@ -84,8 +84,8 @@
 --rs-unit-x9: 36px;
 --rs-unit-x10: 40px;
 --rs-radius-small: 4px;
---rs-radius-medium: 999px;
---rs-radius-large: 999px;
+--rs-radius-medium: 30px;
+--rs-radius-large: 30px;
 --rs-color-foreground-primary: #f8f3f7;
 --rs-color-brand: #5a58f2;
 --rs-color-white: #ffffff;
@@ -191,7 +191,7 @@
 --rs-color-border-positive: #21ab6b;
 --rs-color-border-positive-faded: #264431;
 --rs-color-foreground-positive: #7dd4a5;
---rs-color-background-neutral: #1a1a1a;
+--rs-color-background-neutral: #1c1c1c;
 --rs-color-background-neutral-faded: #2d2d2d;
 --rs-color-border-neutral: #ffffff24;
 --rs-color-border-neutral-faded: #ffffff14;
@@ -201,12 +201,12 @@
 --rs-color-background-disabled-faded: #171921;
 --rs-color-border-disabled: #262a34;
 --rs-color-foreground-disabled: #434959;
---rs-color-background-elevation-base: #161616;
---rs-color-background-elevation-raised: #161616;
---rs-color-background-elevation-overlay: #161616;
+--rs-color-background-elevation-base: #1c1c1c;
+--rs-color-background-elevation-raised: #1c1c1c;
+--rs-color-background-elevation-overlay: #1c1c1c;
 --rs-color-background-page: #141414;
 --rs-color-background-page-faded: #111319;
---rs-color-background-base: #161616;
+--rs-color-background-base: #1c1c1c;
 --rs-color-on-background-primary: oklch(0 0 0);
 --rs-color-rgb-background-primary: 255, 255, 255;
 --rs-color-rgb-background-primary-faded: 45.0075, 45.0075, 45.0075;
@@ -217,15 +217,15 @@
 --rs-color-rgb-background-positive: 3.009, 103.989, 58.0125;
 --rs-color-rgb-background-positive-faded: 26.009999999999998, 77.00999999999999, 46.002;
 --rs-color-on-background-neutral: oklch(1 0 0);
---rs-color-rgb-background-neutral: 26.009999999999998, 26.009999999999998, 26.009999999999998;
+--rs-color-rgb-background-neutral: 27.999, 27.999, 27.999;
 --rs-color-rgb-background-neutral-faded: 45.0075, 45.0075, 45.0075;
 --rs-color-rgb-background-disabled: 29.988, 32.997, 41.9985;
 --rs-color-rgb-background-disabled-faded: 23.001, 24.990000000000002, 32.997;
---rs-color-rgb-background-elevation-base: 22.0065, 22.0065, 22.0065;
---rs-color-rgb-background-elevation-raised: 22.0065, 22.0065, 22.0065;
---rs-color-rgb-background-elevation-overlay: 22.0065, 22.0065, 22.0065;
+--rs-color-rgb-background-elevation-base: 27.999, 27.999, 27.999;
+--rs-color-rgb-background-elevation-raised: 27.999, 27.999, 27.999;
+--rs-color-rgb-background-elevation-overlay: 27.999, 27.999, 27.999;
 --rs-color-rgb-background-page: 19.992, 19.992, 19.992;
 --rs-color-rgb-background-page-faded: 17.008499999999998, 18.9975, 24.990000000000002;
---rs-color-rgb-background-base: 22.0065, 22.0065, 22.0065;
+--rs-color-rgb-background-base: 27.999, 27.999, 27.999;
 			}
 		

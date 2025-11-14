@@ -16,6 +16,7 @@
   --app-background-color: #f8f3f7; /* Light purple background */
   --row-card-border-color: rgba(22, 21, 21, 0.05); /* Use #161515 instead of pure black */
   --card-background-color: #fffdfe; /* Light cards in light mode */
+  --card-border-color: #f6f1f1; /* Light mode card border */
 }
 
 /* Dark mode background and cards */
@@ -23,12 +24,53 @@
   --app-background-color: #161515; /* Dark background */
   --card-background-color: #1c1c1c; /* Dark cards */
   --row-card-border-color: rgba(255, 255, 255, 0.1); /* Lighter border in dark mode */
+  --card-border-color: #141414; /* Dark mode card border */
+}
+
+/* Override Reshaped Card CSS variables to match Dashboard cards */
+[data-rs-theme~="kadabra"] {
+  /* Card background and border variables */
+  --rs-card-background-color: var(--card-background-color, #fffdfe) !important;
+  --rs-card-border-color: var(--card-border-color, #f6f1f1) !important;
+}
+
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] {
+  --rs-card-background-color: var(--card-background-color, #1c1c1c) !important;
+  --rs-card-border-color: #141414 !important;
 }
 
 /* Ensure Reshaped Card components use dark mode card color */
 [data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [data-rs-card],
 [data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="_card_"] {
   background-color: var(--card-background-color) !important;
+}
+
+/* Style Reshaped Card components to match ContainerCard styling */
+[data-rs-theme~="kadabra"] [data-rs-card],
+[data-rs-theme~="kadabra"] [class*="_card_"][class*="_root_"],
+[data-rs-theme~="kadabra"] [class*="_root_"][class*="_card_"],
+[data-rs-theme~="kadabra"] [class*="Card"][class*="_root_"],
+[data-rs-theme~="kadabra"] [class*="_root_"][class*="Card"],
+[data-rs-theme~="kadabra"] [class*="card"][class*="_root_"],
+[data-rs-theme~="kadabra"] [class*="_root_"][class*="card"] {
+  border-radius: 30px !important;
+  border: 1px solid var(--card-border-color, #f6f1f1) !important;
+  box-shadow: none !important;
+  background-color: var(--card-background-color, #fffdfe) !important;
+  --rs-color-background-neutral: var(--card-background-color, #fffdfe) !important;
+}
+
+/* Dark mode card styling */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [data-rs-card],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="_card_"][class*="_root_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="_root_"][class*="_card_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="Card"][class*="_root_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="_root_"][class*="Card"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="card"][class*="_root_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] [class*="_root_"][class*="card"] {
+  border-color: #141414 !important;
+  background-color: var(--card-background-color, #1c1c1c) !important;
+  --rs-color-background-neutral: var(--card-background-color, #1c1c1c) !important;
 }
 
 /* Override Reshaped shadow variables to use dark gray instead of pure black */
@@ -99,18 +141,11 @@ body {
   font-family: var(--rs-font-family-title-5);
 }
 
-/* Button styling - pill-shaped and bold text */
-/* Target all button elements for pill shape and CSS variable overrides */
+/* Button styling - rounded corners and bold text */
 [data-rs-theme~="kadabra"] button[data-rs-button],
 [data-rs-theme~="kadabra"] [data-rs-button],
 [data-rs-theme~="kadabra"] a[data-rs-button] {
-  border-radius: 999px !important; /* Pill-shaped buttons */
-  --rs-button-radius: 999px !important; /* Override CSS variable set by size classes */
-}
-
-/* Override the radius-medium variable that size classes reference */
-[data-rs-theme~="kadabra"] {
-  --rs-radius-medium: 999px !important;
+  border-radius: 30px !important;
 }
 
 /* Target Reshaped's text span class specifically - this is what actually works */
