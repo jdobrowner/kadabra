@@ -112,7 +112,7 @@ body {
 [data-rs-theme~="kadabra"] button[data-rs-button],
 [data-rs-theme~="kadabra"] [data-rs-button],
 [data-rs-theme~="kadabra"] a[data-rs-button] {
-  border-radius: 12px !important;
+  border-radius: var(--rs-radius-medium) !important;
 }
 
 /* Target Reshaped's text span class specifically - this is what actually works */

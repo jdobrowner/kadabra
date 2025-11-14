@@ -205,7 +205,7 @@
       "px": 4
     },
     "medium": {
-      "px": 30
+      "px": 12
     },
     "large": {
       "px": 30
@@ -380,7 +380,7 @@
       "hexDark": "#000000"
     },
     "rgbBackgroundPrimary": {
-      "hex": "27.999, 27.999, 27.999",
+      "hex": "32.0025, 32.0025, 32.0025",
       "hexDark": "255, 255, 255"
     },
     "rgbBackgroundPrimaryFaded": {
@@ -469,7 +469,7 @@
     },
     "rgbBackgroundNeutral": {
       "hex": "255, 253.011, 254.00549999999998",
-      "hexDark": "27.999, 27.999, 27.999"
+      "hexDark": "32.0025, 32.0025, 32.0025"
     },
     "rgbBackgroundNeutralFaded": {
       "hex": "247.9875, 249.00750000000002, 250.002",
@@ -485,18 +485,18 @@
     },
     "rgbBackgroundElevationBase": {
       "hex": "255, 253.011, 254.00549999999998",
-      "hexDark": "27.999, 27.999, 27.999"
+      "hexDark": "32.0025, 32.0025, 32.0025"
     },
     "rgbBackgroundElevationRaised": {
       "hex": "255, 253.011, 254.00549999999998",
-      "hexDark": "27.999, 27.999, 27.999"
+      "hexDark": "32.0025, 32.0025, 32.0025"
     },
     "rgbBackgroundElevationOverlay": {
       "hex": "255, 253.011, 254.00549999999998",
-      "hexDark": "27.999, 27.999, 27.999"
+      "hexDark": "32.0025, 32.0025, 32.0025"
     },
     "rgbBackgroundPage": {
-      "hex": "247.9875, 242.9895, 246.993",
+      "hex": "241.99499999999998, 239.0115, 239.0115",
       "hexDark": "22.0065, 21.012, 21.012"
     },
     "rgbBackgroundPageFaded": {
@@ -519,7 +519,7 @@
     },
     "rgbBackgroundBase": {
       "hex": "255, 253.011, 254.00549999999998",
-      "hexDark": "27.999, 27.999, 27.999"
+      "hexDark": "32.0025, 32.0025, 32.0025"
     }
   },
   "duration": {

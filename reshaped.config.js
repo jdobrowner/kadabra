@@ -105,8 +105,8 @@ const config = {
       // Border radius - rounded corners
       radius: {
         small: { px: 4 },
-        medium: { px: 30 }, // Rounded corners for buttons and cards
-        large: { px: 30 } // Rounded corners
+        medium: { px: 12 }, // Button border radius
+        large: { px: 30 } // Card border radius
       },
       
       // Shadow configuration - use dark gray instead of pure black
