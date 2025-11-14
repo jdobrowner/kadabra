@@ -213,7 +213,7 @@
   },
   "color": {
     "backgroundPrimary": {
-      "hex": "#000000",
+      "hex": "#1c1c1c",
       "hexDark": "#ffffff"
     },
     "backgroundPrimaryFaded": {
@@ -221,7 +221,7 @@
       "hexDark": "#2d2d2d"
     },
     "borderPrimary": {
-      "hex": "#000000",
+      "hex": "#1c1c1c",
       "hexDark": "#ffffff"
     },
     "borderPrimaryFaded": {
@@ -229,8 +229,8 @@
       "hexDark": "#323164"
     },
     "foregroundPrimary": {
-      "hex": "#ffffff",
-      "hexDark": "#ffffff"
+      "hex": "#f8f3f7",
+      "hexDark": "#f8f3f7"
     },
     "backgroundCritical": {
       "hex": "#ea001e",
@@ -293,7 +293,7 @@
       "hexDark": "#7dd4a5"
     },
     "backgroundNeutral": {
-      "hex": "#ffffff",
+      "hex": "#fffdfe",
       "hexDark": "#1a1a1a"
     },
     "backgroundNeutralFaded": {
@@ -309,8 +309,8 @@
       "hexDark": "#ffffff14"
     },
     "foregroundNeutral": {
-      "hex": "#080707",
-      "hexDark": "#eaeaea"
+      "hex": "#161515",
+      "hexDark": "#f8f3f7"
     },
     "foregroundNeutralFaded": {
       "hex": "#706e6b",
@@ -333,19 +333,19 @@
       "hexDark": "#434959"
     },
     "backgroundElevationBase": {
-      "hex": "#fdfdfd",
+      "hex": "#fffdfe",
       "hexDark": "#161616"
     },
     "backgroundElevationRaised": {
-      "hex": "#fdfdfd",
+      "hex": "#fffdfe",
       "hexDark": "#161616"
     },
     "backgroundElevationOverlay": {
-      "hex": "#ffffff",
-      "hexDark": "#1c1f28"
+      "hex": "#fffdfe",
+      "hexDark": "#161616"
     },
     "backgroundPage": {
-      "hex": "#ffffff",
+      "hex": "#fffdfe",
       "hexDark": "#141414"
     },
     "backgroundPageFaded": {
@@ -362,7 +362,7 @@
       "hex": "#000000"
     },
     "backgroundBase": {
-      "hex": "#fdfdfd",
+      "hex": "#fffdfe",
       "hexDark": "#161616"
     },
     "onBackgroundPrimary": {
@@ -380,7 +380,7 @@
       "hexDark": "#000000"
     },
     "rgbBackgroundPrimary": {
-      "hex": "0, 0, 0",
+      "hex": "27.999, 27.999, 27.999",
       "hexDark": "255, 255, 255"
     },
     "rgbBackgroundPrimaryFaded": {
@@ -468,7 +468,7 @@
       "hexDark": "#ffffff"
     },
     "rgbBackgroundNeutral": {
-      "hex": "255, 255, 255",
+      "hex": "255, 253.011, 254.00549999999998",
       "hexDark": "26.009999999999998, 26.009999999999998, 26.009999999999998"
     },
     "rgbBackgroundNeutralFaded": {
@@ -484,19 +484,19 @@
       "hexDark": "23.001, 24.990000000000002, 32.997"
     },
     "rgbBackgroundElevationBase": {
-      "hex": "253.011, 253.011, 253.011",
+      "hex": "255, 253.011, 254.00549999999998",
       "hexDark": "22.0065, 22.0065, 22.0065"
     },
     "rgbBackgroundElevationRaised": {
-      "hex": "253.011, 253.011, 253.011",
+      "hex": "255, 253.011, 254.00549999999998",
       "hexDark": "22.0065, 22.0065, 22.0065"
     },
     "rgbBackgroundElevationOverlay": {
-      "hex": "255, 255, 255",
-      "hexDark": "27.999, 31.008, 40.0095"
+      "hex": "255, 253.011, 254.00549999999998",
+      "hexDark": "22.0065, 22.0065, 22.0065"
     },
     "rgbBackgroundPage": {
-      "hex": "255, 255, 255",
+      "hex": "255, 253.011, 254.00549999999998",
       "hexDark": "19.992, 19.992, 19.992"
     },
     "rgbBackgroundPageFaded": {
@@ -518,7 +518,7 @@
       "hex": "0, 0, 0"
     },
     "rgbBackgroundBase": {
-      "hex": "253.011, 253.011, 253.011",
+      "hex": "255, 253.011, 254.00549999999998",
       "hexDark": "22.0065, 22.0065, 22.0065"
     }
   },

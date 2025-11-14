@@ -86,7 +86,7 @@
 --rs-radius-small: 4px;
 --rs-radius-medium: 999px;
 --rs-radius-large: 999px;
---rs-color-foreground-primary: #ffffff;
+--rs-color-foreground-primary: #f8f3f7;
 --rs-color-brand: #5a58f2;
 --rs-color-white: #ffffff;
 --rs-color-black: #000000;
@@ -114,9 +114,9 @@
 			}
 		
 			[data-rs-theme~="kadabra"][data-rs-color-mode="light"] {
-					--rs-color-background-primary: #000000;
+					--rs-color-background-primary: #1c1c1c;
 --rs-color-background-primary-faded: #f5f5f5;
---rs-color-border-primary: #000000;
+--rs-color-border-primary: #1c1c1c;
 --rs-color-border-primary-faded: #dedcfb;
 --rs-color-background-critical: #ea001e;
 --rs-color-background-critical-faded: #f8d7da;
@@ -133,24 +133,24 @@
 --rs-color-border-positive: #0c6e40;
 --rs-color-border-positive-faded: #d2eddb;
 --rs-color-foreground-positive: #04844b;
---rs-color-background-neutral: #ffffff;
+--rs-color-background-neutral: #fffdfe;
 --rs-color-background-neutral-faded: #f8f9fa;
 --rs-color-border-neutral: #0000001f;
 --rs-color-border-neutral-faded: #00000014;
---rs-color-foreground-neutral: #080707;
+--rs-color-foreground-neutral: #161515;
 --rs-color-foreground-neutral-faded: #706e6b;
 --rs-color-background-disabled: #eceef2;
 --rs-color-background-disabled-faded: #f5f6f9;
 --rs-color-border-disabled: #dfe2ea;
 --rs-color-foreground-disabled: #c6ccda;
---rs-color-background-elevation-base: #fdfdfd;
---rs-color-background-elevation-raised: #fdfdfd;
---rs-color-background-elevation-overlay: #ffffff;
---rs-color-background-page: #ffffff;
+--rs-color-background-elevation-base: #fffdfe;
+--rs-color-background-elevation-raised: #fffdfe;
+--rs-color-background-elevation-overlay: #fffdfe;
+--rs-color-background-page: #fffdfe;
 --rs-color-background-page-faded: #f9f9fb;
---rs-color-background-base: #fdfdfd;
+--rs-color-background-base: #fffdfe;
 --rs-color-on-background-primary: oklch(1 0 0);
---rs-color-rgb-background-primary: 0, 0, 0;
+--rs-color-rgb-background-primary: 27.999, 27.999, 27.999;
 --rs-color-rgb-background-primary-faded: 245.004, 245.004, 245.004;
 --rs-color-rgb-background-critical: 233.988, 0, 29.988;
 --rs-color-rgb-background-critical-faded: 247.9875, 214.9905, 217.9995;
@@ -159,16 +159,16 @@
 --rs-color-rgb-background-positive: 4.0035, 131.988, 74.99549999999999;
 --rs-color-rgb-background-positive-faded: 212.007, 236.997, 217.9995;
 --rs-color-on-background-neutral: oklch(0 0 0);
---rs-color-rgb-background-neutral: 255, 255, 255;
+--rs-color-rgb-background-neutral: 255, 253.011, 254.00549999999998;
 --rs-color-rgb-background-neutral-faded: 247.9875, 249.00750000000002, 250.002;
 --rs-color-rgb-background-disabled: 236.0025, 237.9915, 241.99499999999998;
 --rs-color-rgb-background-disabled-faded: 245.004, 245.9985, 249.00750000000002;
---rs-color-rgb-background-elevation-base: 253.011, 253.011, 253.011;
---rs-color-rgb-background-elevation-raised: 253.011, 253.011, 253.011;
---rs-color-rgb-background-elevation-overlay: 255, 255, 255;
---rs-color-rgb-background-page: 255, 255, 255;
+--rs-color-rgb-background-elevation-base: 255, 253.011, 254.00549999999998;
+--rs-color-rgb-background-elevation-raised: 255, 253.011, 254.00549999999998;
+--rs-color-rgb-background-elevation-overlay: 255, 253.011, 254.00549999999998;
+--rs-color-rgb-background-page: 255, 253.011, 254.00549999999998;
 --rs-color-rgb-background-page-faded: 249.00750000000002, 249.00750000000002, 250.9965;
---rs-color-rgb-background-base: 253.011, 253.011, 253.011;
+--rs-color-rgb-background-base: 255, 253.011, 254.00549999999998;
 			}
 		
 			[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] {
@@ -195,7 +195,7 @@
 --rs-color-background-neutral-faded: #2d2d2d;
 --rs-color-border-neutral: #ffffff24;
 --rs-color-border-neutral-faded: #ffffff14;
---rs-color-foreground-neutral: #eaeaea;
+--rs-color-foreground-neutral: #f8f3f7;
 --rs-color-foreground-neutral-faded: #b5b5b5;
 --rs-color-background-disabled: #1e212a;
 --rs-color-background-disabled-faded: #171921;
@@ -203,7 +203,7 @@
 --rs-color-foreground-disabled: #434959;
 --rs-color-background-elevation-base: #161616;
 --rs-color-background-elevation-raised: #161616;
---rs-color-background-elevation-overlay: #1c1f28;
+--rs-color-background-elevation-overlay: #161616;
 --rs-color-background-page: #141414;
 --rs-color-background-page-faded: #111319;
 --rs-color-background-base: #161616;
@@ -223,7 +223,7 @@
 --rs-color-rgb-background-disabled-faded: 23.001, 24.990000000000002, 32.997;
 --rs-color-rgb-background-elevation-base: 22.0065, 22.0065, 22.0065;
 --rs-color-rgb-background-elevation-raised: 22.0065, 22.0065, 22.0065;
---rs-color-rgb-background-elevation-overlay: 27.999, 31.008, 40.0095;
+--rs-color-rgb-background-elevation-overlay: 22.0065, 22.0065, 22.0065;
 --rs-color-rgb-background-page: 19.992, 19.992, 19.992;
 --rs-color-rgb-background-page-faded: 17.008499999999998, 18.9975, 24.990000000000002;
 --rs-color-rgb-background-base: 22.0065, 22.0065, 22.0065;

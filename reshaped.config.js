@@ -5,10 +5,10 @@ const config = {
     kadabra: {
       // Customize Reshaped's semantic tokens
       color: {
-        // Brand colors - override Reshaped's primary colors (black primary for buttons)
-        foregroundPrimary: { hex: "#ffffff", hexDark: "#ffffff" }, // White text on black buttons
-        borderPrimary: { hex: "#000000", hexDark: "#ffffff" },
-        backgroundPrimary: { hex: "#000000", hexDark: "#ffffff" }, // Black primary buttons
+        // Brand colors - override Reshaped's primary colors (dark gray primary for buttons)
+        foregroundPrimary: { hex: "#f8f3f7", hexDark: "#f8f3f7" }, // Soft white text on dark buttons
+        borderPrimary: { hex: "#1c1c1c", hexDark: "#ffffff" },
+        backgroundPrimary: { hex: "#1c1c1c", hexDark: "#ffffff" }, // Dark gray primary buttons
         backgroundPrimaryFaded: { hex: "#f5f5f5", hexDark: "#2d2d2d" },
         
         // Semantic colors (lower contrast dark mode)
@@ -20,19 +20,18 @@ const config = {
         backgroundCritical: { hex: "#ea001e", hexDark: "#c8102e" },
         backgroundCriticalFaded: { hex: "#f8d7da", hexDark: "#5a1a20" },
         
-        // Neutral colors - lower contrast dark mode
-        foregroundNeutral: { hex: "#080707", hexDark: "#eaeaea" },
-        foregroundNeutralFaded: { hex: "#706e6b", hexDark: "#b5b5b5" },
-        backgroundNeutral: { hex: "#ffffff", hexDark: "#1a1a1a" },
+        // Neutral colors - primary and secondary text colors
+        foregroundNeutral: { hex: "#161515", hexDark: "#f8f3f7" }, // Primary text color
+        foregroundNeutralFaded: { hex: "#706e6b", hexDark: "#b5b5b5" }, // Secondary text color
+        backgroundNeutral: { hex: "#fffdfe", hexDark: "#1a1a1a" }, // Card backgrounds
         backgroundNeutralFaded: { hex: "#f8f9fa", hexDark: "#2d2d2d" },
-        // Card backgrounds - blend of page background (60%) and header background (40%)
-        // Light: 60% #ffffff + 40% #fafafa ≈ #fdfdfd (rgb(253, 253, 253))
-        // Dark: 60% #141414 + 40% #1a1919 ≈ #161616 (rgb(22, 22, 22))
-        backgroundBase: { hex: "#fdfdfd", hexDark: "#161616" },
-        backgroundElevationBase: { hex: "#fdfdfd", hexDark: "#161616" },
-        backgroundElevationRaised: { hex: "#fdfdfd", hexDark: "#161616" },
-        // Main content area background - dark grey in dark mode
-        backgroundPage: { hex: "#ffffff", hexDark: "#141414" },
+        // Card backgrounds - using #fffdfe instead of pure white
+        backgroundBase: { hex: "#fffdfe", hexDark: "#161616" },
+        backgroundElevationBase: { hex: "#fffdfe", hexDark: "#161616" },
+        backgroundElevationRaised: { hex: "#fffdfe", hexDark: "#161616" },
+        backgroundElevationOverlay: { hex: "#fffdfe", hexDark: "#161616" },
+        // Main content area background
+        backgroundPage: { hex: "#fffdfe", hexDark: "#141414" },
       },
       
       // Typography - customize font families
@@ -105,6 +104,43 @@ const config = {
         small: { px: 4 },
         medium: { px: 999 }, // Pill-shaped buttons (used by button size classes)
         large: { px: 999 } // Pill-shaped buttons
+      },
+      
+      // Shadow configuration - use dark gray instead of pure black
+      shadow: {
+        raised: [
+          {
+            offsetX: 0,
+            offsetY: 1,
+            blurRadius: 5,
+            spreadRadius: -4,
+            colorToken: "black",
+            opacity: 0.5
+          },
+          {
+            offsetX: 0,
+            offsetY: 4,
+            blurRadius: 8,
+            colorToken: "black",
+            opacity: 0.05
+          }
+        ],
+        overlay: [
+          {
+            offsetX: 0,
+            offsetY: 5,
+            blurRadius: 10,
+            colorToken: "black",
+            opacity: 0.05
+          },
+          {
+            offsetX: 0,
+            offsetY: 15,
+            blurRadius: 25,
+            colorToken: "black",
+            opacity: 0.07
+          }
+        ]
       },
     },
   },

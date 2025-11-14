@@ -160,7 +160,7 @@ export function Sidebar() {
                   fontFamily: '"Courier New", monospace',
                   fontSize: '22px',
                   fontWeight: 600,
-                  color: '#000000',
+                  color: '#1c1c1c',
                 },
               }}>
                 KADABRA

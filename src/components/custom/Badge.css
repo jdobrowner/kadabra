@@ -59,8 +59,8 @@
 .custom-badge[data-rs-color="neutral"],
 .custom-badge[data-rs-color="neutral"][class*="_root_"],
 .custom-badge[class*="--color-neutral"] {
-  --rs-color-background-neutral: rgba(0, 0, 0, 0.08) !important;
-  --rs-color-on-background-neutral: rgba(0, 0, 0, 0.75) !important;
+  --rs-color-background-neutral: rgba(22, 21, 21, 0.08) !important; /* Use #161515 instead of pure black */
+  --rs-color-on-background-neutral: rgba(22, 21, 21, 0.75) !important; /* Use #161515 instead of pure black */
   background: var(--rs-color-background-neutral) !important;
   color: var(--rs-color-on-background-neutral) !important;
 }

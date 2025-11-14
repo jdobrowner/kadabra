@@ -1,6 +1,6 @@
 .custom-components-page {
   min-height: 100vh;
   padding: 24px 0;
-  background-color: var(--rs-color-background-page, #ffffff);
+  background-color: var(--rs-color-background-page, #fffdfe);
 }
 

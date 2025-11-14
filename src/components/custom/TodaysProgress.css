@@ -27,8 +27,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: #f8f3f7; /* Soft white instead of pure white */
+  box-shadow: 0 2px 4px rgba(22, 21, 21, 0.2); /* Use #161515 instead of pure black */
   transition: transform 0.3s ease;
 }
 

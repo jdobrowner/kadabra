@@ -20,7 +20,7 @@ export function ContainerCard({
   const paddingValue = typeof padding === 'number' ? `${padding * 4}px` : padding
   
   // Use CSS variable for default, or provided backgroundColor
-  const finalBackgroundColor = backgroundColor || 'var(--card-background-color, #ffffff)'
+  const finalBackgroundColor = backgroundColor || 'var(--card-background-color, #fffdfe)'
 
   return (
     <View

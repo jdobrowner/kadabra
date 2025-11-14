@@ -67,7 +67,7 @@ export function AvatarWithInitials({ src, alt, name, size }: AvatarWithInitialsP
           }
         }}
       >
-        <Text variant="body-1" weight="bold" attributes={{ style: { color: 'white' } }}>
+        <Text variant="body-1" weight="bold" attributes={{ style: { color: '#f8f3f7' } }}>
           {initials}
         </Text>
       </View>
