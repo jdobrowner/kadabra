@@ -23,7 +23,7 @@
   cursor: pointer;
 }
 
-/* Active state - dark gray background with white text/icon */
+/* Active state - dark gray background with white text/icon (light mode) */
 /* Sidebar buttons use --color-neutral when active, not --color-primary */
 /* Override Reshaped's CSS variables - these are what actually control the button colors */
 /* Target the specific class combination that Reshaped uses with maximum specificity */
@@ -43,7 +43,21 @@
   border-color: var(--rs-color-background-primary) !important;
 }
 
-/* Target all child elements including nested spans, divs, and icons */
+/* Dark mode: Active sidebar buttons use elevation base background color with neutral text */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar button[class*="_root_"][class*="--variant-solid"][class*="--color-neutral"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar [class*="_root_"][class*="--variant-solid"][class*="--color-neutral"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar button[class*="--variant-solid"][class*="--color-neutral"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar [class*="--variant-solid"][class*="--color-neutral"] {
+  --rs-button-background-color: var(--rs-color-background-elevation-base) !important;
+  --rs-button-foreground-color: var(--rs-color-foreground-neutral) !important;
+  --rs-color-background-neutral: var(--rs-color-background-elevation-base) !important;
+  --rs-color-on-background-neutral: var(--rs-color-foreground-neutral) !important;
+  background-color: var(--rs-color-background-elevation-base) !important;
+  color: var(--rs-color-foreground-neutral) !important;
+  border-color: var(--rs-color-background-elevation-base) !important;
+}
+
+/* Target all child elements including nested spans, divs, and icons (light mode) */
 .sidebar button[data-rs-button][data-rs-variant="solid"] *,
 .sidebar button[data-rs-button][class*="--variant-solid"] *,
 .sidebar [data-rs-button][data-rs-variant="solid"] *,
@@ -51,7 +65,7 @@
   color: var(--rs-color-foreground-primary) !important;
 }
 
-/* Target SVG icons specifically */
+/* Target SVG icons specifically (light mode) */
 .sidebar button[data-rs-button][data-rs-variant="solid"] svg,
 .sidebar button[data-rs-button][class*="--variant-solid"] svg,
 .sidebar [data-rs-button][data-rs-variant="solid"] svg,
@@ -60,7 +74,7 @@
   fill: var(--rs-color-foreground-primary) !important;
 }
 
-/* Target Reshaped's text span and nested divs */
+/* Target Reshaped's text span and nested divs (light mode) */
 .sidebar button[data-rs-button][data-rs-variant="solid"] [class*="_text_"],
 .sidebar button[data-rs-button][class*="--variant-solid"] [class*="_text_"],
 .sidebar [data-rs-button][data-rs-variant="solid"] [class*="_text_"],
@@ -70,6 +84,33 @@
 .sidebar [data-rs-button][data-rs-variant="solid"] [class*="_text_"] div,
 .sidebar [data-rs-button][class*="--variant-solid"] [class*="_text_"] div {
   color: var(--rs-color-foreground-primary) !important;
+}
+
+/* Dark mode: Active sidebar button children use neutral text color */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar button[data-rs-button][data-rs-variant="solid"] *,
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar button[data-rs-button][class*="--variant-solid"] *,
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar [data-rs-button][data-rs-variant="solid"] *,
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar [data-rs-button][class*="--variant-solid"] * {
+  color: var(--rs-color-foreground-neutral) !important;
+}
+
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar button[data-rs-button][data-rs-variant="solid"] svg,
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar button[data-rs-button][class*="--variant-solid"] svg,
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar [data-rs-button][data-rs-variant="solid"] svg,
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar [data-rs-button][class*="--variant-solid"] svg {
+  color: var(--rs-color-foreground-neutral) !important;
+  fill: var(--rs-color-foreground-neutral) !important;
+}
+
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar button[data-rs-button][data-rs-variant="solid"] [class*="_text_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar button[data-rs-button][class*="--variant-solid"] [class*="_text_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar [data-rs-button][data-rs-variant="solid"] [class*="_text_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar [data-rs-button][class*="--variant-solid"] [class*="_text_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar button[data-rs-button][data-rs-variant="solid"] [class*="_text_"] div,
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar button[data-rs-button][class*="--variant-solid"] [class*="_text_"] div,
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar [data-rs-button][data-rs-variant="solid"] [class*="_text_"] div,
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar [data-rs-button][class*="--variant-solid"] [class*="_text_"] div {
+  color: var(--rs-color-foreground-neutral) !important;
 }
 
 /* Hover effect for sidebar buttons */
@@ -83,6 +124,12 @@
 
 .sidebar button[data-rs-button][data-rs-variant="solid"]:hover {
   background-color: var(--rs-color-background-primary) !important;
+  opacity: 0.9;
+}
+
+/* Dark mode: Active button hover uses elevation base background */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar button[data-rs-button][data-rs-variant="solid"]:hover {
+  background-color: var(--rs-color-background-elevation-base) !important;
   opacity: 0.9;
 }
 
