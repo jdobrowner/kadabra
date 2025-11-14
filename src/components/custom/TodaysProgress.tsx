@@ -54,7 +54,7 @@ export function TodaysProgress({ resolved, total, className }: TodaysProgressPro
   const allResolved = totalValue === 0
     ? resolvedValue > 0
     : resolvedValue >= totalValue
-  const progressWidth = 150 // 200px * 0.75 = 150px
+  const progressWidth = 180
 
   const [isAnimating, setIsAnimating] = useState(false)
   const [displayProgress, setDisplayProgress] = useState(progressPercentage)

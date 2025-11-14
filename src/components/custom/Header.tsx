@@ -69,7 +69,7 @@ export function Header({
           } 
         }}
       >
-        <View direction="row" gap={6} align="center" attributes={{ style: { minWidth: 0, flexShrink: 0 } }}>
+        <View direction="row" gap={8} align="center" attributes={{ style: { minWidth: 0, flexShrink: 0 } }}>
           <TodaysProgress />
           {displayAvatar && (
             <DropdownMenu position="bottom-end" fallbackPositions={['bottom', 'top-end', 'top']}>

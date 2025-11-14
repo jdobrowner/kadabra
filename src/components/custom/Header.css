@@ -10,8 +10,8 @@
   left: 220px; /* Start to the right of sidebar */
   z-index: 100;
   width: calc(100% - 220px);
-  /* Transparent background */
-  background: transparent !important;
+  /* App background color */
+  background: var(--rs-color-background-page) !important;
 }
 
 .app-header.sidebar-transitions {
