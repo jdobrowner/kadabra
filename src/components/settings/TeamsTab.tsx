@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { View, Text, Button, Table, Icon } from 'reshaped'
-import { Plus, UsersThree, Funnel } from '@phosphor-icons/react'
+import { View, Text, Button, Table, Icon, DropdownMenu } from 'reshaped'
+import { Plus, UsersThree, Funnel, CaretDown } from '@phosphor-icons/react'
 import { useTeamsStore } from '../../store/useTeamsStore'
 import { useUsersStore } from '../../store/useUsersStore'
 
@@ -400,31 +400,54 @@ export default function TeamsTab() {
                   <Text variant="caption-1" weight="medium">
                     Add member
                   </Text>
-                  <select
-                    disabled={usersLoading || membersNotInTeam.length === 0}
-                    onChange={(e) => {
-                      const value = e.target.value
-                      if (value) {
-                        handleAddMember(selectedTeam.team.id, value)
-                        e.currentTarget.selectedIndex = 0
-                      }
-                    }}
-                    style={{
-                      minWidth: '220px',
-                      padding: '6px 10px',
-                      borderRadius: '4px',
-                      border: '1px solid var(--rs-color-border-neutral)',
-                      backgroundColor: 'var(--rs-color-background-neutral)',
-                      fontSize: '14px',
-                    }}
-                  >
-                    <option value="">{membersNotInTeam.length === 0 ? 'No available users' : 'Select user...'}</option>
-                    {membersNotInTeam.map((user) => (
-                      <option key={user.id} value={user.id}>
-                        {user.name || user.email}
-                      </option>
-                    ))}
-                  </select>
+                  <DropdownMenu>
+                    <DropdownMenu.Trigger>
+                      {(attributes) => (
+                        <Button
+                          {...attributes}
+                          variant="outline"
+                          size="small"
+                          disabled={usersLoading || membersNotInTeam.length === 0}
+                          attributes={{
+                            style: {
+                              borderRadius: '30px',
+                              paddingLeft: '16px',
+                              paddingRight: '12px',
+                              minWidth: '220px',
+                            }
+                          }}
+                        >
+                          <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
+                            <Text>
+                              {membersNotInTeam.length === 0 ? 'No available users' : 'Select user...'}
+                            </Text>
+                            <CaretDown size={16} weight="bold" />
+                          </View>
+                        </Button>
+                      )}
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content>
+                      {membersNotInTeam.length === 0 ? (
+                        <DropdownMenu.Item disabled>No available users</DropdownMenu.Item>
+                      ) : (
+                        <>
+                          <DropdownMenu.Item onClick={() => {}} disabled>
+                            Select user...
+                          </DropdownMenu.Item>
+                          {membersNotInTeam.map((user) => (
+                            <DropdownMenu.Item
+                              key={user.id}
+                              onClick={() => {
+                                handleAddMember(selectedTeam.team.id, user.id)
+                              }}
+                            >
+                              {user.name || user.email}
+                            </DropdownMenu.Item>
+                          ))}
+                        </>
+                      )}
+                    </DropdownMenu.Content>
+                  </DropdownMenu>
                 </View>
               </View>
 

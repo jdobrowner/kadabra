@@ -1,6 +1,6 @@
-import { Container, View, Button, Card, Text, Loader } from 'reshaped'
+import { Container, View, Button, Card, Text, Loader, DropdownMenu } from 'reshaped'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Lightbulb, Phone, User, Copy, CheckCircle, Plus } from '@phosphor-icons/react'
+import { ArrowLeft, Lightbulb, Phone, User, Copy, CheckCircle, Plus, CaretDown } from '@phosphor-icons/react'
 import { useAppStore } from '../store/useAppStore'
 import { useActionPlansStore } from '../store/useActionPlansStore'
 import { useBoardsStore, type BoardColumn } from '../store/useBoardsStore'
@@ -362,25 +362,50 @@ export default function ActionPlan() {
                   <Text variant="caption-1" weight="medium">
                     Board
                   </Text>
-                  <select
-                    value={promotionBoardId}
-                    onChange={(event) => setPromotionBoardId(event.target.value)}
-                    disabled={boardsLoading || boards.length === 0 || isPromoting}
-                    style={{
-                      padding: '8px 12px',
-                      borderRadius: '6px',
-                      border: '1px solid var(--rs-color-border-neutral)',
-                      backgroundColor: 'var(--rs-color-background-neutral)',
-                      fontSize: '14px',
-                    }}
-                  >
-                    {boards.length === 0 && <option value="">No boards available</option>}
-                    {boards.map((boardItem) => (
-                      <option key={boardItem.id} value={boardItem.id}>
-                        {boardItem.name}
-                      </option>
-                    ))}
-                  </select>
+                  {boardsLoading || boards.length === 0 ? (
+                    <Text variant="caption-1" color="neutral-faded">
+                      {boardsLoading ? 'Loading boards…' : 'No boards available'}
+                    </Text>
+                  ) : (
+                    <DropdownMenu>
+                      <DropdownMenu.Trigger>
+                        {(attributes) => (
+                          <Button
+                            {...attributes}
+                            variant="outline"
+                            size="small"
+                            disabled={isPromoting}
+                            attributes={{
+                              style: {
+                                borderRadius: '30px',
+                                paddingLeft: '16px',
+                                paddingRight: '12px',
+                                width: '100%',
+                                justifyContent: 'space-between',
+                              }
+                            }}
+                          >
+                            <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
+                              <Text>
+                                {promotionBoardId ? boards.find(b => b.id === promotionBoardId)?.name || 'Select board' : 'Select board'}
+                              </Text>
+                              <CaretDown size={16} weight="bold" />
+                            </View>
+                          </Button>
+                        )}
+                      </DropdownMenu.Trigger>
+                      <DropdownMenu.Content>
+                        {boards.map((boardItem) => (
+                          <DropdownMenu.Item
+                            key={boardItem.id}
+                            onClick={() => setPromotionBoardId(boardItem.id)}
+                          >
+                            {boardItem.name}
+                          </DropdownMenu.Item>
+                        ))}
+                      </DropdownMenu.Content>
+                    </DropdownMenu>
+                  )}
                   {selectedBoardMeta && (
                     <Text variant="caption-1" color="neutral-faded">
                       {selectedBoardMeta.cardType.toUpperCase()} •{' '}
@@ -402,24 +427,44 @@ export default function ActionPlan() {
                       This board has no columns yet. Configure columns in Settings → Boards.
                     </Text>
                   ) : (
-                    <select
-                      value={promotionColumnId}
-                      onChange={(event) => setPromotionColumnId(event.target.value)}
-                      disabled={isPromoting}
-                      style={{
-                        padding: '8px 12px',
-                        borderRadius: '6px',
-                        border: '1px solid var(--rs-color-border-neutral)',
-                        backgroundColor: 'var(--rs-color-background-neutral)',
-                        fontSize: '14px',
-                      }}
-                    >
-                      {promotionColumns.map((column) => (
-                        <option key={column.id} value={column.id}>
-                          {column.name}
-                        </option>
-                      ))}
-                    </select>
+                    <DropdownMenu>
+                      <DropdownMenu.Trigger>
+                        {(attributes) => (
+                          <Button
+                            {...attributes}
+                            variant="outline"
+                            size="small"
+                            disabled={isPromoting}
+                            attributes={{
+                              style: {
+                                borderRadius: '30px',
+                                paddingLeft: '16px',
+                                paddingRight: '12px',
+                                width: '100%',
+                                justifyContent: 'space-between',
+                              }
+                            }}
+                          >
+                            <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
+                              <Text>
+                                {promotionColumnId ? promotionColumns.find(c => c.id === promotionColumnId)?.name || 'Select column' : 'Select column'}
+                              </Text>
+                              <CaretDown size={16} weight="bold" />
+                            </View>
+                          </Button>
+                        )}
+                      </DropdownMenu.Trigger>
+                      <DropdownMenu.Content>
+                        {promotionColumns.map((column) => (
+                          <DropdownMenu.Item
+                            key={column.id}
+                            onClick={() => setPromotionColumnId(column.id)}
+                          >
+                            {column.name}
+                          </DropdownMenu.Item>
+                        ))}
+                      </DropdownMenu.Content>
+                    </DropdownMenu>
                   )}
                 </View>
 
@@ -427,25 +472,47 @@ export default function ActionPlan() {
                   <Text variant="caption-1" weight="medium">
                     Assign team (optional)
                   </Text>
-                  <select
-                    value={promotionTeamId}
-                    onChange={(event) => setPromotionTeamId(event.target.value)}
-                    disabled={isPromoting}
-                    style={{
-                      padding: '8px 12px',
-                      borderRadius: '6px',
-                      border: '1px solid var(--rs-color-border-neutral)',
-                      backgroundColor: 'var(--rs-color-background-neutral)',
-                      fontSize: '14px',
-                    }}
-                  >
-                    <option value="">Unassigned</option>
-                    {teams.map((team) => (
-                      <option key={team.id} value={team.id}>
-                        {team.name}
-                      </option>
-                    ))}
-                  </select>
+                  <DropdownMenu>
+                    <DropdownMenu.Trigger>
+                      {(attributes) => (
+                        <Button
+                          {...attributes}
+                          variant="outline"
+                          size="small"
+                          disabled={isPromoting}
+                          attributes={{
+                            style: {
+                              borderRadius: '30px',
+                              paddingLeft: '16px',
+                              paddingRight: '12px',
+                              width: '100%',
+                              justifyContent: 'space-between',
+                            }
+                          }}
+                        >
+                          <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
+                            <Text>
+                              {promotionTeamId ? teams.find(t => t.id === promotionTeamId)?.name || 'Unassigned' : 'Unassigned'}
+                            </Text>
+                            <CaretDown size={16} weight="bold" />
+                          </View>
+                        </Button>
+                      )}
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content>
+                      <DropdownMenu.Item onClick={() => setPromotionTeamId('')}>
+                        Unassigned
+                      </DropdownMenu.Item>
+                      {teams.map((team) => (
+                        <DropdownMenu.Item
+                          key={team.id}
+                          onClick={() => setPromotionTeamId(team.id)}
+                        >
+                          {team.name}
+                        </DropdownMenu.Item>
+                      ))}
+                    </DropdownMenu.Content>
+                  </DropdownMenu>
                 </View>
               </View>
 

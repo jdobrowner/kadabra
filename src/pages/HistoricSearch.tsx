@@ -1,5 +1,5 @@
-import { Container, View, Card, Text, Select, Button } from 'reshaped'
-import { MagnifyingGlass, Funnel } from '@phosphor-icons/react'
+import { Container, View, Card, Text, Button, DropdownMenu } from 'reshaped'
+import { MagnifyingGlass, Funnel, CaretDown } from '@phosphor-icons/react'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { PageHeader } from '../components/custom/PageHeader'
@@ -42,6 +42,42 @@ export default function HistoricSearch() {
 
   const hasActiveFilters = searchQuery !== '' || typeFilter !== 'all' || statusFilter !== 'all' || priorityFilter !== 'all'
 
+  // Helper functions to get display labels
+  const getTypeLabel = (value: string) => {
+    const labels: Record<string, string> = {
+      'all': 'All Types',
+      'customers': 'Customers',
+      'conversations': 'Conversations',
+      'action-plans': 'Action Plans',
+    }
+    return labels[value] || 'All Types'
+  }
+
+  const getPriorityLabel = (value: string) => {
+    const labels: Record<string, string> = {
+      'all': 'All Priority',
+      'at-risk': 'At-Risk',
+      'opportunity': 'Opportunity',
+      'lead': 'Lead',
+      'follow-up': 'Follow-Up',
+      'no-action': 'No Action',
+    }
+    return labels[value] || 'All Priority'
+  }
+
+  const getStatusLabel = (value: string) => {
+    const labels: Record<string, string> = {
+      'all': 'All Status',
+      'active': 'Active',
+      'completed': 'Completed',
+    }
+    return labels[value] || 'All Status'
+  }
+
+  const getSortLabel = (value: 'recent' | 'relevance') => {
+    return value === 'recent' ? 'Most Recent' : 'Relevance'
+  }
+
   return (
     <Container>
       <View direction="column" gap={6}>
@@ -80,65 +116,170 @@ export default function HistoricSearch() {
                 </Text>
               </View>
 
-              <Select
-                name="type"
-                value={typeFilter}
-                onChange={(value) => setTypeFilter(value as any)}
-                options={[
-                  { value: 'all', label: 'All Types' },
-                  { value: 'customers', label: 'Customers' },
-                  { value: 'conversations', label: 'Conversations' },
-                  { value: 'action-plans', label: 'Action Plans' },
-                ]}
-                attributes={{ style: { minWidth: '150px' } }}
-              />
+              {/* Type Filter */}
+              <View direction="row" gap={2} align="center">
+                <Text variant="body-2" weight="medium">Type:</Text>
+                <DropdownMenu>
+                  <DropdownMenu.Trigger>
+                    {(attributes) => (
+                      <Button
+                        {...attributes}
+                        variant="outline"
+                        size="small"
+                        attributes={{
+                          style: {
+                            borderRadius: '30px',
+                            paddingLeft: '16px',
+                            paddingRight: '12px',
+                          }
+                        }}
+                      >
+                        <View direction="row" gap={2} align="center">
+                          <Text>{getTypeLabel(typeFilter)}</Text>
+                          <CaretDown size={16} weight="bold" />
+                        </View>
+                      </Button>
+                    )}
+                  </DropdownMenu.Trigger>
+                  <DropdownMenu.Content>
+                    <DropdownMenu.Item onClick={() => setTypeFilter('all')}>
+                      All Types
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item onClick={() => setTypeFilter('customers')}>
+                      Customers
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item onClick={() => setTypeFilter('conversations')}>
+                      Conversations
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item onClick={() => setTypeFilter('action-plans')}>
+                      Action Plans
+                    </DropdownMenu.Item>
+                  </DropdownMenu.Content>
+                </DropdownMenu>
+              </View>
 
-              <Select
-                name="priority"
-                value={priorityFilter}
-                onChange={(value) => {
-                  const val = typeof value === 'string' ? value : value?.value || 'all'
-                  setPriorityFilter(val)
-                }}
-                options={[
-                  { value: 'all', label: 'All Priority' },
-                  { value: 'at-risk', label: 'At-Risk' },
-                  { value: 'opportunity', label: 'Opportunity' },
-                  { value: 'lead', label: 'Lead' },
-                  { value: 'follow-up', label: 'Follow-Up' },
-                  { value: 'no-action', label: 'No Action' },
-                ]}
-                attributes={{ style: { minWidth: '150px' } }}
-              />
+              {/* Priority Filter */}
+              <View direction="row" gap={2} align="center">
+                <Text variant="body-2" weight="medium">Priority:</Text>
+                <DropdownMenu>
+                  <DropdownMenu.Trigger>
+                    {(attributes) => (
+                      <Button
+                        {...attributes}
+                        variant="outline"
+                        size="small"
+                        attributes={{
+                          style: {
+                            borderRadius: '30px',
+                            paddingLeft: '16px',
+                            paddingRight: '12px',
+                          }
+                        }}
+                      >
+                        <View direction="row" gap={2} align="center">
+                          <Text>{getPriorityLabel(priorityFilter)}</Text>
+                          <CaretDown size={16} weight="bold" />
+                        </View>
+                      </Button>
+                    )}
+                  </DropdownMenu.Trigger>
+                  <DropdownMenu.Content>
+                    <DropdownMenu.Item onClick={() => setPriorityFilter('all')}>
+                      All Priority
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item onClick={() => setPriorityFilter('at-risk')}>
+                      At-Risk
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item onClick={() => setPriorityFilter('opportunity')}>
+                      Opportunity
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item onClick={() => setPriorityFilter('lead')}>
+                      Lead
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item onClick={() => setPriorityFilter('follow-up')}>
+                      Follow-Up
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item onClick={() => setPriorityFilter('no-action')}>
+                      No Action
+                    </DropdownMenu.Item>
+                  </DropdownMenu.Content>
+                </DropdownMenu>
+              </View>
 
-              <Select
-                name="status"
-                value={statusFilter}
-                onChange={(value) => {
-                  const val = typeof value === 'string' ? value : value?.value || 'all'
-                  setStatusFilter(val)
-                }}
-                options={[
-                  { value: 'all', label: 'All Status' },
-                  { value: 'active', label: 'Active' },
-                  { value: 'completed', label: 'Completed' },
-                ]}
-                attributes={{ style: { minWidth: '150px' } }}
-              />
+              {/* Status Filter */}
+              <View direction="row" gap={2} align="center">
+                <Text variant="body-2" weight="medium">Status:</Text>
+                <DropdownMenu>
+                  <DropdownMenu.Trigger>
+                    {(attributes) => (
+                      <Button
+                        {...attributes}
+                        variant="outline"
+                        size="small"
+                        attributes={{
+                          style: {
+                            borderRadius: '30px',
+                            paddingLeft: '16px',
+                            paddingRight: '12px',
+                          }
+                        }}
+                      >
+                        <View direction="row" gap={2} align="center">
+                          <Text>{getStatusLabel(statusFilter)}</Text>
+                          <CaretDown size={16} weight="bold" />
+                        </View>
+                      </Button>
+                    )}
+                  </DropdownMenu.Trigger>
+                  <DropdownMenu.Content>
+                    <DropdownMenu.Item onClick={() => setStatusFilter('all')}>
+                      All Status
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item onClick={() => setStatusFilter('active')}>
+                      Active
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item onClick={() => setStatusFilter('completed')}>
+                      Completed
+                    </DropdownMenu.Item>
+                  </DropdownMenu.Content>
+                </DropdownMenu>
+              </View>
 
-              <Select
-                name="sort"
-                value={sortBy}
-                onChange={(value) => {
-                  const val = typeof value === 'string' ? value : value?.value || 'recent'
-                  setSortBy(val as 'recent' | 'relevance')
-                }}
-                options={[
-                  { value: 'recent', label: 'Most Recent' },
-                  { value: 'relevance', label: 'Relevance' },
-                ]}
-                attributes={{ style: { minWidth: '150px' } }}
-              />
+              {/* Sort Filter */}
+              <View direction="row" gap={2} align="center">
+                <Text variant="body-2" weight="medium">Sort:</Text>
+                <DropdownMenu>
+                  <DropdownMenu.Trigger>
+                    {(attributes) => (
+                      <Button
+                        {...attributes}
+                        variant="outline"
+                        size="small"
+                        attributes={{
+                          style: {
+                            borderRadius: '30px',
+                            paddingLeft: '16px',
+                            paddingRight: '12px',
+                          }
+                        }}
+                      >
+                        <View direction="row" gap={2} align="center">
+                          <Text>{getSortLabel(sortBy)}</Text>
+                          <CaretDown size={16} weight="bold" />
+                        </View>
+                      </Button>
+                    )}
+                  </DropdownMenu.Trigger>
+                  <DropdownMenu.Content>
+                    <DropdownMenu.Item onClick={() => setSortBy('recent')}>
+                      Most Recent
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item onClick={() => setSortBy('relevance')}>
+                      Relevance
+                    </DropdownMenu.Item>
+                  </DropdownMenu.Content>
+                </DropdownMenu>
+              </View>
 
               {hasActiveFilters && (
                 <Button variant="outline" size="small" onClick={handleClearFilters}>

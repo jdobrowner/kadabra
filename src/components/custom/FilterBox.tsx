@@ -1,5 +1,5 @@
-import { Card, Text, View, Select, Button, ToggleButtonGroup, ToggleButton, Icon } from 'reshaped'
-import { Funnel, X, TrendUp, Clock } from '@phosphor-icons/react'
+import { Card, Text, View, Button, Icon, DropdownMenu } from 'reshaped'
+import { Funnel, X, TrendUp, Clock, CaretDown } from '@phosphor-icons/react'
 
 export interface FilterBoxProps {
   priorityFilter?: string
@@ -25,28 +25,45 @@ export function FilterBox({
   onClear
 }: FilterBoxProps) {
   const hasActiveFilters = priorityFilter !== 'all' || assigneeFilter !== 'all' || timeframeFilter !== 'all'
-  const normalizeToggleValue = (value: unknown, fallback: string) => {
-    if (Array.isArray(value)) {
-      const first = value[0]
-      return typeof first === 'string' ? first : fallback
+  
+  // Helper functions to get display labels
+  const getPriorityLabel = (value: string) => {
+    const labels: Record<string, string> = {
+      'all': 'All Priority',
+      'at-risk': 'At-Risk',
+      'opportunity': 'Opportunity',
+      'lead': 'Lead',
+      'follow-up': 'Follow-Up',
+      'no-action': 'No Action',
     }
-    if (typeof value === 'string') {
-      return value
-    }
-    return fallback
+    return labels[value] || 'All Priority'
   }
-  const getToggleButtonAttributes = (isActive: boolean) => ({
-    style: {
-      borderRadius: '30px',
-      border: '1px solid',
-      borderColor: isActive ? 'var(--rs-color-border-primary)' : 'var(--rs-color-border-neutral-faded)',
-      backgroundColor: isActive ? 'var(--rs-color-background-primary-faded)' : 'transparent',
-      color: isActive ? 'var(--rs-color-foreground-primary)' : undefined,
-      boxShadow: isActive ? '0 1px 2px rgba(22, 21, 21, 0.08)' : 'none',
-      fontWeight: isActive ? 600 : undefined,
-      transition: 'background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease',
-    },
-  })
+
+  const getAssigneeLabel = (value: string) => {
+    const labels: Record<string, string> = {
+      'all': 'All Assignees',
+      'john-smith': 'John Smith',
+      'emily-davis': 'Emily Davis',
+      'michael-chen': 'Michael Chen',
+      'unassigned': 'Unassigned',
+    }
+    return labels[value] || 'All Assignees'
+  }
+
+  const getTimeframeLabel = (value: string) => {
+    const labels: Record<string, string> = {
+      'all': 'All Time',
+      'today': 'Today',
+      '24h': 'Last 24 Hours',
+      '7d': 'Last 7 Days',
+      '30d': 'Last 30 Days',
+    }
+    return labels[value] || 'All Time'
+  }
+
+  const getRankingLabel = (value: 'priority' | 'most-recent') => {
+    return value === 'priority' ? 'Priority' : 'Most Recent'
+  }
 
   return (
     <Card padding={6}>
@@ -60,67 +77,191 @@ export function FilterBox({
             </Text>
           </View>
 
-          <ToggleButtonGroup
-            value={priorityFilter ? [priorityFilter] : []}
-            onChange={({ value }) => {
-              const normalized = normalizeToggleValue(value, 'all')
-              onPriorityChange?.(normalized || 'all')
-            }}
-            selectionMode="single"
-          >
-            <ToggleButton value="all" attributes={getToggleButtonAttributes(priorityFilter === 'all')}>
+          {/* Priority Filter */}
+          <View direction="row" gap={2} align="center">
+            <Text variant="body-2" weight="medium">Priority:</Text>
+            <DropdownMenu>
+              <DropdownMenu.Trigger>
+                {(attributes) => (
+                  <Button
+                    {...attributes}
+                    variant="outline"
+                    size="small"
+                    attributes={{
+                      style: {
+                        borderRadius: '30px',
+                        paddingLeft: '16px',
+                        paddingRight: '12px',
+                      }
+                    }}
+                  >
+                    <View direction="row" gap={2} align="center">
+                      <Text>{getPriorityLabel(priorityFilter)}</Text>
+                      <CaretDown size={16} weight="bold" />
+                    </View>
+                  </Button>
+                )}
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content>
+                <DropdownMenu.Item onClick={() => onPriorityChange?.('all')}>
               All Priority
-            </ToggleButton>
-            <ToggleButton value="at-risk" attributes={getToggleButtonAttributes(priorityFilter === 'at-risk')}>
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onPriorityChange?.('at-risk')}>
               At-Risk
-            </ToggleButton>
-            <ToggleButton
-              value="opportunity"
-              attributes={getToggleButtonAttributes(priorityFilter === 'opportunity')}
-            >
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onPriorityChange?.('opportunity')}>
               Opportunity
-            </ToggleButton>
-            <ToggleButton value="lead" attributes={getToggleButtonAttributes(priorityFilter === 'lead')}>
-              Lead
-            </ToggleButton>
-            <ToggleButton
-              value="follow-up"
-              attributes={getToggleButtonAttributes(priorityFilter === 'follow-up')}
-            >
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onPriorityChange?.('lead')}>
+                  Lead
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onPriorityChange?.('follow-up')}>
               Follow-Up
-            </ToggleButton>
-            <ToggleButton value="no-action" attributes={getToggleButtonAttributes(priorityFilter === 'no-action')}>
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onPriorityChange?.('no-action')}>
               No Action
-            </ToggleButton>
-          </ToggleButtonGroup>
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu>
+          </View>
 
-          <Select
-            name="assignee"
-            value={assigneeFilter}
-            onChange={(value) => onAssigneeChange?.(typeof value === 'string' ? value : value?.value || '')}
-            options={[
-              { value: 'all', label: 'All Assignees' },
-              { value: 'john-smith', label: 'John Smith' },
-              { value: 'emily-davis', label: 'Emily Davis' },
-              { value: 'michael-chen', label: 'Michael Chen' },
-              { value: 'unassigned', label: 'Unassigned' },
-            ]}
-            attributes={{ style: { minWidth: '150px' } }}
-          />
+          {/* Assignee Filter */}
+          <View direction="row" gap={2} align="center">
+            <Text variant="body-2" weight="medium">Assignee:</Text>
+            <DropdownMenu>
+              <DropdownMenu.Trigger>
+                {(attributes) => (
+                  <Button
+                    {...attributes}
+                    variant="outline"
+                    size="small"
+                    attributes={{
+                      style: {
+                        borderRadius: '30px',
+                        paddingLeft: '16px',
+                        paddingRight: '12px',
+                      }
+                    }}
+                  >
+                    <View direction="row" gap={2} align="center">
+                      <Text>{getAssigneeLabel(assigneeFilter)}</Text>
+                      <CaretDown size={16} weight="bold" />
+                    </View>
+                  </Button>
+                )}
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content>
+                <DropdownMenu.Item onClick={() => onAssigneeChange?.('all')}>
+                  All Assignees
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onAssigneeChange?.('john-smith')}>
+                  John Smith
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onAssigneeChange?.('emily-davis')}>
+                  Emily Davis
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onAssigneeChange?.('michael-chen')}>
+                  Michael Chen
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onAssigneeChange?.('unassigned')}>
+                  Unassigned
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu>
+          </View>
 
-          <Select
-            name="timeframe"
-            value={timeframeFilter}
-            onChange={(value) => onTimeframeChange?.(typeof value === 'string' ? value : value?.value || '')}
-            options={[
-              { value: 'all', label: 'All Time' },
-              { value: 'today', label: 'Today' },
-              { value: '24h', label: 'Last 24 Hours' },
-              { value: '7d', label: 'Last 7 Days' },
-              { value: '30d', label: 'Last 30 Days' },
-            ]}
-            attributes={{ style: { minWidth: '150px' } }}
-          />
+          {/* Timeframe Filter */}
+          <View direction="row" gap={2} align="center">
+            <Text variant="body-2" weight="medium">Timeframe:</Text>
+            <DropdownMenu>
+              <DropdownMenu.Trigger>
+                {(attributes) => (
+                  <Button
+                    {...attributes}
+                    variant="outline"
+                    size="small"
+                    attributes={{
+                      style: {
+                        borderRadius: '30px',
+                        paddingLeft: '16px',
+                        paddingRight: '12px',
+                      }
+                    }}
+                  >
+                    <View direction="row" gap={2} align="center">
+                      <Text>{getTimeframeLabel(timeframeFilter)}</Text>
+                      <CaretDown size={16} weight="bold" />
+                    </View>
+                  </Button>
+                )}
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content>
+                <DropdownMenu.Item onClick={() => onTimeframeChange?.('all')}>
+                  All Time
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onTimeframeChange?.('today')}>
+                  Today
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onTimeframeChange?.('24h')}>
+                  Last 24 Hours
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onTimeframeChange?.('7d')}>
+                  Last 7 Days
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onTimeframeChange?.('30d')}>
+                  Last 30 Days
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu>
+          </View>
+
+          {/* Ranking Filter */}
+          <View direction="row" gap={2} align="center">
+            <Icon svg={<TrendUp weight="bold" />} size={4} />
+            <Text variant="body-2" weight="medium">Ranked by:</Text>
+            <DropdownMenu>
+              <DropdownMenu.Trigger>
+                {(attributes) => (
+                  <Button
+                    {...attributes}
+                    variant="outline"
+                    size="small"
+                    attributes={{
+                      style: {
+                        borderRadius: '30px',
+                        paddingLeft: '16px',
+                        paddingRight: '12px',
+                      }
+                    }}
+                  >
+                    <View direction="row" gap={2} align="center">
+                      {rankingOption === 'priority' ? (
+                        <Icon svg={<TrendUp />} size={4} />
+                      ) : (
+                        <Icon svg={<Clock />} size={4} />
+                      )}
+                      <Text>{getRankingLabel(rankingOption)}</Text>
+                      <CaretDown size={16} weight="bold" />
+                    </View>
+                  </Button>
+                )}
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content>
+                <DropdownMenu.Item onClick={() => onRankingChange?.('priority')}>
+                  <View direction="row" gap={2} align="center">
+                    <Icon svg={<TrendUp />} size={4} />
+                    <Text>Priority</Text>
+                  </View>
+                </DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => onRankingChange?.('most-recent')}>
+                  <View direction="row" gap={2} align="center">
+                    <Icon svg={<Clock />} size={4} />
+                    <Text>Most Recent</Text>
+                  </View>
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu>
+          </View>
 
           {hasActiveFilters && (
             <Button
@@ -132,43 +273,6 @@ export function FilterBox({
               Clear
             </Button>
           )}
-        </View>
-
-        {/* Ranking Row */}
-        <View direction="row" gap={4} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
-          <View direction="row" gap={2} align="center">
-            <Icon svg={<TrendUp weight="bold" />} size={4} />
-            <Text variant="body-2" weight="medium">
-              Ranked by:
-            </Text>
-            <ToggleButtonGroup
-              value={rankingOption ? [rankingOption] : []}
-              onChange={({ value }) => {
-                const normalized = normalizeToggleValue(value, 'priority') as 'priority' | 'most-recent'
-                onRankingChange?.(normalized)
-              }}
-              selectionMode="single"
-            >
-              <ToggleButton
-                value="priority"
-                attributes={getToggleButtonAttributes(rankingOption === 'priority')}
-              >
-                <View direction="row" gap={2} align="center">
-                  <Icon svg={<TrendUp />} size={4} />
-                  <Text>Priority</Text>
-                </View>
-              </ToggleButton>
-              <ToggleButton
-                value="most-recent"
-                attributes={getToggleButtonAttributes(rankingOption === 'most-recent')}
-              >
-                <View direction="row" gap={2} align="center">
-                  <Icon svg={<Clock />} size={4} />
-                  <Text>Most Recent</Text>
-                </View>
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </View>
         </View>
       </View>
     </Card>

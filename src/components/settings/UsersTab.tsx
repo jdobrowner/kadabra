@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { View, Text, Button, Table, Avatar, Icon } from 'reshaped'
-import { Trash, UserCircle } from '@phosphor-icons/react'
+import { View, Text, Button, Table, Avatar, Icon, DropdownMenu } from 'reshaped'
+import { Trash, UserCircle, CaretDown } from '@phosphor-icons/react'
 import { useUsersStore } from '../../store/useUsersStore'
 import { useAuthStore } from '../../store/useAuthStore'
 
@@ -146,30 +146,40 @@ export default function UsersTab() {
                         {user.role}
                       </Text>
                       {!isCurrentUser && !isUpdating && (
-                        <View
-                          attributes={{
-                            style: { position: 'relative' },
-                          }}
-                        >
-                          <select
-                            value={user.role}
-                            onChange={(e) => handleUpdateRole(user.id, e.target.value as 'admin' | 'developer' | 'member')}
-                            style={{
-                              padding: '4px 24px 4px 8px',
-                              borderRadius: '4px',
-                              border: '1px solid var(--rs-color-border-neutral)',
-                              backgroundColor: 'var(--rs-color-background-neutral)',
-                              fontSize: '14px',
-                              cursor: 'pointer',
-                            }}
-                          >
+                        <DropdownMenu>
+                          <DropdownMenu.Trigger>
+                            {(attributes) => (
+                              <Button
+                                {...attributes}
+                                variant="outline"
+                                size="small"
+                                attributes={{
+                                  style: {
+                                    borderRadius: '30px',
+                                    paddingLeft: '12px',
+                                    paddingRight: '8px',
+                                    fontSize: '14px',
+                                  }
+                                }}
+                              >
+                                <View direction="row" gap={2} align="center">
+                                  <Text>{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</Text>
+                                  <CaretDown size={14} weight="bold" />
+                                </View>
+                              </Button>
+                            )}
+                          </DropdownMenu.Trigger>
+                          <DropdownMenu.Content>
                             {(['admin', 'developer', 'member'] as const).map((role) => (
-                              <option key={role} value={role}>
+                              <DropdownMenu.Item
+                                key={role}
+                                onClick={() => handleUpdateRole(user.id, role)}
+                              >
                                 {role.charAt(0).toUpperCase() + role.slice(1)}
-                              </option>
+                              </DropdownMenu.Item>
                             ))}
-                          </select>
-                        </View>
+                          </DropdownMenu.Content>
+                        </DropdownMenu>
                       )}
                     </View>
                   </View>

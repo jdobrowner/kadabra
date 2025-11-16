@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { View, Text, Button, Table, Icon } from 'reshaped'
-import { Plus, Columns } from '@phosphor-icons/react'
+import { View, Text, Button, Table, Icon, DropdownMenu } from 'reshaped'
+import { Plus, Columns, CaretDown } from '@phosphor-icons/react'
 import { useBoardsStore } from '../../store/useBoardsStore'
 import { useTeamsStore } from '../../store/useTeamsStore'
 
@@ -264,46 +264,81 @@ export default function BoardsTab() {
                   <Text variant="caption-1" weight="medium">
                     Visibility
                   </Text>
-                  <select
-                    value={newBoardVisibility}
-                    onChange={(e) => setNewBoardVisibility(e.target.value as 'org' | 'team')}
-                    style={{
-                      width: '100%',
-                      padding: '8px 12px',
-                      borderRadius: '4px',
-                      border: '1px solid var(--rs-color-border-neutral)',
-                      backgroundColor: 'var(--rs-color-background-neutral)',
-                      fontSize: '14px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <option value="team">Specific teams</option>
-                    <option value="org">Entire organization</option>
-                  </select>
+                  <DropdownMenu>
+                    <DropdownMenu.Trigger>
+                      {(attributes) => (
+                        <Button
+                          {...attributes}
+                          variant="outline"
+                          size="small"
+                          attributes={{
+                            style: {
+                              borderRadius: '30px',
+                              paddingLeft: '16px',
+                              paddingRight: '12px',
+                              width: '100%',
+                              justifyContent: 'space-between',
+                            }
+                          }}
+                        >
+                          <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
+                            <Text>
+                              {newBoardVisibility === 'org' ? 'Entire organization' : 'Specific teams'}
+                            </Text>
+                            <CaretDown size={16} weight="bold" />
+                          </View>
+                        </Button>
+                      )}
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content>
+                      <DropdownMenu.Item onClick={() => setNewBoardVisibility('team')}>
+                        Specific teams
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Item onClick={() => setNewBoardVisibility('org')}>
+                        Entire organization
+                      </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                  </DropdownMenu>
                 </View>
                 <View direction="column" gap={1} attributes={{ style: { flex: 1 } }}>
                   <Text variant="caption-1" weight="medium">
                     Card type
                   </Text>
-                  <select
-                    value={newBoardType}
-                    onChange={(e) => setNewBoardType(e.target.value as typeof newBoardType)}
-                    style={{
-                      width: '100%',
-                      padding: '8px 12px',
-                      borderRadius: '4px',
-                      border: '1px solid var(--rs-color-border-neutral)',
-                      backgroundColor: 'var(--rs-color-background-neutral)',
-                      fontSize: '14px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {(['lead', 'case', 'deal', 'task', 'custom'] as const).map((type) => (
-                      <option key={type} value={type}>
-                        {cardTypeLabels[type]}
-                      </option>
-                    ))}
-                  </select>
+                  <DropdownMenu>
+                    <DropdownMenu.Trigger>
+                      {(attributes) => (
+                        <Button
+                          {...attributes}
+                          variant="outline"
+                          size="small"
+                          attributes={{
+                            style: {
+                              borderRadius: '30px',
+                              paddingLeft: '16px',
+                              paddingRight: '12px',
+                              width: '100%',
+                              justifyContent: 'space-between',
+                            }
+                          }}
+                        >
+                          <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
+                            <Text>{cardTypeLabels[newBoardType]}</Text>
+                            <CaretDown size={16} weight="bold" />
+                          </View>
+                        </Button>
+                      )}
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content>
+                      {(['lead', 'case', 'deal', 'task', 'custom'] as const).map((type) => (
+                        <DropdownMenu.Item
+                          key={type}
+                          onClick={() => setNewBoardType(type)}
+                        >
+                          {cardTypeLabels[type]}
+                        </DropdownMenu.Item>
+                      ))}
+                    </DropdownMenu.Content>
+                  </DropdownMenu>
                 </View>
               </View>
 
@@ -312,26 +347,46 @@ export default function BoardsTab() {
                   <Text variant="caption-1" weight="medium">
                     Default team
                   </Text>
-                  <select
-                    value={newBoardDefaultTeam}
-                    onChange={(e) => setNewBoardDefaultTeam(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '8px 12px',
-                      borderRadius: '4px',
-                      border: '1px solid var(--rs-color-border-neutral)',
-                      backgroundColor: 'var(--rs-color-background-neutral)',
-                      fontSize: '14px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <option value="">Select team...</option>
-                    {teams.map((team) => (
-                      <option key={team.id} value={team.id}>
-                        {team.name}
-                      </option>
-                    ))}
-                  </select>
+                  <DropdownMenu>
+                    <DropdownMenu.Trigger>
+                      {(attributes) => (
+                        <Button
+                          {...attributes}
+                          variant="outline"
+                          size="small"
+                          attributes={{
+                            style: {
+                              borderRadius: '30px',
+                              paddingLeft: '16px',
+                              paddingRight: '12px',
+                              width: '100%',
+                              justifyContent: 'space-between',
+                            }
+                          }}
+                        >
+                          <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
+                            <Text>
+                              {newBoardDefaultTeam ? teams.find(t => t.id === newBoardDefaultTeam)?.name || 'Select team...' : 'Select team...'}
+                            </Text>
+                            <CaretDown size={16} weight="bold" />
+                          </View>
+                        </Button>
+                      )}
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content>
+                      <DropdownMenu.Item onClick={() => setNewBoardDefaultTeam('')}>
+                        Select team...
+                      </DropdownMenu.Item>
+                      {teams.map((team) => (
+                        <DropdownMenu.Item
+                          key={team.id}
+                          onClick={() => setNewBoardDefaultTeam(team.id)}
+                        >
+                          {team.name}
+                        </DropdownMenu.Item>
+                      ))}
+                    </DropdownMenu.Content>
+                  </DropdownMenu>
                 </View>
               )}
 
@@ -390,39 +445,76 @@ export default function BoardsTab() {
                     </View>
                   </Table.Cell>
                   <Table.Cell>
-                    <select
-                      value={board.visibility}
-                      onChange={(e) => handleUpdateBoardVisibility(board.id, e.target.value as 'org' | 'team')}
-                      style={{
-                        padding: '4px 8px',
-                        borderRadius: '4px',
-                        border: '1px solid var(--rs-color-border-neutral)',
-                        backgroundColor: 'var(--rs-color-background-neutral)',
-                        fontSize: '13px',
-                      }}
-                    >
-                      <option value="org">Organization</option>
-                      <option value="team">Teams</option>
-                    </select>
+                    <DropdownMenu>
+                      <DropdownMenu.Trigger>
+                        {(attributes) => (
+                          <Button
+                            {...attributes}
+                            variant="outline"
+                            size="small"
+                            attributes={{
+                              style: {
+                                borderRadius: '30px',
+                                paddingLeft: '12px',
+                                paddingRight: '8px',
+                                fontSize: '13px',
+                              }
+                            }}
+                          >
+                            <View direction="row" gap={2} align="center">
+                              <Text>
+                                {board.visibility === 'org' ? 'Organization' : 'Teams'}
+                              </Text>
+                              <CaretDown size={14} weight="bold" />
+                            </View>
+                          </Button>
+                        )}
+                      </DropdownMenu.Trigger>
+                      <DropdownMenu.Content>
+                        <DropdownMenu.Item onClick={() => handleUpdateBoardVisibility(board.id, 'org')}>
+                          Organization
+                        </DropdownMenu.Item>
+                        <DropdownMenu.Item onClick={() => handleUpdateBoardVisibility(board.id, 'team')}>
+                          Teams
+                        </DropdownMenu.Item>
+                      </DropdownMenu.Content>
+                    </DropdownMenu>
                   </Table.Cell>
                   <Table.Cell>
-                    <select
-                      value={board.cardType}
-                      onChange={(e) => handleUpdateBoardType(board.id, e.target.value as typeof board.cardType)}
-                      style={{
-                        padding: '4px 8px',
-                        borderRadius: '4px',
-                        border: '1px solid var(--rs-color-border-neutral)',
-                        backgroundColor: 'var(--rs-color-background-neutral)',
-                        fontSize: '13px',
-                      }}
-                    >
-                      {(['lead', 'case', 'deal', 'task', 'custom'] as const).map((type) => (
-                        <option key={type} value={type}>
-                          {cardTypeLabels[type]}
-                        </option>
-                      ))}
-                    </select>
+                    <DropdownMenu>
+                      <DropdownMenu.Trigger>
+                        {(attributes) => (
+                          <Button
+                            {...attributes}
+                            variant="outline"
+                            size="small"
+                            attributes={{
+                              style: {
+                                borderRadius: '30px',
+                                paddingLeft: '12px',
+                                paddingRight: '8px',
+                                fontSize: '13px',
+                              }
+                            }}
+                          >
+                            <View direction="row" gap={2} align="center">
+                              <Text>{cardTypeLabels[board.cardType]}</Text>
+                              <CaretDown size={14} weight="bold" />
+                            </View>
+                          </Button>
+                        )}
+                      </DropdownMenu.Trigger>
+                      <DropdownMenu.Content>
+                        {(['lead', 'case', 'deal', 'task', 'custom'] as const).map((type) => (
+                          <DropdownMenu.Item
+                            key={type}
+                            onClick={() => handleUpdateBoardType(board.id, type)}
+                          >
+                            {cardTypeLabels[type]}
+                          </DropdownMenu.Item>
+                        ))}
+                      </DropdownMenu.Content>
+                    </DropdownMenu>
                   </Table.Cell>
                   <Table.Cell>
                     <Text variant="body-2" color="neutral-faded">
@@ -619,41 +711,86 @@ export default function BoardsTab() {
                     Add team permission
                   </Text>
                   <View direction="row" gap={2}>
-                    <select
-                      value={permissionTeamId}
-                      onChange={(e) => setPermissionTeamId(e.target.value)}
-                      disabled={availableTeamsForPermission.length === 0}
-                      style={{
-                        padding: '6px 10px',
-                        borderRadius: '4px',
-                        border: '1px solid var(--rs-color-border-neutral)',
-                        backgroundColor: 'var(--rs-color-background-neutral)',
-                        fontSize: '14px',
-                      }}
-                    >
-                      <option value="">
-                        {availableTeamsForPermission.length === 0 ? 'All teams assigned' : 'Select team...'}
-                      </option>
-                      {availableTeamsForPermission.map((team) => (
-                        <option key={team.id} value={team.id}>
-                          {team.name}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      value={permissionMode}
-                      onChange={(e) => setPermissionMode(e.target.value as 'edit' | 'view')}
-                      style={{
-                        padding: '6px 10px',
-                        borderRadius: '4px',
-                        border: '1px solid var(--rs-color-border-neutral)',
-                        backgroundColor: 'var(--rs-color-background-neutral)',
-                        fontSize: '14px',
-                      }}
-                    >
-                      <option value="edit">Editor</option>
-                      <option value="view">Viewer</option>
-                    </select>
+                    <DropdownMenu>
+                      <DropdownMenu.Trigger>
+                        {(attributes) => (
+                          <Button
+                            {...attributes}
+                            variant="outline"
+                            size="small"
+                            disabled={availableTeamsForPermission.length === 0}
+                            attributes={{
+                              style: {
+                                borderRadius: '30px',
+                                paddingLeft: '12px',
+                                paddingRight: '8px',
+                              }
+                            }}
+                          >
+                            <View direction="row" gap={2} align="center">
+                              <Text>
+                                {permissionTeamId
+                                  ? availableTeamsForPermission.find(t => t.id === permissionTeamId)?.name || 'Select team...'
+                                  : availableTeamsForPermission.length === 0
+                                  ? 'All teams assigned'
+                                  : 'Select team...'}
+                              </Text>
+                              <CaretDown size={14} weight="bold" />
+                            </View>
+                          </Button>
+                        )}
+                      </DropdownMenu.Trigger>
+                      <DropdownMenu.Content>
+                        {availableTeamsForPermission.length === 0 ? (
+                          <DropdownMenu.Item disabled>All teams assigned</DropdownMenu.Item>
+                        ) : (
+                          <>
+                            <DropdownMenu.Item onClick={() => setPermissionTeamId('')}>
+                              Select team...
+                            </DropdownMenu.Item>
+                            {availableTeamsForPermission.map((team) => (
+                              <DropdownMenu.Item
+                                key={team.id}
+                                onClick={() => setPermissionTeamId(team.id)}
+                              >
+                                {team.name}
+                              </DropdownMenu.Item>
+                            ))}
+                          </>
+                        )}
+                      </DropdownMenu.Content>
+                    </DropdownMenu>
+                    <DropdownMenu>
+                      <DropdownMenu.Trigger>
+                        {(attributes) => (
+                          <Button
+                            {...attributes}
+                            variant="outline"
+                            size="small"
+                            attributes={{
+                              style: {
+                                borderRadius: '30px',
+                                paddingLeft: '12px',
+                                paddingRight: '8px',
+                              }
+                            }}
+                          >
+                            <View direction="row" gap={2} align="center">
+                              <Text>{permissionMode === 'edit' ? 'Editor' : 'Viewer'}</Text>
+                              <CaretDown size={14} weight="bold" />
+                            </View>
+                          </Button>
+                        )}
+                      </DropdownMenu.Trigger>
+                      <DropdownMenu.Content>
+                        <DropdownMenu.Item onClick={() => setPermissionMode('edit')}>
+                          Editor
+                        </DropdownMenu.Item>
+                        <DropdownMenu.Item onClick={() => setPermissionMode('view')}>
+                          Viewer
+                        </DropdownMenu.Item>
+                      </DropdownMenu.Content>
+                    </DropdownMenu>
                     <Button size="small" disabled={addingPermission || !permissionTeamId} onClick={handleAddPermission}>
                       {addingPermission ? 'Adding...' : 'Add'}
                     </Button>

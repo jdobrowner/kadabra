@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { View, Text, Button, Table, Icon } from 'reshaped'
+import { View, Text, Button, Table, Icon, DropdownMenu } from 'reshaped'
 import { CustomBadge } from '../custom/Badge'
-import { Plus, Trash, Copy, EnvelopeSimple, XCircle } from '@phosphor-icons/react'
+import { Plus, Trash, Copy, EnvelopeSimple, XCircle, CaretDown } from '@phosphor-icons/react'
 import { useInvitationsStore } from '../../store/useInvitationsStore'
 
 export default function InvitationsTab() {
@@ -98,26 +98,43 @@ export default function InvitationsTab() {
           </Text>
         </View>
         <View direction="row" gap={2}>
-          <select
-            value={invitationsFilter}
-            onChange={(e) => fetchInvitations(e.target.value as typeof invitationsFilter)}
-            style={{
-              padding: '6px 24px 6px 12px',
-              borderRadius: '4px',
-              border: '1px solid var(--rs-color-border-neutral)',
-              backgroundColor: 'var(--rs-color-background-neutral)',
-              fontSize: '14px',
-              cursor: 'pointer',
-            }}
-          >
-            {(['all', 'pending', 'accepted', 'expired', 'canceled', 'rejected'] as const).map(
-              (status) => (
-                <option key={status} value={status}>
-                  {status === 'all' ? 'All' : status.charAt(0).toUpperCase() + status.slice(1)}
-                </option>
-              )
-            )}
-          </select>
+          <DropdownMenu>
+            <DropdownMenu.Trigger>
+              {(attributes) => (
+                <Button
+                  {...attributes}
+                  variant="outline"
+                  size="small"
+                  attributes={{
+                    style: {
+                      borderRadius: '30px',
+                      paddingLeft: '16px',
+                      paddingRight: '12px',
+                    }
+                  }}
+                >
+                  <View direction="row" gap={2} align="center">
+                    <Text>
+                      {invitationsFilter === 'all' ? 'All' : invitationsFilter.charAt(0).toUpperCase() + invitationsFilter.slice(1)}
+                    </Text>
+                    <CaretDown size={16} weight="bold" />
+                  </View>
+                </Button>
+              )}
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content>
+              {(['all', 'pending', 'accepted', 'expired', 'canceled', 'rejected'] as const).map(
+                (status) => (
+                  <DropdownMenu.Item
+                    key={status}
+                    onClick={() => fetchInvitations(status)}
+                  >
+                    {status === 'all' ? 'All' : status.charAt(0).toUpperCase() + status.slice(1)}
+                  </DropdownMenu.Item>
+                )
+              )}
+            </DropdownMenu.Content>
+          </DropdownMenu>
           <Button
             variant="outline"
             icon={<Icon svg={<Plus weight="bold" />} size={4} />}
@@ -175,25 +192,41 @@ export default function InvitationsTab() {
               <Text variant="caption-1" weight="medium">
                 Role
               </Text>
-              <select
-                value={role}
-                onChange={(e) => setRole(e.target.value as 'admin' | 'developer' | 'member')}
-                style={{
-                  width: '100%',
-                  padding: '8px 12px',
-                  borderRadius: '4px',
-                  border: '1px solid var(--rs-color-border-neutral)',
-                  backgroundColor: 'var(--rs-color-background-neutral)',
-                  fontSize: '14px',
-                  cursor: 'pointer',
-                }}
-              >
-                {(['admin', 'developer', 'member'] as const).map((r) => (
-                  <option key={r} value={r}>
-                    {r.charAt(0).toUpperCase() + r.slice(1)}
-                  </option>
-                ))}
-              </select>
+              <DropdownMenu>
+                <DropdownMenu.Trigger>
+                  {(attributes) => (
+                    <Button
+                      {...attributes}
+                      variant="outline"
+                      size="small"
+                      attributes={{
+                        style: {
+                          borderRadius: '30px',
+                          paddingLeft: '16px',
+                          paddingRight: '12px',
+                          width: '100%',
+                          justifyContent: 'space-between',
+                        }
+                      }}
+                    >
+                      <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
+                        <Text>{role.charAt(0).toUpperCase() + role.slice(1)}</Text>
+                        <CaretDown size={16} weight="bold" />
+                      </View>
+                    </Button>
+                  )}
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content>
+                  {(['admin', 'developer', 'member'] as const).map((r) => (
+                    <DropdownMenu.Item
+                      key={r}
+                      onClick={() => setRole(r)}
+                    >
+                      {r.charAt(0).toUpperCase() + r.slice(1)}
+                    </DropdownMenu.Item>
+                  ))}
+                </DropdownMenu.Content>
+              </DropdownMenu>
             </View>
 
             <View direction="row" gap={2} justify="end">
