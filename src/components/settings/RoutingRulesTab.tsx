@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import { View, Text, Button, Table, Icon, DropdownMenu } from 'reshaped'
-import { Plus, CaretDown } from '@phosphor-icons/react'
+import { View, Text, Button, Table, Icon } from 'reshaped'
+import { Plus } from '@phosphor-icons/react'
+import { StyledDropdown } from '../../components/custom/StyledDropdown'
 import { useRoutingRulesStore } from '../../store/useRoutingRulesStore'
 import { useTeamsStore } from '../../store/useTeamsStore'
 import { useBoardsStore } from '../../store/useBoardsStore'
@@ -186,57 +187,37 @@ export default function RoutingRulesTab() {
                   <Text variant="caption-1" weight="medium">
                     Condition type
                   </Text>
-                  <DropdownMenu>
-                    <DropdownMenu.Trigger>
-                      {(attributes) => (
-                        <Button
-                          {...attributes}
-                          variant="outline"
-                          size="small"
-                          attributes={{
-                            style: {
-                              borderRadius: '30px',
-                              paddingLeft: '16px',
-                              paddingRight: '12px',
-                              width: '100%',
-                              justifyContent: 'space-between',
-                            }
-                          }}
-                        >
-                          <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
-                            <Text>
-                              {conditionType === 'badge' ? 'Customer badge' :
-                               conditionType === 'intent' ? 'Intent' :
-                               conditionType === 'urgency' ? 'Urgency' :
-                               conditionType === 'customer_segment' ? 'Customer segment' :
-                               conditionType === 'channel' ? 'Channel' : 'Custom'}
-                            </Text>
-                            <CaretDown size={16} weight="bold" />
-                          </View>
-                        </Button>
-                      )}
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content>
-                      <DropdownMenu.Item onClick={() => setConditionType('badge')}>
-                        Customer badge
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item onClick={() => setConditionType('intent')}>
-                        Intent
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item onClick={() => setConditionType('urgency')}>
-                        Urgency
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item onClick={() => setConditionType('customer_segment')}>
-                        Customer segment
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item onClick={() => setConditionType('channel')}>
-                        Channel
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item onClick={() => setConditionType('custom')}>
-                        Custom
-                      </DropdownMenu.Item>
-                    </DropdownMenu.Content>
-                  </DropdownMenu>
+                  <StyledDropdown
+                    trigger={
+                      <Text>
+                        {conditionType === 'badge' ? 'Customer badge' :
+                         conditionType === 'intent' ? 'Intent' :
+                         conditionType === 'urgency' ? 'Urgency' :
+                         conditionType === 'customer_segment' ? 'Customer segment' :
+                         conditionType === 'channel' ? 'Channel' : 'Custom'}
+                      </Text>
+                    }
+                    fullWidth
+                  >
+                    <StyledDropdown.Item onClick={() => setConditionType('badge')}>
+                      Customer badge
+                    </StyledDropdown.Item>
+                    <StyledDropdown.Item onClick={() => setConditionType('intent')}>
+                      Intent
+                    </StyledDropdown.Item>
+                    <StyledDropdown.Item onClick={() => setConditionType('urgency')}>
+                      Urgency
+                    </StyledDropdown.Item>
+                    <StyledDropdown.Item onClick={() => setConditionType('customer_segment')}>
+                      Customer segment
+                    </StyledDropdown.Item>
+                    <StyledDropdown.Item onClick={() => setConditionType('channel')}>
+                      Channel
+                    </StyledDropdown.Item>
+                    <StyledDropdown.Item onClick={() => setConditionType('custom')}>
+                      Custom
+                    </StyledDropdown.Item>
+                  </StyledDropdown>
                 </View>
                 <View direction="column" gap={1} attributes={{ style: { flex: 1 } }}>
                   <Text variant="caption-1" weight="medium">
@@ -263,87 +244,42 @@ export default function RoutingRulesTab() {
                 <Text variant="caption-1" weight="medium">
                   Channel (optional)
                 </Text>
-                <DropdownMenu>
-                  <DropdownMenu.Trigger>
-                    {(attributes) => (
-                      <Button
-                        {...attributes}
-                        variant="outline"
-                        size="small"
-                        attributes={{
-                          style: {
-                            borderRadius: '30px',
-                            paddingLeft: '16px',
-                            paddingRight: '12px',
-                            width: '100%',
-                            justifyContent: 'space-between',
-                          }
-                        }}
-                      >
-                        <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
-                          <Text>{channel || 'Any channel'}</Text>
-                          <CaretDown size={16} weight="bold" />
-                        </View>
-                      </Button>
-                    )}
-                  </DropdownMenu.Trigger>
-                  <DropdownMenu.Content>
-                    <DropdownMenu.Item onClick={() => setChannel('')}>
-                      Any channel
-                    </DropdownMenu.Item>
-                    {['phone', 'email', 'chat', 'video', 'sms', 'ai-call', 'voice-message'].map((ch) => (
-                      <DropdownMenu.Item key={ch} onClick={() => setChannel(ch)}>
-                        {ch}
-                      </DropdownMenu.Item>
-                    ))}
-                  </DropdownMenu.Content>
-                </DropdownMenu>
+                <StyledDropdown trigger={<Text>{channel || 'Any channel'}</Text>} fullWidth>
+                  <StyledDropdown.Item onClick={() => setChannel('')}>
+                    Any channel
+                  </StyledDropdown.Item>
+                  {['phone', 'email', 'chat', 'video', 'sms', 'ai-call', 'voice-message'].map((ch) => (
+                    <StyledDropdown.Item key={ch} onClick={() => setChannel(ch)}>
+                      {ch}
+                    </StyledDropdown.Item>
+                  ))}
+                </StyledDropdown>
               </View>
 
               <View direction="column" gap={1}>
                 <Text variant="caption-1" weight="medium">
                   Target team
                 </Text>
-                <DropdownMenu>
-                  <DropdownMenu.Trigger>
-                    {(attributes) => (
-                      <Button
-                        {...attributes}
-                        variant="outline"
-                        size="small"
-                        attributes={{
-                          style: {
-                            borderRadius: '30px',
-                            paddingLeft: '16px',
-                            paddingRight: '12px',
-                            width: '100%',
-                            justifyContent: 'space-between',
-                          }
-                        }}
-                      >
-                        <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
-                          <Text>
-                            {targetTeamId ? teams.find(t => t.id === targetTeamId)?.name || 'Select team...' : 'Select team...'}
-                          </Text>
-                          <CaretDown size={16} weight="bold" />
-                        </View>
-                      </Button>
-                    )}
-                  </DropdownMenu.Trigger>
-                  <DropdownMenu.Content>
-                    <DropdownMenu.Item onClick={() => setTargetTeamId('')}>
-                      Select team...
-                    </DropdownMenu.Item>
-                    {teams.map((team) => (
-                      <DropdownMenu.Item
-                        key={team.id}
-                        onClick={() => setTargetTeamId(team.id)}
-                      >
-                        {team.name}
-                      </DropdownMenu.Item>
-                    ))}
-                  </DropdownMenu.Content>
-                </DropdownMenu>
+                <StyledDropdown
+                  trigger={
+                    <Text>
+                      {targetTeamId ? teams.find(t => t.id === targetTeamId)?.name || 'Select team...' : 'Select team...'}
+                    </Text>
+                  }
+                  fullWidth
+                >
+                  <StyledDropdown.Item onClick={() => setTargetTeamId('')}>
+                    Select team...
+                  </StyledDropdown.Item>
+                  {teams.map((team) => (
+                    <StyledDropdown.Item
+                      key={team.id}
+                      onClick={() => setTargetTeamId(team.id)}
+                    >
+                      {team.name}
+                    </StyledDropdown.Item>
+                  ))}
+                </StyledDropdown>
               </View>
 
               <View direction="row" gap={3}>
@@ -351,92 +287,52 @@ export default function RoutingRulesTab() {
                   <Text variant="caption-1" weight="medium">
                     Target board (optional)
                   </Text>
-                  <DropdownMenu>
-                    <DropdownMenu.Trigger>
-                      {(attributes) => (
-                        <Button
-                          {...attributes}
-                          variant="outline"
-                          size="small"
-                          attributes={{
-                            style: {
-                              borderRadius: '30px',
-                              paddingLeft: '16px',
-                              paddingRight: '12px',
-                              width: '100%',
-                              justifyContent: 'space-between',
-                            }
-                          }}
-                        >
-                          <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
-                            <Text>
-                              {targetBoardId ? boards.find(b => b.id === targetBoardId)?.name || 'Use routing defaults' : 'Use routing defaults'}
-                            </Text>
-                            <CaretDown size={16} weight="bold" />
-                          </View>
-                        </Button>
-                      )}
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content>
-                      <DropdownMenu.Item onClick={() => setTargetBoardId('')}>
-                        Use routing defaults
-                      </DropdownMenu.Item>
-                      {boards.map((board) => (
-                        <DropdownMenu.Item
-                          key={board.id}
-                          onClick={() => setTargetBoardId(board.id)}
-                        >
-                          {board.name}
-                        </DropdownMenu.Item>
-                      ))}
-                    </DropdownMenu.Content>
-                  </DropdownMenu>
+                  <StyledDropdown
+                    trigger={
+                      <Text>
+                        {targetBoardId ? boards.find(b => b.id === targetBoardId)?.name || 'Use routing defaults' : 'Use routing defaults'}
+                      </Text>
+                    }
+                    fullWidth
+                  >
+                    <StyledDropdown.Item onClick={() => setTargetBoardId('')}>
+                      Use routing defaults
+                    </StyledDropdown.Item>
+                    {boards.map((board) => (
+                      <StyledDropdown.Item
+                        key={board.id}
+                        onClick={() => setTargetBoardId(board.id)}
+                      >
+                        {board.name}
+                      </StyledDropdown.Item>
+                    ))}
+                  </StyledDropdown>
                 </View>
                 <View direction="column" gap={1} attributes={{ style: { flex: 1 } }}>
                   <Text variant="caption-1" weight="medium">
                     Target column (optional)
                   </Text>
-                  <DropdownMenu>
-                    <DropdownMenu.Trigger>
-                      {(attributes) => (
-                        <Button
-                          {...attributes}
-                          variant="outline"
-                          size="small"
-                          disabled={!targetBoardId || availableColumns.length === 0}
-                          attributes={{
-                            style: {
-                              borderRadius: '30px',
-                              paddingLeft: '16px',
-                              paddingRight: '12px',
-                              width: '100%',
-                              justifyContent: 'space-between',
-                            }
-                          }}
-                        >
-                          <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
-                            <Text>
-                              {targetColumnId ? availableColumns.find(c => c.id === targetColumnId)?.name || 'Use board default' : 'Use board default'}
-                            </Text>
-                            <CaretDown size={16} weight="bold" />
-                          </View>
-                        </Button>
-                      )}
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content>
-                      <DropdownMenu.Item onClick={() => setTargetColumnId('')}>
-                        Use board default
-                      </DropdownMenu.Item>
-                      {availableColumns.map((column) => (
-                        <DropdownMenu.Item
-                          key={column.id}
-                          onClick={() => setTargetColumnId(column.id)}
-                        >
-                          {column.name}
-                        </DropdownMenu.Item>
-                      ))}
-                    </DropdownMenu.Content>
-                  </DropdownMenu>
+                  <StyledDropdown
+                    trigger={
+                      <Text>
+                        {targetColumnId ? availableColumns.find(c => c.id === targetColumnId)?.name || 'Use board default' : 'Use board default'}
+                      </Text>
+                    }
+                    disabled={!targetBoardId || availableColumns.length === 0}
+                    fullWidth
+                  >
+                    <StyledDropdown.Item onClick={() => setTargetColumnId('')}>
+                      Use board default
+                    </StyledDropdown.Item>
+                    {availableColumns.map((column) => (
+                      <StyledDropdown.Item
+                        key={column.id}
+                        onClick={() => setTargetColumnId(column.id)}
+                      >
+                        {column.name}
+                      </StyledDropdown.Item>
+                    ))}
+                  </StyledDropdown>
                 </View>
               </View>
 

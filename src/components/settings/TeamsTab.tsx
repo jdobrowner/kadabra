@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import { View, Text, Button, Table, Icon, DropdownMenu } from 'reshaped'
-import { Plus, UsersThree, Funnel, CaretDown } from '@phosphor-icons/react'
+import { View, Text, Button, Table, Icon } from 'reshaped'
+import { Plus, UsersThree, Funnel } from '@phosphor-icons/react'
+import { StyledDropdown } from '../../components/custom/StyledDropdown'
 import { useTeamsStore } from '../../store/useTeamsStore'
 import { useUsersStore } from '../../store/useUsersStore'
 
@@ -400,54 +401,36 @@ export default function TeamsTab() {
                   <Text variant="caption-1" weight="medium">
                     Add member
                   </Text>
-                  <DropdownMenu>
-                    <DropdownMenu.Trigger>
-                      {(attributes) => (
-                        <Button
-                          {...attributes}
-                          variant="outline"
-                          size="small"
-                          disabled={usersLoading || membersNotInTeam.length === 0}
-                          attributes={{
-                            style: {
-                              borderRadius: '30px',
-                              paddingLeft: '16px',
-                              paddingRight: '12px',
-                              minWidth: '220px',
-                            }
-                          }}
-                        >
-                          <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
-                            <Text>
-                              {membersNotInTeam.length === 0 ? 'No available users' : 'Select user...'}
-                            </Text>
-                            <CaretDown size={16} weight="bold" />
-                          </View>
-                        </Button>
-                      )}
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content>
-                      {membersNotInTeam.length === 0 ? (
-                        <DropdownMenu.Item disabled>No available users</DropdownMenu.Item>
-                      ) : (
-                        <>
-                          <DropdownMenu.Item onClick={() => {}} disabled>
-                            Select user...
-                          </DropdownMenu.Item>
-                          {membersNotInTeam.map((user) => (
-                            <DropdownMenu.Item
-                              key={user.id}
-                              onClick={() => {
-                                handleAddMember(selectedTeam.team.id, user.id)
-                              }}
-                            >
-                              {user.name || user.email}
-                            </DropdownMenu.Item>
-                          ))}
-                        </>
-                      )}
-                    </DropdownMenu.Content>
-                  </DropdownMenu>
+                  <StyledDropdown
+                    trigger={
+                      <Text>
+                        {membersNotInTeam.length === 0 ? 'No available users' : 'Select user...'}
+                      </Text>
+                    }
+                    disabled={usersLoading || membersNotInTeam.length === 0}
+                    triggerMinWidth="220px"
+                    fullWidth
+                  >
+                    {membersNotInTeam.length === 0 ? (
+                      <StyledDropdown.Item disabled>No available users</StyledDropdown.Item>
+                    ) : (
+                      <>
+                        <StyledDropdown.Item onClick={() => {}} disabled>
+                          Select user...
+                        </StyledDropdown.Item>
+                        {membersNotInTeam.map((user) => (
+                          <StyledDropdown.Item
+                            key={user.id}
+                            onClick={() => {
+                              handleAddMember(selectedTeam.team.id, user.id)
+                            }}
+                          >
+                            {user.name || user.email}
+                          </StyledDropdown.Item>
+                        ))}
+                      </>
+                    )}
+                  </StyledDropdown>
                 </View>
               </View>
 

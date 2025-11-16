@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import { View, Text, Button, Table, Icon, DropdownMenu } from 'reshaped'
-import { Plus, Columns, CaretDown } from '@phosphor-icons/react'
+import { View, Text, Button, Table, Icon } from 'reshaped'
+import { Plus, Columns } from '@phosphor-icons/react'
+import { StyledDropdown } from '../../components/custom/StyledDropdown'
 import { useBoardsStore } from '../../store/useBoardsStore'
 import { useTeamsStore } from '../../store/useTeamsStore'
 
@@ -264,81 +265,36 @@ export default function BoardsTab() {
                   <Text variant="caption-1" weight="medium">
                     Visibility
                   </Text>
-                  <DropdownMenu>
-                    <DropdownMenu.Trigger>
-                      {(attributes) => (
-                        <Button
-                          {...attributes}
-                          variant="outline"
-                          size="small"
-                          attributes={{
-                            style: {
-                              borderRadius: '30px',
-                              paddingLeft: '16px',
-                              paddingRight: '12px',
-                              width: '100%',
-                              justifyContent: 'space-between',
-                            }
-                          }}
-                        >
-                          <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
-                            <Text>
-                              {newBoardVisibility === 'org' ? 'Entire organization' : 'Specific teams'}
-                            </Text>
-                            <CaretDown size={16} weight="bold" />
-                          </View>
-                        </Button>
-                      )}
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content>
-                      <DropdownMenu.Item onClick={() => setNewBoardVisibility('team')}>
-                        Specific teams
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item onClick={() => setNewBoardVisibility('org')}>
-                        Entire organization
-                      </DropdownMenu.Item>
-                    </DropdownMenu.Content>
-                  </DropdownMenu>
+                  <StyledDropdown
+                    trigger={
+                      <Text>
+                        {newBoardVisibility === 'org' ? 'Entire organization' : 'Specific teams'}
+                      </Text>
+                    }
+                    fullWidth
+                  >
+                    <StyledDropdown.Item onClick={() => setNewBoardVisibility('team')}>
+                      Specific teams
+                    </StyledDropdown.Item>
+                    <StyledDropdown.Item onClick={() => setNewBoardVisibility('org')}>
+                      Entire organization
+                    </StyledDropdown.Item>
+                  </StyledDropdown>
                 </View>
                 <View direction="column" gap={1} attributes={{ style: { flex: 1 } }}>
                   <Text variant="caption-1" weight="medium">
                     Card type
                   </Text>
-                  <DropdownMenu>
-                    <DropdownMenu.Trigger>
-                      {(attributes) => (
-                        <Button
-                          {...attributes}
-                          variant="outline"
-                          size="small"
-                          attributes={{
-                            style: {
-                              borderRadius: '30px',
-                              paddingLeft: '16px',
-                              paddingRight: '12px',
-                              width: '100%',
-                              justifyContent: 'space-between',
-                            }
-                          }}
-                        >
-                          <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
-                            <Text>{cardTypeLabels[newBoardType]}</Text>
-                            <CaretDown size={16} weight="bold" />
-                          </View>
-                        </Button>
-                      )}
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content>
-                      {(['lead', 'case', 'deal', 'task', 'custom'] as const).map((type) => (
-                        <DropdownMenu.Item
-                          key={type}
-                          onClick={() => setNewBoardType(type)}
-                        >
-                          {cardTypeLabels[type]}
-                        </DropdownMenu.Item>
-                      ))}
-                    </DropdownMenu.Content>
-                  </DropdownMenu>
+                  <StyledDropdown trigger={<Text>{cardTypeLabels[newBoardType]}</Text>} fullWidth>
+                    {(['lead', 'case', 'deal', 'task', 'custom'] as const).map((type) => (
+                      <StyledDropdown.Item
+                        key={type}
+                        onClick={() => setNewBoardType(type)}
+                      >
+                        {cardTypeLabels[type]}
+                      </StyledDropdown.Item>
+                    ))}
+                  </StyledDropdown>
                 </View>
               </View>
 
@@ -347,46 +303,26 @@ export default function BoardsTab() {
                   <Text variant="caption-1" weight="medium">
                     Default team
                   </Text>
-                  <DropdownMenu>
-                    <DropdownMenu.Trigger>
-                      {(attributes) => (
-                        <Button
-                          {...attributes}
-                          variant="outline"
-                          size="small"
-                          attributes={{
-                            style: {
-                              borderRadius: '30px',
-                              paddingLeft: '16px',
-                              paddingRight: '12px',
-                              width: '100%',
-                              justifyContent: 'space-between',
-                            }
-                          }}
-                        >
-                          <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
-                            <Text>
-                              {newBoardDefaultTeam ? teams.find(t => t.id === newBoardDefaultTeam)?.name || 'Select team...' : 'Select team...'}
-                            </Text>
-                            <CaretDown size={16} weight="bold" />
-                          </View>
-                        </Button>
-                      )}
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content>
-                      <DropdownMenu.Item onClick={() => setNewBoardDefaultTeam('')}>
-                        Select team...
-                      </DropdownMenu.Item>
-                      {teams.map((team) => (
-                        <DropdownMenu.Item
-                          key={team.id}
-                          onClick={() => setNewBoardDefaultTeam(team.id)}
-                        >
-                          {team.name}
-                        </DropdownMenu.Item>
-                      ))}
-                    </DropdownMenu.Content>
-                  </DropdownMenu>
+                  <StyledDropdown
+                    trigger={
+                      <Text>
+                        {newBoardDefaultTeam ? teams.find(t => t.id === newBoardDefaultTeam)?.name || 'Select team...' : 'Select team...'}
+                      </Text>
+                    }
+                    fullWidth
+                  >
+                    <StyledDropdown.Item onClick={() => setNewBoardDefaultTeam('')}>
+                      Select team...
+                    </StyledDropdown.Item>
+                    {teams.map((team) => (
+                      <StyledDropdown.Item
+                        key={team.id}
+                        onClick={() => setNewBoardDefaultTeam(team.id)}
+                      >
+                        {team.name}
+                      </StyledDropdown.Item>
+                    ))}
+                  </StyledDropdown>
                 </View>
               )}
 
@@ -445,76 +381,40 @@ export default function BoardsTab() {
                     </View>
                   </Table.Cell>
                   <Table.Cell>
-                    <DropdownMenu>
-                      <DropdownMenu.Trigger>
-                        {(attributes) => (
-                          <Button
-                            {...attributes}
-                            variant="outline"
-                            size="small"
-                            attributes={{
-                              style: {
-                                borderRadius: '30px',
-                                paddingLeft: '12px',
-                                paddingRight: '8px',
-                                fontSize: '13px',
-                              }
-                            }}
-                          >
-                            <View direction="row" gap={2} align="center">
-                              <Text>
-                                {board.visibility === 'org' ? 'Organization' : 'Teams'}
-                              </Text>
-                              <CaretDown size={14} weight="bold" />
-                            </View>
-                          </Button>
-                        )}
-                      </DropdownMenu.Trigger>
-                      <DropdownMenu.Content>
-                        <DropdownMenu.Item onClick={() => handleUpdateBoardVisibility(board.id, 'org')}>
-                          Organization
-                        </DropdownMenu.Item>
-                        <DropdownMenu.Item onClick={() => handleUpdateBoardVisibility(board.id, 'team')}>
-                          Teams
-                        </DropdownMenu.Item>
-                      </DropdownMenu.Content>
-                    </DropdownMenu>
+                    <StyledDropdown
+                      trigger={
+                        <Text>
+                          {board.visibility === 'org' ? 'Organization' : 'Teams'}
+                        </Text>
+                      }
+                      triggerFontSize="13px"
+                      triggerPaddingLeft="12px"
+                      triggerPaddingRight="8px"
+                    >
+                      <StyledDropdown.Item onClick={() => handleUpdateBoardVisibility(board.id, 'org')}>
+                        Organization
+                      </StyledDropdown.Item>
+                      <StyledDropdown.Item onClick={() => handleUpdateBoardVisibility(board.id, 'team')}>
+                        Teams
+                      </StyledDropdown.Item>
+                    </StyledDropdown>
                   </Table.Cell>
                   <Table.Cell>
-                    <DropdownMenu>
-                      <DropdownMenu.Trigger>
-                        {(attributes) => (
-                          <Button
-                            {...attributes}
-                            variant="outline"
-                            size="small"
-                            attributes={{
-                              style: {
-                                borderRadius: '30px',
-                                paddingLeft: '12px',
-                                paddingRight: '8px',
-                                fontSize: '13px',
-                              }
-                            }}
-                          >
-                            <View direction="row" gap={2} align="center">
-                              <Text>{cardTypeLabels[board.cardType]}</Text>
-                              <CaretDown size={14} weight="bold" />
-                            </View>
-                          </Button>
-                        )}
-                      </DropdownMenu.Trigger>
-                      <DropdownMenu.Content>
-                        {(['lead', 'case', 'deal', 'task', 'custom'] as const).map((type) => (
-                          <DropdownMenu.Item
-                            key={type}
-                            onClick={() => handleUpdateBoardType(board.id, type)}
-                          >
-                            {cardTypeLabels[type]}
-                          </DropdownMenu.Item>
-                        ))}
-                      </DropdownMenu.Content>
-                    </DropdownMenu>
+                    <StyledDropdown
+                      trigger={<Text>{cardTypeLabels[board.cardType]}</Text>}
+                      triggerFontSize="13px"
+                      triggerPaddingLeft="12px"
+                      triggerPaddingRight="8px"
+                    >
+                      {(['lead', 'case', 'deal', 'task', 'custom'] as const).map((type) => (
+                        <StyledDropdown.Item
+                          key={type}
+                          onClick={() => handleUpdateBoardType(board.id, type)}
+                        >
+                          {cardTypeLabels[type]}
+                        </StyledDropdown.Item>
+                      ))}
+                    </StyledDropdown>
                   </Table.Cell>
                   <Table.Cell>
                     <Text variant="body-2" color="neutral-faded">
@@ -711,86 +611,50 @@ export default function BoardsTab() {
                     Add team permission
                   </Text>
                   <View direction="row" gap={2}>
-                    <DropdownMenu>
-                      <DropdownMenu.Trigger>
-                        {(attributes) => (
-                          <Button
-                            {...attributes}
-                            variant="outline"
-                            size="small"
-                            disabled={availableTeamsForPermission.length === 0}
-                            attributes={{
-                              style: {
-                                borderRadius: '30px',
-                                paddingLeft: '12px',
-                                paddingRight: '8px',
-                              }
-                            }}
-                          >
-                            <View direction="row" gap={2} align="center">
-                              <Text>
-                                {permissionTeamId
-                                  ? availableTeamsForPermission.find(t => t.id === permissionTeamId)?.name || 'Select team...'
-                                  : availableTeamsForPermission.length === 0
-                                  ? 'All teams assigned'
-                                  : 'Select team...'}
-                              </Text>
-                              <CaretDown size={14} weight="bold" />
-                            </View>
-                          </Button>
-                        )}
-                      </DropdownMenu.Trigger>
-                      <DropdownMenu.Content>
-                        {availableTeamsForPermission.length === 0 ? (
-                          <DropdownMenu.Item disabled>All teams assigned</DropdownMenu.Item>
-                        ) : (
-                          <>
-                            <DropdownMenu.Item onClick={() => setPermissionTeamId('')}>
-                              Select team...
-                            </DropdownMenu.Item>
-                            {availableTeamsForPermission.map((team) => (
-                              <DropdownMenu.Item
-                                key={team.id}
-                                onClick={() => setPermissionTeamId(team.id)}
-                              >
-                                {team.name}
-                              </DropdownMenu.Item>
-                            ))}
-                          </>
-                        )}
-                      </DropdownMenu.Content>
-                    </DropdownMenu>
-                    <DropdownMenu>
-                      <DropdownMenu.Trigger>
-                        {(attributes) => (
-                          <Button
-                            {...attributes}
-                            variant="outline"
-                            size="small"
-                            attributes={{
-                              style: {
-                                borderRadius: '30px',
-                                paddingLeft: '12px',
-                                paddingRight: '8px',
-                              }
-                            }}
-                          >
-                            <View direction="row" gap={2} align="center">
-                              <Text>{permissionMode === 'edit' ? 'Editor' : 'Viewer'}</Text>
-                              <CaretDown size={14} weight="bold" />
-                            </View>
-                          </Button>
-                        )}
-                      </DropdownMenu.Trigger>
-                      <DropdownMenu.Content>
-                        <DropdownMenu.Item onClick={() => setPermissionMode('edit')}>
-                          Editor
-                        </DropdownMenu.Item>
-                        <DropdownMenu.Item onClick={() => setPermissionMode('view')}>
-                          Viewer
-                        </DropdownMenu.Item>
-                      </DropdownMenu.Content>
-                    </DropdownMenu>
+                    <StyledDropdown
+                      trigger={
+                        <Text>
+                          {permissionTeamId
+                            ? availableTeamsForPermission.find(t => t.id === permissionTeamId)?.name || 'Select team...'
+                            : availableTeamsForPermission.length === 0
+                            ? 'All teams assigned'
+                            : 'Select team...'}
+                        </Text>
+                      }
+                      disabled={availableTeamsForPermission.length === 0}
+                      triggerPaddingLeft="12px"
+                      triggerPaddingRight="8px"
+                    >
+                      {availableTeamsForPermission.length === 0 ? (
+                        <StyledDropdown.Item disabled>All teams assigned</StyledDropdown.Item>
+                      ) : (
+                        <>
+                          <StyledDropdown.Item onClick={() => setPermissionTeamId('')}>
+                            Select team...
+                          </StyledDropdown.Item>
+                          {availableTeamsForPermission.map((team) => (
+                            <StyledDropdown.Item
+                              key={team.id}
+                              onClick={() => setPermissionTeamId(team.id)}
+                            >
+                              {team.name}
+                            </StyledDropdown.Item>
+                          ))}
+                        </>
+                      )}
+                    </StyledDropdown>
+                    <StyledDropdown
+                      trigger={<Text>{permissionMode === 'edit' ? 'Editor' : 'Viewer'}</Text>}
+                      triggerPaddingLeft="12px"
+                      triggerPaddingRight="8px"
+                    >
+                      <StyledDropdown.Item onClick={() => setPermissionMode('edit')}>
+                        Editor
+                      </StyledDropdown.Item>
+                      <StyledDropdown.Item onClick={() => setPermissionMode('view')}>
+                        Viewer
+                      </StyledDropdown.Item>
+                    </StyledDropdown>
                     <Button size="small" disabled={addingPermission || !permissionTeamId} onClick={handleAddPermission}>
                       {addingPermission ? 'Adding...' : 'Add'}
                     </Button>

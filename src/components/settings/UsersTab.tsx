@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { View, Text, Button, Table, Avatar, Icon, DropdownMenu } from 'reshaped'
-import { Trash, UserCircle, CaretDown } from '@phosphor-icons/react'
+import { View, Text, Button, Table, Avatar, Icon } from 'reshaped'
+import { Trash, UserCircle } from '@phosphor-icons/react'
+import { StyledDropdown } from '../custom/StyledDropdown'
 import { useUsersStore } from '../../store/useUsersStore'
 import { useAuthStore } from '../../store/useAuthStore'
 
@@ -146,40 +147,21 @@ export default function UsersTab() {
                         {user.role}
                       </Text>
                       {!isCurrentUser && !isUpdating && (
-                        <DropdownMenu>
-                          <DropdownMenu.Trigger>
-                            {(attributes) => (
-                              <Button
-                                {...attributes}
-                                variant="outline"
-                                size="small"
-                                attributes={{
-                                  style: {
-                                    borderRadius: '30px',
-                                    paddingLeft: '12px',
-                                    paddingRight: '8px',
-                                    fontSize: '14px',
-                                  }
-                                }}
-                              >
-                                <View direction="row" gap={2} align="center">
-                                  <Text>{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</Text>
-                                  <CaretDown size={14} weight="bold" />
-                                </View>
-                              </Button>
-                            )}
-                          </DropdownMenu.Trigger>
-                          <DropdownMenu.Content>
-                            {(['admin', 'developer', 'member'] as const).map((role) => (
-                              <DropdownMenu.Item
-                                key={role}
-                                onClick={() => handleUpdateRole(user.id, role)}
-                              >
-                                {role.charAt(0).toUpperCase() + role.slice(1)}
-                              </DropdownMenu.Item>
-                            ))}
-                          </DropdownMenu.Content>
-                        </DropdownMenu>
+                        <StyledDropdown
+                          trigger={<Text>{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</Text>}
+                          triggerFontSize="14px"
+                          triggerPaddingLeft="12px"
+                          triggerPaddingRight="8px"
+                        >
+                          {(['admin', 'developer', 'member'] as const).map((role) => (
+                            <StyledDropdown.Item
+                              key={role}
+                              onClick={() => handleUpdateRole(user.id, role)}
+                            >
+                              {role.charAt(0).toUpperCase() + role.slice(1)}
+                            </StyledDropdown.Item>
+                          ))}
+                        </StyledDropdown>
                       )}
                     </View>
                   </View>

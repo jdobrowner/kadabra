@@ -1,5 +1,6 @@
-import { Container, View, Card, Text, Button, DropdownMenu } from 'reshaped'
-import { MagnifyingGlass, Funnel, CaretDown } from '@phosphor-icons/react'
+import { Container, View, Card, Text, Button } from 'reshaped'
+import { MagnifyingGlass, Funnel } from '@phosphor-icons/react'
+import { StyledDropdown } from '../components/custom/StyledDropdown'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { PageHeader } from '../components/custom/PageHeader'
@@ -119,166 +120,74 @@ export default function HistoricSearch() {
               {/* Type Filter */}
               <View direction="row" gap={2} align="center">
                 <Text variant="body-2" weight="medium">Type:</Text>
-                <DropdownMenu>
-                  <DropdownMenu.Trigger>
-                    {(attributes) => (
-                      <Button
-                        {...attributes}
-                        variant="outline"
-                        size="small"
-                        attributes={{
-                          style: {
-                            borderRadius: '30px',
-                            paddingLeft: '16px',
-                            paddingRight: '12px',
-                          }
-                        }}
-                      >
-                        <View direction="row" gap={2} align="center">
-                          <Text>{getTypeLabel(typeFilter)}</Text>
-                          <CaretDown size={16} weight="bold" />
-                        </View>
-                      </Button>
-                    )}
-                  </DropdownMenu.Trigger>
-                  <DropdownMenu.Content>
-                    <DropdownMenu.Item onClick={() => setTypeFilter('all')}>
-                      All Types
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item onClick={() => setTypeFilter('customers')}>
-                      Customers
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item onClick={() => setTypeFilter('conversations')}>
-                      Conversations
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item onClick={() => setTypeFilter('action-plans')}>
-                      Action Plans
-                    </DropdownMenu.Item>
-                  </DropdownMenu.Content>
-                </DropdownMenu>
+                <StyledDropdown trigger={<Text>{getTypeLabel(typeFilter)}</Text>}>
+                  <StyledDropdown.Item onClick={() => setTypeFilter('all')}>
+                    All Types
+                  </StyledDropdown.Item>
+                  <StyledDropdown.Item onClick={() => setTypeFilter('customers')}>
+                    Customers
+                  </StyledDropdown.Item>
+                  <StyledDropdown.Item onClick={() => setTypeFilter('conversations')}>
+                    Conversations
+                  </StyledDropdown.Item>
+                  <StyledDropdown.Item onClick={() => setTypeFilter('action-plans')}>
+                    Action Plans
+                  </StyledDropdown.Item>
+                </StyledDropdown>
               </View>
 
               {/* Priority Filter */}
               <View direction="row" gap={2} align="center">
                 <Text variant="body-2" weight="medium">Priority:</Text>
-                <DropdownMenu>
-                  <DropdownMenu.Trigger>
-                    {(attributes) => (
-                      <Button
-                        {...attributes}
-                        variant="outline"
-                        size="small"
-                        attributes={{
-                          style: {
-                            borderRadius: '30px',
-                            paddingLeft: '16px',
-                            paddingRight: '12px',
-                          }
-                        }}
-                      >
-                        <View direction="row" gap={2} align="center">
-                          <Text>{getPriorityLabel(priorityFilter)}</Text>
-                          <CaretDown size={16} weight="bold" />
-                        </View>
-                      </Button>
-                    )}
-                  </DropdownMenu.Trigger>
-                  <DropdownMenu.Content>
-                    <DropdownMenu.Item onClick={() => setPriorityFilter('all')}>
-                      All Priority
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item onClick={() => setPriorityFilter('at-risk')}>
-                      At-Risk
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item onClick={() => setPriorityFilter('opportunity')}>
-                      Opportunity
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item onClick={() => setPriorityFilter('lead')}>
-                      Lead
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item onClick={() => setPriorityFilter('follow-up')}>
-                      Follow-Up
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item onClick={() => setPriorityFilter('no-action')}>
-                      No Action
-                    </DropdownMenu.Item>
-                  </DropdownMenu.Content>
-                </DropdownMenu>
+                <StyledDropdown trigger={<Text>{getPriorityLabel(priorityFilter)}</Text>}>
+                  <StyledDropdown.Item onClick={() => setPriorityFilter('all')}>
+                    All Priority
+                  </StyledDropdown.Item>
+                  <StyledDropdown.Item onClick={() => setPriorityFilter('at-risk')}>
+                    At-Risk
+                  </StyledDropdown.Item>
+                  <StyledDropdown.Item onClick={() => setPriorityFilter('opportunity')}>
+                    Opportunity
+                  </StyledDropdown.Item>
+                  <StyledDropdown.Item onClick={() => setPriorityFilter('lead')}>
+                    Lead
+                  </StyledDropdown.Item>
+                  <StyledDropdown.Item onClick={() => setPriorityFilter('follow-up')}>
+                    Follow-Up
+                  </StyledDropdown.Item>
+                  <StyledDropdown.Item onClick={() => setPriorityFilter('no-action')}>
+                    No Action
+                  </StyledDropdown.Item>
+                </StyledDropdown>
               </View>
 
               {/* Status Filter */}
               <View direction="row" gap={2} align="center">
                 <Text variant="body-2" weight="medium">Status:</Text>
-                <DropdownMenu>
-                  <DropdownMenu.Trigger>
-                    {(attributes) => (
-                      <Button
-                        {...attributes}
-                        variant="outline"
-                        size="small"
-                        attributes={{
-                          style: {
-                            borderRadius: '30px',
-                            paddingLeft: '16px',
-                            paddingRight: '12px',
-                          }
-                        }}
-                      >
-                        <View direction="row" gap={2} align="center">
-                          <Text>{getStatusLabel(statusFilter)}</Text>
-                          <CaretDown size={16} weight="bold" />
-                        </View>
-                      </Button>
-                    )}
-                  </DropdownMenu.Trigger>
-                  <DropdownMenu.Content>
-                    <DropdownMenu.Item onClick={() => setStatusFilter('all')}>
-                      All Status
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item onClick={() => setStatusFilter('active')}>
-                      Active
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item onClick={() => setStatusFilter('completed')}>
-                      Completed
-                    </DropdownMenu.Item>
-                  </DropdownMenu.Content>
-                </DropdownMenu>
+                <StyledDropdown trigger={<Text>{getStatusLabel(statusFilter)}</Text>}>
+                  <StyledDropdown.Item onClick={() => setStatusFilter('all')}>
+                    All Status
+                  </StyledDropdown.Item>
+                  <StyledDropdown.Item onClick={() => setStatusFilter('active')}>
+                    Active
+                  </StyledDropdown.Item>
+                  <StyledDropdown.Item onClick={() => setStatusFilter('completed')}>
+                    Completed
+                  </StyledDropdown.Item>
+                </StyledDropdown>
               </View>
 
               {/* Sort Filter */}
               <View direction="row" gap={2} align="center">
                 <Text variant="body-2" weight="medium">Sort:</Text>
-                <DropdownMenu>
-                  <DropdownMenu.Trigger>
-                    {(attributes) => (
-                      <Button
-                        {...attributes}
-                        variant="outline"
-                        size="small"
-                        attributes={{
-                          style: {
-                            borderRadius: '30px',
-                            paddingLeft: '16px',
-                            paddingRight: '12px',
-                          }
-                        }}
-                      >
-                        <View direction="row" gap={2} align="center">
-                          <Text>{getSortLabel(sortBy)}</Text>
-                          <CaretDown size={16} weight="bold" />
-                        </View>
-                      </Button>
-                    )}
-                  </DropdownMenu.Trigger>
-                  <DropdownMenu.Content>
-                    <DropdownMenu.Item onClick={() => setSortBy('recent')}>
-                      Most Recent
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item onClick={() => setSortBy('relevance')}>
-                      Relevance
-                    </DropdownMenu.Item>
-                  </DropdownMenu.Content>
-                </DropdownMenu>
+                <StyledDropdown trigger={<Text>{getSortLabel(sortBy)}</Text>}>
+                  <StyledDropdown.Item onClick={() => setSortBy('recent')}>
+                    Most Recent
+                  </StyledDropdown.Item>
+                  <StyledDropdown.Item onClick={() => setSortBy('relevance')}>
+                    Relevance
+                  </StyledDropdown.Item>
+                </StyledDropdown>
               </View>
 
               {hasActiveFilters && (

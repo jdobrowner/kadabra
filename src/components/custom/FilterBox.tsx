@@ -1,5 +1,6 @@
-import { Card, Text, View, Button, Icon, DropdownMenu } from 'reshaped'
-import { Funnel, X, TrendUp, Clock, CaretDown } from '@phosphor-icons/react'
+import { Card, Text, View, Button, Icon } from 'reshaped'
+import { Funnel, X, ArrowsDownUp } from '@phosphor-icons/react'
+import { StyledDropdown } from './StyledDropdown'
 
 export interface FilterBoxProps {
   priorityFilter?: string
@@ -70,197 +71,105 @@ export function FilterBox({
       <View direction="column" gap={4}>
         {/* Filters Row */}
         <View direction="row" gap={4} align="center" attributes={{ style: { flexWrap: 'wrap' } }}>
+          {/* Ranking Filter */}
+          <View direction="row" gap={2} align="center">
+            <Icon svg={<ArrowsDownUp size={18} weight="bold" />} size={4} />
+            <Text variant="body-2" weight="medium">Ranked by:</Text>
+            <StyledDropdown trigger={<Text>{getRankingLabel(rankingOption)}</Text>}>
+              <StyledDropdown.Item onClick={() => onRankingChange?.('priority')}>
+                Priority
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onRankingChange?.('most-recent')}>
+                Most Recent
+              </StyledDropdown.Item>
+            </StyledDropdown>
+          </View>
+
+          {/* Vertical Divider */}
+          <View
+            attributes={{
+              style: {
+                width: '1px',
+                height: '24px',
+                backgroundColor: 'var(--rs-color-border-neutral)',
+              }
+            }}
+          />
+
           <View direction="row" gap={2} align="center">
             <Funnel size={18} weight="bold" />
             <Text variant="body-2" weight="medium">
-              Filters:
+              Filter by:
             </Text>
           </View>
 
           {/* Priority Filter */}
           <View direction="row" gap={2} align="center">
             <Text variant="body-2" weight="medium">Priority:</Text>
-            <DropdownMenu>
-              <DropdownMenu.Trigger>
-                {(attributes) => (
-                  <Button
-                    {...attributes}
-                    variant="outline"
-                    size="small"
-                    attributes={{
-                      style: {
-                        borderRadius: '30px',
-                        paddingLeft: '16px',
-                        paddingRight: '12px',
-                      }
-                    }}
-                  >
-                    <View direction="row" gap={2} align="center">
-                      <Text>{getPriorityLabel(priorityFilter)}</Text>
-                      <CaretDown size={16} weight="bold" />
-                    </View>
-                  </Button>
-                )}
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Content>
-                <DropdownMenu.Item onClick={() => onPriorityChange?.('all')}>
-              All Priority
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onPriorityChange?.('at-risk')}>
-              At-Risk
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onPriorityChange?.('opportunity')}>
-              Opportunity
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onPriorityChange?.('lead')}>
-                  Lead
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onPriorityChange?.('follow-up')}>
-              Follow-Up
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onPriorityChange?.('no-action')}>
-              No Action
-                </DropdownMenu.Item>
-              </DropdownMenu.Content>
-            </DropdownMenu>
+            <StyledDropdown trigger={<Text>{getPriorityLabel(priorityFilter)}</Text>}>
+              <StyledDropdown.Item onClick={() => onPriorityChange?.('all')}>
+                All Priority
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onPriorityChange?.('at-risk')}>
+                At-Risk
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onPriorityChange?.('opportunity')}>
+                Opportunity
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onPriorityChange?.('lead')}>
+                Lead
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onPriorityChange?.('follow-up')}>
+                Follow-Up
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onPriorityChange?.('no-action')}>
+                No Action
+              </StyledDropdown.Item>
+            </StyledDropdown>
           </View>
 
           {/* Assignee Filter */}
           <View direction="row" gap={2} align="center">
             <Text variant="body-2" weight="medium">Assignee:</Text>
-            <DropdownMenu>
-              <DropdownMenu.Trigger>
-                {(attributes) => (
-                  <Button
-                    {...attributes}
-                    variant="outline"
-                    size="small"
-                    attributes={{
-                      style: {
-                        borderRadius: '30px',
-                        paddingLeft: '16px',
-                        paddingRight: '12px',
-                      }
-                    }}
-                  >
-                    <View direction="row" gap={2} align="center">
-                      <Text>{getAssigneeLabel(assigneeFilter)}</Text>
-                      <CaretDown size={16} weight="bold" />
-                    </View>
-                  </Button>
-                )}
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Content>
-                <DropdownMenu.Item onClick={() => onAssigneeChange?.('all')}>
-                  All Assignees
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onAssigneeChange?.('john-smith')}>
-                  John Smith
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onAssigneeChange?.('emily-davis')}>
-                  Emily Davis
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onAssigneeChange?.('michael-chen')}>
-                  Michael Chen
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onAssigneeChange?.('unassigned')}>
-                  Unassigned
-                </DropdownMenu.Item>
-              </DropdownMenu.Content>
-            </DropdownMenu>
+            <StyledDropdown trigger={<Text>{getAssigneeLabel(assigneeFilter)}</Text>}>
+              <StyledDropdown.Item onClick={() => onAssigneeChange?.('all')}>
+                All Assignees
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onAssigneeChange?.('john-smith')}>
+                John Smith
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onAssigneeChange?.('emily-davis')}>
+                Emily Davis
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onAssigneeChange?.('michael-chen')}>
+                Michael Chen
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onAssigneeChange?.('unassigned')}>
+                Unassigned
+              </StyledDropdown.Item>
+            </StyledDropdown>
           </View>
 
           {/* Timeframe Filter */}
           <View direction="row" gap={2} align="center">
             <Text variant="body-2" weight="medium">Timeframe:</Text>
-            <DropdownMenu>
-              <DropdownMenu.Trigger>
-                {(attributes) => (
-                  <Button
-                    {...attributes}
-                    variant="outline"
-                    size="small"
-                    attributes={{
-                      style: {
-                        borderRadius: '30px',
-                        paddingLeft: '16px',
-                        paddingRight: '12px',
-                      }
-                    }}
-                  >
-                    <View direction="row" gap={2} align="center">
-                      <Text>{getTimeframeLabel(timeframeFilter)}</Text>
-                      <CaretDown size={16} weight="bold" />
-                    </View>
-                  </Button>
-                )}
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Content>
-                <DropdownMenu.Item onClick={() => onTimeframeChange?.('all')}>
-                  All Time
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onTimeframeChange?.('today')}>
-                  Today
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onTimeframeChange?.('24h')}>
-                  Last 24 Hours
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onTimeframeChange?.('7d')}>
-                  Last 7 Days
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onTimeframeChange?.('30d')}>
-                  Last 30 Days
-                </DropdownMenu.Item>
-              </DropdownMenu.Content>
-            </DropdownMenu>
-          </View>
-
-          {/* Ranking Filter */}
-          <View direction="row" gap={2} align="center">
-            <Icon svg={<TrendUp weight="bold" />} size={4} />
-            <Text variant="body-2" weight="medium">Ranked by:</Text>
-            <DropdownMenu>
-              <DropdownMenu.Trigger>
-                {(attributes) => (
-                  <Button
-                    {...attributes}
-                    variant="outline"
-                    size="small"
-                    attributes={{
-                      style: {
-                        borderRadius: '30px',
-                        paddingLeft: '16px',
-                        paddingRight: '12px',
-                      }
-                    }}
-                  >
-                    <View direction="row" gap={2} align="center">
-                      {rankingOption === 'priority' ? (
-                        <Icon svg={<TrendUp />} size={4} />
-                      ) : (
-                        <Icon svg={<Clock />} size={4} />
-                      )}
-                      <Text>{getRankingLabel(rankingOption)}</Text>
-                      <CaretDown size={16} weight="bold" />
-                    </View>
-                  </Button>
-                )}
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Content>
-                <DropdownMenu.Item onClick={() => onRankingChange?.('priority')}>
-                  <View direction="row" gap={2} align="center">
-                    <Icon svg={<TrendUp />} size={4} />
-                    <Text>Priority</Text>
-                  </View>
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => onRankingChange?.('most-recent')}>
-                  <View direction="row" gap={2} align="center">
-                    <Icon svg={<Clock />} size={4} />
-                    <Text>Most Recent</Text>
-                  </View>
-                </DropdownMenu.Item>
-              </DropdownMenu.Content>
-            </DropdownMenu>
+            <StyledDropdown trigger={<Text>{getTimeframeLabel(timeframeFilter)}</Text>}>
+              <StyledDropdown.Item onClick={() => onTimeframeChange?.('all')}>
+                All Time
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onTimeframeChange?.('today')}>
+                Today
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onTimeframeChange?.('24h')}>
+                Last 24 Hours
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onTimeframeChange?.('7d')}>
+                Last 7 Days
+              </StyledDropdown.Item>
+              <StyledDropdown.Item onClick={() => onTimeframeChange?.('30d')}>
+                Last 30 Days
+              </StyledDropdown.Item>
+            </StyledDropdown>
           </View>
 
           {hasActiveFilters && (

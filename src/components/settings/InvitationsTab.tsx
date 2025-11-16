@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { View, Text, Button, Table, Icon, DropdownMenu } from 'reshaped'
+import { View, Text, Button, Table, Icon } from 'reshaped'
 import { CustomBadge } from '../custom/Badge'
-import { Plus, Trash, Copy, EnvelopeSimple, XCircle, CaretDown } from '@phosphor-icons/react'
+import { Plus, Trash, Copy, EnvelopeSimple, XCircle } from '@phosphor-icons/react'
+import { StyledDropdown } from '../custom/StyledDropdown'
 import { useInvitationsStore } from '../../store/useInvitationsStore'
 
 export default function InvitationsTab() {
@@ -98,43 +99,24 @@ export default function InvitationsTab() {
           </Text>
         </View>
         <View direction="row" gap={2}>
-          <DropdownMenu>
-            <DropdownMenu.Trigger>
-              {(attributes) => (
-                <Button
-                  {...attributes}
-                  variant="outline"
-                  size="small"
-                  attributes={{
-                    style: {
-                      borderRadius: '30px',
-                      paddingLeft: '16px',
-                      paddingRight: '12px',
-                    }
-                  }}
+          <StyledDropdown
+            trigger={
+              <Text>
+                {invitationsFilter === 'all' ? 'All' : invitationsFilter.charAt(0).toUpperCase() + invitationsFilter.slice(1)}
+              </Text>
+            }
+          >
+            {(['all', 'pending', 'accepted', 'expired', 'canceled', 'rejected'] as const).map(
+              (status) => (
+                <StyledDropdown.Item
+                  key={status}
+                  onClick={() => fetchInvitations(status)}
                 >
-                  <View direction="row" gap={2} align="center">
-                    <Text>
-                      {invitationsFilter === 'all' ? 'All' : invitationsFilter.charAt(0).toUpperCase() + invitationsFilter.slice(1)}
-                    </Text>
-                    <CaretDown size={16} weight="bold" />
-                  </View>
-                </Button>
-              )}
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content>
-              {(['all', 'pending', 'accepted', 'expired', 'canceled', 'rejected'] as const).map(
-                (status) => (
-                  <DropdownMenu.Item
-                    key={status}
-                    onClick={() => fetchInvitations(status)}
-                  >
-                    {status === 'all' ? 'All' : status.charAt(0).toUpperCase() + status.slice(1)}
-                  </DropdownMenu.Item>
-                )
-              )}
-            </DropdownMenu.Content>
-          </DropdownMenu>
+                  {status === 'all' ? 'All' : status.charAt(0).toUpperCase() + status.slice(1)}
+                </StyledDropdown.Item>
+              )
+            )}
+          </StyledDropdown>
           <Button
             variant="outline"
             icon={<Icon svg={<Plus weight="bold" />} size={4} />}
@@ -192,41 +174,19 @@ export default function InvitationsTab() {
               <Text variant="caption-1" weight="medium">
                 Role
               </Text>
-              <DropdownMenu>
-                <DropdownMenu.Trigger>
-                  {(attributes) => (
-                    <Button
-                      {...attributes}
-                      variant="outline"
-                      size="small"
-                      attributes={{
-                        style: {
-                          borderRadius: '30px',
-                          paddingLeft: '16px',
-                          paddingRight: '12px',
-                          width: '100%',
-                          justifyContent: 'space-between',
-                        }
-                      }}
-                    >
-                      <View direction="row" gap={2} align="center" attributes={{ style: { width: '100%', justifyContent: 'space-between' } }}>
-                        <Text>{role.charAt(0).toUpperCase() + role.slice(1)}</Text>
-                        <CaretDown size={16} weight="bold" />
-                      </View>
-                    </Button>
-                  )}
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Content>
-                  {(['admin', 'developer', 'member'] as const).map((r) => (
-                    <DropdownMenu.Item
-                      key={r}
-                      onClick={() => setRole(r)}
-                    >
-                      {r.charAt(0).toUpperCase() + r.slice(1)}
-                    </DropdownMenu.Item>
-                  ))}
-                </DropdownMenu.Content>
-              </DropdownMenu>
+              <StyledDropdown
+                trigger={<Text>{role.charAt(0).toUpperCase() + role.slice(1)}</Text>}
+                fullWidth
+              >
+                {(['admin', 'developer', 'member'] as const).map((r) => (
+                  <StyledDropdown.Item
+                    key={r}
+                    onClick={() => setRole(r)}
+                  >
+                    {r.charAt(0).toUpperCase() + r.slice(1)}
+                  </StyledDropdown.Item>
+                ))}
+              </StyledDropdown>
             </View>
 
             <View direction="row" gap={2} justify="end">
