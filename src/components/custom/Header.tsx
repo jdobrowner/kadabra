@@ -1,10 +1,10 @@
 import { View, Icon, Avatar, DropdownMenu, Text } from 'reshaped'
-import { Sparkle, Moon, Sun, SignOut, ToggleLeft, ToggleRight } from '@phosphor-icons/react'
+import { Moon, Sun, SignOut, ToggleLeft, ToggleRight } from '@phosphor-icons/react'
 import { TodaysProgress } from './TodaysProgress'
 import { useAuthStore } from '../../store/useAuthStore'
 import { useTheme } from 'reshaped'
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './Header.css'
 import { LOCAL_STORAGE_KEYS, setStoredValue, getStoredValue } from '../../utils/storage'
 import { isMockEnabled } from '../../lib/config'
@@ -32,6 +32,38 @@ export function Header({
     setDemoMode(isMockEnabled)
   }, [])
 
+  const gradientExtensionRef = useRef<HTMLDivElement>(null)
+
+  // Sync gradient extension with sidebar state
+  useEffect(() => {
+    const header = document.querySelector('.app-header')
+    const gradientExtension = gradientExtensionRef.current
+    
+    if (!header || !gradientExtension) return
+
+    const syncClasses = () => {
+      if (header.classList.contains('sidebar-closed')) {
+        gradientExtension.classList.add('sidebar-closed')
+      } else {
+        gradientExtension.classList.remove('sidebar-closed')
+      }
+      if (header.classList.contains('sidebar-transitions')) {
+        gradientExtension.classList.add('sidebar-transitions')
+      } else {
+        gradientExtension.classList.remove('sidebar-transitions')
+      }
+    }
+
+    // Initial sync
+    syncClasses()
+
+    // Watch for changes using MutationObserver
+    const observer = new MutationObserver(syncClasses)
+    observer.observe(header, { attributes: true, attributeFilter: ['class'] })
+
+    return () => observer.disconnect()
+  }, [])
+
   const handleLogout = () => {
     logout()
     navigate('/signin')
@@ -46,29 +78,30 @@ export function Header({
   }
 
   return (
-    <header className="app-header">
-      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
-        <defs>
-          <linearGradient id="header-gradient-purple" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#5a77eb" />
-            <stop offset="40%" stopColor="#8b5cf6" />
-            <stop offset="100%" stopColor="#a855f7" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <View 
-        direction="row" 
-        gap={4} 
-        align="center"
-        attributes={{ 
-          style: { 
-            width: '100%',
-            justifyContent: 'flex-end',
-            padding: '2px 16px',
-            height: 'var(--header-height)',
-          } 
-        }}
-      >
+    <>
+      <header className="app-header">
+        <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+          <defs>
+            <linearGradient id="header-gradient-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#5a77eb" />
+              <stop offset="40%" stopColor="#8b5cf6" />
+              <stop offset="100%" stopColor="#a855f7" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <View 
+          direction="row" 
+          gap={4} 
+          align="center"
+          attributes={{ 
+            style: { 
+              width: '100%',
+              justifyContent: 'flex-end',
+              padding: '2px 16px',
+              height: 'var(--header-height)',
+            } 
+          }}
+        >
         <View direction="row" gap={8} align="center" attributes={{ style: { minWidth: 0, flexShrink: 0 } }}>
           <TodaysProgress />
           {displayAvatar && (
@@ -138,6 +171,22 @@ export function Header({
           )}
         </View>
       </View>
-    </header>
+      </header>
+      {/* Extended gradient background - positioned below header, above main content */}
+      <div 
+        ref={gradientExtensionRef}
+        className="header-gradient-extension"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: '220px',
+          width: 'calc(100% - 220px)',
+          height: 'calc(var(--header-height) * 2)',
+          background: 'linear-gradient(to bottom, var(--rs-color-background-page) 0%, var(--rs-color-background-page) 30%, transparent 100%)',
+          pointerEvents: 'none',
+          zIndex: 50,
+        }}
+      />
+    </>
   )
 }

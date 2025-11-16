@@ -24,6 +24,16 @@
   width: calc(100% - 64px);
 }
 
+/* Extended gradient background - matches header positioning */
+.header-gradient-extension {
+  transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.header-gradient-extension.sidebar-closed {
+  left: 64px;
+  width: calc(100% - 64px);
+}
+
 .header-title {
   font-family: "Fredoka", sans-serif;
   font-optical-sizing: auto;
