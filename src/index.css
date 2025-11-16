@@ -151,30 +151,69 @@ body {
   color: var(--rs-color-foreground-primary) !important;
 }
 
-/* StyledDropdown trigger text - smaller and not bold */
-[data-rs-theme~="kadabra"] button[data-rs-button].styled-dropdown-trigger [class*="_text_"],
-[data-rs-theme~="kadabra"] button.styled-dropdown-trigger [class*="_text_"],
+/* StyledDropdown border color - custom color for light mode, darker for dark mode */
+[data-rs-theme~="kadabra"] {
+  --rs-color-styled-dropdown-border: #e8e3e3;
+}
+
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] {
+  --rs-color-styled-dropdown-border: #353535;
+}
+
+/* StyledDropdown trigger text - smaller and medium weight */
+[data-rs-theme~="kadabra"] .styled-dropdown-trigger,
+[data-rs-theme~="kadabra"] .styled-dropdown-trigger *,
+[data-rs-theme~="kadabra"] .styled-dropdown-trigger-content,
+[data-rs-theme~="kadabra"] .styled-dropdown-trigger-content *,
+[data-rs-theme~="kadabra"] .styled-dropdown-trigger-content span,
 [data-rs-theme~="kadabra"] .styled-dropdown-trigger [class*="_text_"],
-[data-rs-theme~="kadabra"] .styled-dropdown-trigger [class*="_text_"] * {
-  font-weight: normal !important;
+[data-rs-theme~="kadabra"] .styled-dropdown-trigger [class*="_text_"] *,
+[data-rs-theme~="kadabra"] button.styled-dropdown-trigger,
+[data-rs-theme~="kadabra"] button.styled-dropdown-trigger *,
+[data-rs-theme~="kadabra"] button[data-rs-button].styled-dropdown-trigger,
+[data-rs-theme~="kadabra"] button[data-rs-button].styled-dropdown-trigger * {
+  font-weight: 500 !important;
   font-size: 13px !important;
 }
 
 /* StyledDropdown menu items - lighter text and hover state */
-[data-rs-theme~="kadabra"] .styled-dropdown-content [data-rs-dropdown-menu-item],
-[data-rs-theme~="kadabra"] .styled-dropdown-content button[data-rs-dropdown-menu-item],
-[data-rs-theme~="kadabra"] .styled-dropdown-content [role="menuitem"],
-[data-rs-theme~="kadabra"] .styled-dropdown-content button[role="menuitem"] {
+/* Use maximum specificity to override Reshaped's styles */
+[data-rs-theme~="kadabra"] .styled-dropdown-content > *,
+[data-rs-theme~="kadabra"] .styled-dropdown-content > div,
+[data-rs-theme~="kadabra"] .styled-dropdown-content > button,
+[data-rs-theme~="kadabra"] .styled-dropdown-content > a {
   font-weight: normal !important;
   font-size: 14px !important;
-  transition: background-color 0.15s ease;
-  cursor: pointer;
+  transition: background-color 0.15s ease !important;
+  cursor: pointer !important;
+  border-radius: 4px !important;
 }
 
-[data-rs-theme~="kadabra"] .styled-dropdown-content [data-rs-dropdown-menu-item]:hover,
-[data-rs-theme~="kadabra"] .styled-dropdown-content button[data-rs-dropdown-menu-item]:hover,
+/* Hover states - use maximum specificity */
+[data-rs-theme~="kadabra"] .styled-dropdown-content > *:hover,
+[data-rs-theme~="kadabra"] .styled-dropdown-content > div:hover,
+[data-rs-theme~="kadabra"] .styled-dropdown-content > button:hover,
+[data-rs-theme~="kadabra"] .styled-dropdown-content > a:hover {
+  background-color: var(--rs-color-background-neutral-stronger) !important;
+}
+
+/* Target any nested interactive elements */
+[data-rs-theme~="kadabra"] .styled-dropdown-content button,
+[data-rs-theme~="kadabra"] .styled-dropdown-content [role="menuitem"],
+[data-rs-theme~="kadabra"] .styled-dropdown-content [data-rs-dropdown-menu-item],
+[data-rs-theme~="kadabra"] .styled-dropdown-content [class*="MenuItem"],
+[data-rs-theme~="kadabra"] .styled-dropdown-content [class*="menu-item"] {
+  font-weight: normal !important;
+  font-size: 14px !important;
+  transition: background-color 0.15s ease !important;
+  cursor: pointer !important;
+}
+
+[data-rs-theme~="kadabra"] .styled-dropdown-content button:hover,
 [data-rs-theme~="kadabra"] .styled-dropdown-content [role="menuitem"]:hover,
-[data-rs-theme~="kadabra"] .styled-dropdown-content button[role="menuitem"]:hover {
+[data-rs-theme~="kadabra"] .styled-dropdown-content [data-rs-dropdown-menu-item]:hover,
+[data-rs-theme~="kadabra"] .styled-dropdown-content [class*="MenuItem"]:hover,
+[data-rs-theme~="kadabra"] .styled-dropdown-content [class*="menu-item"]:hover {
   background-color: var(--rs-color-background-neutral-stronger) !important;
 }
 

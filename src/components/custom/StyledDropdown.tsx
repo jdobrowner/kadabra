@@ -35,8 +35,8 @@ export function StyledDropdown({
     paddingRight: triggerPaddingRight,
     paddingTop: '8px',
     paddingBottom: '8px',
-    borderColor: 'var(--rs-color-foreground-neutral)',
-    fontWeight: 'normal',
+    borderColor: 'var(--rs-color-styled-dropdown-border, #e8e3e3)',
+    fontWeight: '500',
     fontSize: triggerFontSize || '13px',
     ...(fullWidth && {
       width: '100%',
@@ -73,12 +73,17 @@ export function StyledDropdown({
               gap={2}
               align="center"
               attributes={{
-                style: fullWidth
-                  ? { width: '100%', justifyContent: 'space-between' }
-                  : undefined,
+                style: {
+                  ...(fullWidth ? { width: '100%', justifyContent: 'space-between' } : {}),
+                  fontSize: triggerFontSize || '13px',
+                  fontWeight: '500',
+                },
+                className: 'styled-dropdown-trigger-content',
               }}
             >
-              {trigger}
+              <span style={{ fontSize: triggerFontSize || '13px', fontWeight: '500' }}>
+                {trigger}
+              </span>
               <CaretDown size={triggerFontSize === '13px' ? 14 : 16} weight="regular" />
             </View>
           </Button>

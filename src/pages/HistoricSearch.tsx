@@ -112,14 +112,14 @@ export default function HistoricSearch() {
             <View direction="row" gap={4} align="center" attributes={{ style: { flexWrap: 'wrap' } }}>
               <View direction="row" gap={2} align="center">
                 <Funnel size={18} weight="bold" />
-                <Text variant="body-2" weight="medium">
-                  Filters:
+                <Text variant="body-2" attributes={{ style: { fontWeight: '500' } }}>
+                  Filter by:
                 </Text>
               </View>
 
               {/* Type Filter */}
               <View direction="row" gap={2} align="center">
-                <Text variant="body-2" weight="medium">Type:</Text>
+                <Text variant="body-2" weight="medium" color="neutral-faded">Type:</Text>
                 <StyledDropdown trigger={<Text>{getTypeLabel(typeFilter)}</Text>}>
                   <StyledDropdown.Item onClick={() => setTypeFilter('all')}>
                     All Types
@@ -138,7 +138,7 @@ export default function HistoricSearch() {
 
               {/* Priority Filter */}
               <View direction="row" gap={2} align="center">
-                <Text variant="body-2" weight="medium">Priority:</Text>
+                <Text variant="body-2" weight="medium" color="neutral-faded">Priority:</Text>
                 <StyledDropdown trigger={<Text>{getPriorityLabel(priorityFilter)}</Text>}>
                   <StyledDropdown.Item onClick={() => setPriorityFilter('all')}>
                     All Priority
@@ -163,7 +163,7 @@ export default function HistoricSearch() {
 
               {/* Status Filter */}
               <View direction="row" gap={2} align="center">
-                <Text variant="body-2" weight="medium">Status:</Text>
+                <Text variant="body-2" weight="medium" color="neutral-faded">Status:</Text>
                 <StyledDropdown trigger={<Text>{getStatusLabel(statusFilter)}</Text>}>
                   <StyledDropdown.Item onClick={() => setStatusFilter('all')}>
                     All Status
@@ -179,7 +179,7 @@ export default function HistoricSearch() {
 
               {/* Sort Filter */}
               <View direction="row" gap={2} align="center">
-                <Text variant="body-2" weight="medium">Sort:</Text>
+                <Text variant="body-2" weight="medium" color="neutral-faded">Sort:</Text>
                 <StyledDropdown trigger={<Text>{getSortLabel(sortBy)}</Text>}>
                   <StyledDropdown.Item onClick={() => setSortBy('recent')}>
                     Most Recent

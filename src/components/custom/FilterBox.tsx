@@ -74,7 +74,7 @@ export function FilterBox({
           {/* Ranking Filter */}
           <View direction="row" gap={2} align="center">
             <Icon svg={<ArrowsDownUp size={18} weight="bold" />} size={4} />
-            <Text variant="body-2" weight="medium">Ranked by:</Text>
+            <Text variant="body-2" attributes={{ style: { fontWeight: '500' } }}>Rank by:</Text>
             <StyledDropdown trigger={<Text>{getRankingLabel(rankingOption)}</Text>}>
               <StyledDropdown.Item onClick={() => onRankingChange?.('priority')}>
                 Priority
@@ -98,14 +98,14 @@ export function FilterBox({
 
           <View direction="row" gap={2} align="center">
             <Funnel size={18} weight="bold" />
-            <Text variant="body-2" weight="medium">
+            <Text variant="body-2" attributes={{ style: { fontWeight: '500' } }}>
               Filter by:
             </Text>
           </View>
 
           {/* Priority Filter */}
           <View direction="row" gap={2} align="center">
-            <Text variant="body-2" weight="medium">Priority:</Text>
+            <Text variant="body-2" weight="medium" color="neutral-faded">Priority:</Text>
             <StyledDropdown trigger={<Text>{getPriorityLabel(priorityFilter)}</Text>}>
               <StyledDropdown.Item onClick={() => onPriorityChange?.('all')}>
                 All Priority
@@ -130,7 +130,7 @@ export function FilterBox({
 
           {/* Assignee Filter */}
           <View direction="row" gap={2} align="center">
-            <Text variant="body-2" weight="medium">Assignee:</Text>
+            <Text variant="body-2" weight="medium" color="neutral-faded">Assignee:</Text>
             <StyledDropdown trigger={<Text>{getAssigneeLabel(assigneeFilter)}</Text>}>
               <StyledDropdown.Item onClick={() => onAssigneeChange?.('all')}>
                 All Assignees
@@ -152,7 +152,7 @@ export function FilterBox({
 
           {/* Timeframe Filter */}
           <View direction="row" gap={2} align="center">
-            <Text variant="body-2" weight="medium">Timeframe:</Text>
+            <Text variant="body-2" weight="medium" color="neutral-faded">Timeframe:</Text>
             <StyledDropdown trigger={<Text>{getTimeframeLabel(timeframeFilter)}</Text>}>
               <StyledDropdown.Item onClick={() => onTimeframeChange?.('all')}>
                 All Time
