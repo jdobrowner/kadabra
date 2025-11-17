@@ -147,16 +147,6 @@ export function Header({
       {/* Extended gradient background - positioned below header, above main content */}
       <div 
         className="header-gradient-extension"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: '220px',
-          width: 'calc(100% - 220px)',
-          height: 'calc(var(--header-height) * 2)',
-          background: 'linear-gradient(to bottom, var(--rs-color-background-page) 0%, var(--rs-color-background-page) 30%, transparent 100%)',
-          pointerEvents: 'none',
-          zIndex: 50,
-        }}
       />
     </>
   )

@@ -16,12 +16,14 @@
 
 /* Extended gradient background - matches header positioning */
 .header-gradient-extension {
-  transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
-}
-
-.header-gradient-extension {
-  left: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
   width: 100vw;
+  height: calc(var(--header-height) * 2);
+  background: linear-gradient(to bottom, var(--rs-color-background-page) 0%, var(--rs-color-background-page) 30%, transparent 100%);
+  pointer-events: none;
+  z-index: 50;
 }
 
 .header-title {
