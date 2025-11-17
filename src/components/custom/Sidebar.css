@@ -19,7 +19,7 @@
 }
 
 .sidebar-closed {
-  width: 64px; /* Slightly wider to better center icons */
+  width: 60px; /* Slightly wider to better center icons */
   cursor: pointer;
 }
 

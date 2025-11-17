@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { View, Text, Icon, Button } from 'reshaped'
+import { View, Text, Button } from 'reshaped'
 import {
   House,
   Lightning,
@@ -22,6 +22,65 @@ interface NavItem {
   label: string
 }
 
+interface SidebarNavButtonProps {
+  icon: React.ReactElement
+  label: string
+  isOpen: boolean
+  isActive: boolean
+  onClick: (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => void
+  ariaLabel: string
+}
+
+function SidebarNavButton({ icon, label, isOpen, isActive, onClick, ariaLabel }: SidebarNavButtonProps) {
+  return (
+    <Button
+      size="large"
+      variant={isActive ? 'solid' : 'ghost'}
+      onClick={onClick}
+      attributes={{
+        'aria-label': ariaLabel,
+        style: {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          padding: 0,
+          gap: '0 !important'
+        },
+      }}
+    >
+      {/* Fixed width icon container */}
+      <View
+        attributes={{
+          style: {
+            width: '44px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+          },
+        }}
+      >
+        {icon}
+      </View>
+      {/* Text to the right when sidebar is open */}
+      {isOpen && (
+        <Text
+          variant="body-2"
+          weight="medium"
+          attributes={{
+            style: {
+              fontSize: '16px',
+              marginLeft: '-8px'
+            },
+          }}
+        >
+          {label}
+        </Text>
+      )}
+    </Button>
+  )
+}
+
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(true)
   const [hasRendered, setHasRendered] = useState(false)
@@ -36,12 +95,12 @@ export function Sidebar() {
   }, [])
 
   const navItems: NavItem[] = [
-    { path: '/triage', icon: <Lightning weight="bold" />, label: 'Triage' },
-    { path: '/search', icon: <MagnifyingGlass weight="bold" />, label: 'Search' },
-    { path: '/boards', icon: <Cards weight="bold" />, label: 'Boards' },
-    { path: '/calendar', icon: <Calendar weight="bold" />, label: 'Calendar' },
+    { path: '/triage', icon: <Lightning weight="bold" size={20} />, label: 'Triage' },
+    { path: '/search', icon: <MagnifyingGlass weight="bold" size={20} />, label: 'Search' },
+    { path: '/boards', icon: <Cards weight="bold" size={20} />, label: 'Boards' },
+    { path: '/calendar', icon: <Calendar weight="bold" size={20} />, label: 'Calendar' },
     ...(isDeveloperOrAdmin 
-      ? [{ path: '/import-data', icon: <Upload weight="bold" />, label: 'Import' }]
+      ? [{ path: '/import-data', icon: <Upload weight="bold" size={20} />, label: 'Import' }]
       : []
     ),
   ]
@@ -120,29 +179,28 @@ export function Sidebar() {
           style: {
             height: '100%',
             display: 'flex',
-            padding: '16px 4px'
+            padding: '16px 8px'
           },
         }}
       >
         {/* Logo section - spark icon, wordmark, and panel toggle */}
-        {/* Use fixed height container with CSS Grid to prevent layout shifts */}
-        <div
-          className="sidebar-logo-container"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: isOpen ? '1fr auto' : '1fr',
-            alignItems: 'center',
-            width: '100%',
-            height: '48px', // Fixed height to prevent jumps
-            marginBottom: '-8px', // Negative margin to cancel out View gap
-            position: 'relative',
+        <View
+          direction="row"
+          align="center"
+          attributes={{
+            style: {
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '-8px', // Negative margin to cancel out View gap
+            },
           }}
         >
           {/* Spark icon + KADABRA wordmark */}
           <Button
             size="large"
             variant="ghost"
-            icon={<Sparkle weight="bold" />}
             onClick={(e) => {
               e.stopPropagation()
               if (!isOpen) {
@@ -152,17 +210,44 @@ export function Sidebar() {
             attributes={{
               'aria-label': isOpen ? 'Logo' : 'Open sidebar',
               className: 'sidebar-logo-button',
+              style: {
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                padding: 0,
+                gap: '0 !important',
+              },
             }}
           >
-            {isOpen && (
-              <Text variant="body-2" weight="medium" attributes={{
+            {/* Fixed width icon container */}
+            <View
+              attributes={{
                 style: {
-                  fontFamily: '"Courier New", monospace',
-                  fontSize: '22px',
-                  fontWeight: 600,
-                  color: '#202020',
+                  width: '44px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
                 },
-              }}>
+              }}
+            >
+              <Sparkle weight="bold" size={20} />
+            </View>
+            {/* Text to the right when sidebar is open */}
+            {isOpen && (
+              <Text
+                variant="body-2"
+                weight="medium"
+                attributes={{
+                  style: {
+                    fontFamily: '"Courier New", monospace',
+                    fontSize: '22px',
+                    fontWeight: 600,
+                    color: '#202020',
+                    marginLeft: '-8px',
+                  },
+                }}
+              >
                 KADABRA
               </Text>
             )}
@@ -172,7 +257,7 @@ export function Sidebar() {
             <Button
               size="large"
               variant="ghost"
-              icon={<SidebarSimple weight="bold" />}
+              icon={<SidebarSimple weight="bold" size={20} />}
               onClick={(e) => {
                 e.stopPropagation()
                 setIsOpen(false)
@@ -183,58 +268,36 @@ export function Sidebar() {
               }}
             />
           )}
-        </div>
+        </View>
 
-        {/* Dashboard button - left aligned */}
-            <Button
-              size="large"
-          variant={isActive('/') ? 'solid' : 'ghost'}
-          icon={<House weight="bold" />}
-              onClick={(e) => {
-                e.stopPropagation()
+        {/* Dashboard button */}
+        <SidebarNavButton
+          icon={<House weight="bold" size={20} />}
+          label="Dashboard"
+          isOpen={isOpen}
+          isActive={isActive('/')}
+          onClick={(e) => {
+            e.stopPropagation()
             handleNavClick('/')
-              }}
-          attributes={{
-            'aria-label': 'Dashboard',
           }}
-        >
-          {isOpen && (
-            <Text variant="body-2" weight="medium" attributes={{
-              style: {
-                fontSize: '16px',
-              },
-            }}>
-              Dashboard
-            </Text>
-          )}
-        </Button>
+          ariaLabel="Dashboard"
+        />
 
-        {/* Navigation items - always left aligned */}
-          {navItems.map((item) => (
-            <Button
-              key={item.path}
-              size="large"
-              variant={isActive(item.path) ? 'solid' : 'ghost'}
-              icon={item.icon}
-              onClick={(e) => {
-                e.stopPropagation()
-                handleNavClick(item.path)
-              }}
-              attributes={{
-                'aria-label': item.label,
-              }}
-            >
-              {isOpen && (
-                <Text variant="body-2" weight="medium" attributes={{
-                  style: {
-                    fontSize: '16px',
-                  },
-                }}>
-                  {item.label}
-                </Text>
-              )}
-            </Button>
-          ))}
+        {/* Navigation items */}
+        {navItems.map((item) => (
+          <SidebarNavButton
+            key={item.path}
+            icon={item.icon}
+            label={item.label}
+            isOpen={isOpen}
+            isActive={isActive(item.path)}
+            onClick={(e) => {
+              e.stopPropagation()
+              handleNavClick(item.path)
+            }}
+            ariaLabel={item.label}
+          />
+        ))}
 
         {/* Bottom section: Settings, Notifications, User Avatar */}
         <View
@@ -248,52 +311,30 @@ export function Sidebar() {
             },
           }}
         >
-          {/* Notifications button - always left aligned */}
-            <Button
-              size="large"
-            variant="ghost"
-            icon={<Icon svg={<Bell weight='bold' />} size={5} />}
-              onClick={(e) => {
-                e.stopPropagation()
-              }}
-              attributes={{
-              'aria-label': 'Notifications',
-              }}
-            >
-            {isOpen && (
-              <Text variant="body-2" weight="medium" attributes={{
-                style: {
-                  fontSize: '16px',
-                },
-              }}>
-                Notifications
-              </Text>
-            )}
-            </Button>
+          {/* Notifications button */}
+          <SidebarNavButton
+            icon={<Bell weight='bold' size={20} />}
+            label="Notifications"
+            isOpen={isOpen}
+            isActive={false}
+            onClick={(e) => {
+              e.stopPropagation()
+            }}
+            ariaLabel="Notifications"
+          />
 
-          {/* Settings button - always left aligned */}
-            <Button
-              size="large"
-              variant={isActive('/settings') ? 'solid' : 'ghost'}
-              icon={<Gear weight="bold" />}
-              onClick={(e) => {
-                e.stopPropagation()
-                navigate('/settings')
-              }}
-              attributes={{
-                'aria-label': 'Settings',
-              }}
-          >
-            {isOpen && (
-              <Text variant="body-2" weight="medium" attributes={{
-                style: {
-                  fontSize: '16px',
-                },
-              }}>
-                Settings
-              </Text>
-          )}
-          </Button>
+          {/* Settings button */}
+          <SidebarNavButton
+            icon={<Gear weight="bold" size={20} />}
+            label="Settings"
+            isOpen={isOpen}
+            isActive={isActive('/settings')}
+            onClick={(e) => {
+              e.stopPropagation()
+              navigate('/settings')
+            }}
+            ariaLabel="Settings"
+          />
         </View>
       </View>
     </aside>
