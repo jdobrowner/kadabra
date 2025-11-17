@@ -26,8 +26,8 @@ const config = {
         backgroundNeutral: { hex: "#fffdfe", hexDark: "#202020" }, // Card backgrounds - matches Dashboard cards
         backgroundNeutralFaded: { hex: "#f8f9fa", hexDark: "#2d2d2d" },
         // Border colors - custom card borders
-        borderNeutral: { hex: "#f6f1f1", hexDark: "#141414" }, // Card border color
-        borderNeutralFaded: { hex: "#292929", hexDark: "rgba(255, 255, 255, 0.1)" }, // Row card border color
+        borderNeutral: { hex: "#dadada", hexDark: "#444444" }, // Main borders (sidebar, dropdowns, progress bar) - darker for visibility
+        borderNeutralFaded: { hex: "#eae9e9", hexDark: "#292929" }, // Card borders - lighter than border-neutral in light mode
         // Card backgrounds - using #fffdfe instead of pure white
         backgroundBase: { hex: "#fffdfe", hexDark: "#202020" },
         backgroundElevationBase: { hex: "#fffdfe", hexDark: "#202020" },

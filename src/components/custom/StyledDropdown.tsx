@@ -35,7 +35,7 @@ export function StyledDropdown({
     paddingRight: triggerPaddingRight,
     paddingTop: '8px',
     paddingBottom: '8px',
-    borderColor: 'var(--rs-color-styled-dropdown-border, #e8e3e3)',
+    borderColor: 'var(--rs-color-border-neutral)',
     fontWeight: '500',
     fontSize: triggerFontSize || '13px',
     ...(fullWidth && {

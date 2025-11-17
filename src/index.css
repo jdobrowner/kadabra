@@ -23,7 +23,7 @@
 [data-rs-theme~="kadabra"] {
   /* Card background and border variables - use Reshaped tokens */
   --rs-card-background-color: var(--rs-color-background-neutral) !important;
-  --rs-card-border-color: var(--rs-color-border-neutral) !important;
+  --rs-card-border-color: var(--rs-color-border-neutral-faded) !important;
 }
 
 /* Reshaped Card components automatically use theme tokens for dark mode */
@@ -37,7 +37,7 @@
 [data-rs-theme~="kadabra"] [class*="card"][class*="_root_"],
 [data-rs-theme~="kadabra"] [class*="_root_"][class*="card"] {
   border-radius: 30px !important;
-  border: 1px solid var(--rs-color-border-neutral) !important;
+  border: 1px solid var(--rs-color-border-neutral-faded) !important;
   box-shadow: none !important;
   background-color: var(--rs-color-background-neutral) !important;
 }
@@ -151,14 +151,6 @@ body {
   color: var(--rs-color-foreground-primary) !important;
 }
 
-/* StyledDropdown border color - custom color for light mode, darker for dark mode */
-[data-rs-theme~="kadabra"] {
-  --rs-color-styled-dropdown-border: #e8e3e3;
-}
-
-[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] {
-  --rs-color-styled-dropdown-border: #353535;
-}
 
 /* StyledDropdown trigger text - smaller and medium weight */
 [data-rs-theme~="kadabra"] .styled-dropdown-trigger,

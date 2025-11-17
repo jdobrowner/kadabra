@@ -301,12 +301,12 @@
       "hexDark": "#2d2d2d"
     },
     "borderNeutral": {
-      "hex": "#f6f1f1",
-      "hexDark": "#141414"
+      "hex": "#dadada",
+      "hexDark": "#444444"
     },
     "borderNeutralFaded": {
-      "hex": "#292929",
-      "hexDark": "rgba(255, 255, 255, 0.1)"
+      "hex": "#eae9e9",
+      "hexDark": "#292929"
     },
     "foregroundNeutral": {
       "hex": "#161515",

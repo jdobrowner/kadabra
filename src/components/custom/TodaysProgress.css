@@ -11,10 +11,19 @@
   transition: width 0.5s ease, background 0.4s ease;
 }
 
-/* Set empty/track background to light grey in light mode only */
-[data-rs-theme~="kadabra"]:not([data-rs-color-mode="dark"]) .progress-container div[role="progressbar"],
-[data-rs-theme~="kadabra"][data-rs-color-mode="light"] .progress-container div[role="progressbar"] {
-  background-color: #ccd0d5 !important;
+/* Set empty/track background to border-neutral color */
+[data-rs-theme~="kadabra"] .progress-container div[role="progressbar"] {
+  background-color: var(--rs-color-border-neutral) !important;
+}
+
+/* Target the track container div */
+[data-rs-theme~="kadabra"] .progress-container div[role="progressbar"] > div {
+  background-color: var(--rs-color-border-neutral) !important;
+}
+
+/* Ensure the track (non-value part) uses border-neutral - more specific */
+[data-rs-theme~="kadabra"] .progress-container div[role="progressbar"] > div:not([class*="value"]):not([class*="Value"]) {
+  background-color: var(--rs-color-border-neutral) !important;
 }
 
 .progress-container--animating div[role="progressbar"] > div[class*="value"] {

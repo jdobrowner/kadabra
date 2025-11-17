@@ -84,6 +84,7 @@ function SidebarNavButton({ icon, label, isOpen, isActive, onClick, ariaLabel }:
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(true)
   const [hasRendered, setHasRendered] = useState(false)
+  const [showPanelToggle, setShowPanelToggle] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   const { user } = useAuthStore()
@@ -93,6 +94,19 @@ export function Sidebar() {
   useEffect(() => {
     setHasRendered(true)
   }, [])
+
+  // Control panel toggle fade-in timing
+  useEffect(() => {
+    if (isOpen && hasRendered) {
+      // Delay showing the toggle button to match sidebar opening animation
+      const timer = setTimeout(() => {
+        setShowPanelToggle(true)
+      }, 100) // Start fade-in 0.1s after sidebar starts opening (sidebar takes 0.3s total)
+      return () => clearTimeout(timer)
+    } else {
+      setShowPanelToggle(false)
+    }
+  }, [isOpen, hasRendered])
 
   const navItems: NavItem[] = [
     { path: '/triage', icon: <Lightning weight="bold" size={20} />, label: 'Triage' },
@@ -179,10 +193,13 @@ export function Sidebar() {
           style: {
             height: '100%',
             display: 'flex',
-            padding: '16px 8px'
+            padding: '16px 10px 16px 8px',
+            position: 'relative',
           },
         }}
       >
+        {/* Sidebar border - doesn't extend to top/bottom */}
+        <div className="sidebar-border" />
         {/* Logo section - spark icon, wordmark, and panel toggle */}
         <View
           direction="row"
@@ -193,6 +210,8 @@ export function Sidebar() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
+              flexWrap: 'nowrap',
+              paddingLeft: '2px',
               marginBottom: '-8px', // Negative margin to cancel out View gap
             },
           }}
@@ -216,6 +235,8 @@ export function Sidebar() {
                 justifyContent: 'flex-start',
                 padding: 0,
                 gap: '0 !important',
+                flexShrink: 1,
+                minWidth: 0,
               },
             }}
           >
@@ -265,6 +286,11 @@ export function Sidebar() {
               attributes={{
                 'aria-label': 'Close sidebar',
                 className: 'sidebar-panel-toggle',
+                style: {
+                  flexShrink: 0,
+                  opacity: showPanelToggle ? 1 : 0,
+                  transition: hasRendered ? 'opacity 0.2s ease-in' : 'none',
+                },
               }}
             />
           )}
@@ -307,7 +333,6 @@ export function Sidebar() {
             style: {
               marginTop: 'auto',
               paddingTop: '16px',
-              borderTop: '1px solid var(--rs-color-border-neutral-faded)',
             },
           }}
         >

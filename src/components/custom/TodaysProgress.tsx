@@ -171,7 +171,7 @@ export function TodaysProgress({ resolved, total, className }: TodaysProgressPro
                 value={displayProgress} 
                 attributes={{
                   style: {
-                    '--rs-color-background-primary': 'transparent'
+                    '--rs-color-background-primary': 'var(--rs-color-border-neutral)'
                   } as CSSProperties
                 }}
               />

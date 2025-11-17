@@ -9,6 +9,22 @@
   background: transparent !important;
 }
 
+/* Sidebar border - doesn't extend to top/bottom */
+.sidebar-border {
+  position: absolute;
+  right: 0;
+  top: 28px;
+  bottom: 28px;
+  width: 1px;
+  background-color: var(--rs-color-border-neutral);
+  pointer-events: none;
+}
+
+/* Dark mode: use faded border color */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .sidebar-border {
+  background-color: var(--rs-color-border-neutral-faded);
+}
+
 /* Only apply transitions after initial render */
 .sidebar.sidebar-transitions {
   transition: width 0.3s ease-in-out;
@@ -19,7 +35,7 @@
 }
 
 .sidebar-closed {
-  width: 60px; /* Slightly wider to better center icons */
+  width: 62px; /* Slightly wider to better center icons */
   cursor: pointer;
 }
 
