@@ -1,7 +1,8 @@
 import { Container, View, Button, Card, Text, Loader } from 'reshaped'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Lightbulb, Phone, User, Copy, CheckCircle, Plus } from '@phosphor-icons/react'
+import { ArrowLeft, Lightbulb, Phone, User, Copy, CheckCircle, Plus, Bell } from '@phosphor-icons/react'
 import { StyledDropdown } from '../components/custom/StyledDropdown'
+import { ReminderForm } from '../components/custom/ReminderForm'
 import { useAppStore } from '../store/useAppStore'
 import { useActionPlansStore } from '../store/useActionPlansStore'
 import { useBoardsStore, type BoardColumn } from '../store/useBoardsStore'
@@ -28,6 +29,8 @@ export default function ActionPlan() {
   const [columnsLoading, setColumnsLoading] = useState(false)
   const [promotionStatus, setPromotionStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [promotionError, setPromotionError] = useState<string | null>(null)
+  const [showReminderForm, setShowReminderForm] = useState(false)
+  const [selectedActionItemId, setSelectedActionItemId] = useState<string | null>(null)
   
   // Get action plan from store
   const actionPlan = useActionPlansStore((state) => state.currentActionPlan)
@@ -561,13 +564,26 @@ export default function ActionPlan() {
                 <View direction="column" gap={3}>
                   {actionPlan.actionItems && actionPlan.actionItems.length > 0 ? (
                     actionPlan.actionItems.map((item, index) => (
-                      <View key={item.id} direction="row" gap={3}>
+                      <View key={item.id} direction="row" gap={3} align="start">
                         <Text variant="body-2" weight="bold" color="primary">
                           {index + 1}.
                         </Text>
-                        <View direction="column" gap={1} attributes={{ style: { flex: 1 } }}>
-                          <Text variant="body-2">{item.title}</Text>
-                          <Text variant="body-3" color="neutral-faded">{item.description}</Text>
+                        <View direction="column" gap={2} attributes={{ style: { flex: 1 } }}>
+                          <View direction="column" gap={1}>
+                            <Text variant="body-2">{item.title}</Text>
+                            <Text variant="body-3" color="neutral-faded">{item.description}</Text>
+                          </View>
+                          <Button
+                            size="small"
+                            variant="outline"
+                            icon={<Bell weight="bold" />}
+                            onClick={() => {
+                              setSelectedActionItemId(item.id)
+                              setShowReminderForm(true)
+                            }}
+                          >
+                            Create Reminder
+                          </Button>
                         </View>
                       </View>
                     ))
@@ -667,6 +683,22 @@ export default function ActionPlan() {
       </View>
 
       </View>
+
+      {/* Reminder Form Modal */}
+      {showReminderForm && selectedActionItemId && (
+        <ReminderForm
+          actionItemId={selectedActionItemId}
+          customerId={actionPlan.customerId}
+          onClose={() => {
+            setShowReminderForm(false)
+            setSelectedActionItemId(null)
+          }}
+          onSuccess={() => {
+            setShowReminderForm(false)
+            setSelectedActionItemId(null)
+          }}
+        />
+      )}
     </Container>
   )
 }

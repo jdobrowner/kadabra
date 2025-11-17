@@ -8,9 +8,8 @@ import {
   SidebarSimple,
   MagnifyingGlass,
   Cards,
-  Calendar,
-  Upload,
   Bell,
+  Upload,
   Sparkle,
 } from '@phosphor-icons/react'
 import { useAuthStore } from '../../store/useAuthStore'
@@ -112,8 +111,8 @@ export function Sidebar() {
     { path: '/triage', icon: <Lightning weight="bold" size={20} />, label: 'Triage' },
     { path: '/search', icon: <MagnifyingGlass weight="bold" size={20} />, label: 'Search' },
     { path: '/boards', icon: <Cards weight="bold" size={20} />, label: 'Boards' },
-    { path: '/calendar', icon: <Calendar weight="bold" size={20} />, label: 'Calendar' },
-    ...(isDeveloperOrAdmin 
+    { path: '/reminders', icon: <Bell weight="bold" size={20} />, label: 'Reminders' },
+    ...(isDeveloperOrAdmin
       ? [{ path: '/import-data', icon: <Upload weight="bold" size={20} />, label: 'Import' }]
       : []
     ),

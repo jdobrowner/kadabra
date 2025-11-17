@@ -2,7 +2,7 @@ import { Container, View, Button, Text, Icon, Card } from 'reshaped'
 import { WelcomeStats } from '../components/custom/WelcomeStats'
 import { PageHeader } from '../components/custom/PageHeader'
 import { CustomerCardHorizontal } from '../components/custom/CustomerCardHorizontal'
-import { MiniCalendar } from '../components/custom/MiniCalendar'
+import { MiniReminders } from '../components/custom/MiniReminders'
 import { MiniKanban } from '../components/custom/MiniKanban'
 import { useDashboardStore } from '../store/useDashboardStore'
 import { useCustomersStore } from '../store/useCustomersStore'
@@ -117,7 +117,7 @@ export default function Dashboard() {
 
         {/* Row 2: Right Column - 1 column (Calendar) */}
         <div className="dashboard-right-column">
-          <MiniCalendar />
+          <MiniReminders />
         </div>
 
         {/* Row 3: Kanban - 1 column (positioned in 3rd column) */}

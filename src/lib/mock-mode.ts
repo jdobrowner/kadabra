@@ -5,7 +5,7 @@ import { useDashboardStore } from '../store/useDashboardStore'
 import { useActionPlansStore } from '../store/useActionPlansStore'
 import { useTasksStore } from '../store/useTasksStore'
 import { useConversationsStore } from '../store/useConversationsStore'
-import { useCalendarStore } from '../store/useCalendarStore'
+import { useRemindersStore } from '../store/useRemindersStore'
 import { useUsersStore } from '../store/useUsersStore'
 import { useInvitationsStore } from '../store/useInvitationsStore'
 import { useApiKeysStore } from '../store/useApiKeysStore'
@@ -43,7 +43,7 @@ export async function initializeMockMode() {
     useDashboardStore.getState().fetchStats(),
     useActionPlansStore.getState().fetchActionPlans(),
     useTasksStore.getState().fetchTasks({ status: 'all', priority: 'all' }),
-    useCalendarStore.getState().fetchTodayEvents(),
+    useRemindersStore.getState().fetchUpcomingReminders(),
     useUsersStore.getState().fetchUsers(),
     useInvitationsStore.getState().fetchInvitations('all'),
     useApiKeysStore.getState().fetchApiKeys(),
@@ -54,7 +54,7 @@ export async function initializeMockMode() {
       useConversationsStore.getState().fetchConversationsForCustomer(customerId)
     ),
     ...customerIds.map((customerId) =>
-      useCalendarStore.getState().fetchEventsByCustomer(customerId)
+      useRemindersStore.getState().fetchReminders({ customerId })
     )
   )
 

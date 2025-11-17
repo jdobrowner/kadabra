@@ -3,7 +3,7 @@ import { customersRouter } from './customers'
 import { actionPlansRouter } from './actionPlans'
 import { conversationsRouter } from './conversations'
 import { tasksRouter } from './tasks'
-import { calendarRouter } from './calendar'
+import { remindersRouter } from './reminders'
 import { dashboardRouter } from './dashboard'
 import { aiAgentRouter } from './aiAgent'
 import { searchRouter } from './search'
@@ -25,7 +25,7 @@ export const appRouter = router({
   actionPlans: actionPlansRouter,
   conversations: conversationsRouter,
   tasks: tasksRouter,
-  calendar: calendarRouter,
+  reminders: remindersRouter,
   dashboard: dashboardRouter,
   aiAgent: aiAgentRouter,
   search: searchRouter,

@@ -9,7 +9,8 @@ export const actionItemTypeEnum = pgEnum('action_item_type', ['email', 'call', '
 export const actionItemStatusEnum = pgEnum('action_item_status', ['pending', 'completed'])
 export const taskStatusEnum = pgEnum('task_status', ['todo', 'in_progress', 'done'])
 export const taskPriorityEnum = pgEnum('task_priority', ['low', 'medium', 'high', 'urgent'])
-export const calendarEventTypeEnum = pgEnum('calendar_event_type', ['call', 'meeting', 'follow_up', 'demo'])
+export const reminderTypeEnum = pgEnum('reminder_type', ['email', 'call', 'text', 'task'])
+export const reminderStatusEnum = pgEnum('reminder_status', ['pending', 'completed', 'dismissed'])
 export const userRoleEnum = pgEnum('user_role', ['admin', 'developer', 'member'])
 export const invitationStatusEnum = pgEnum('invitation_status', ['pending', 'accepted', 'rejected', 'expired', 'canceled'])
 export const auditActionTypeEnum = pgEnum('audit_action_type', ['status_change', 'record_created', 'assigned', 'unassigned', 'updated'])
@@ -273,18 +274,19 @@ export const tasks = pgTable('tasks', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
-// Calendar events table
-export const calendarEvents = pgTable('calendar_events', {
+// Reminders table
+export const reminders = pgTable('reminders', {
   id: text('id').primaryKey(),
   orgId: text('org_id').notNull().references(() => orgs.id, { onDelete: 'cascade' }),
   customerId: text('customer_id').notNull().references(() => customers.id, { onDelete: 'cascade' }),
+  actionItemId: text('action_item_id').references(() => actionItems.id, { onDelete: 'set null' }),
+  type: reminderTypeEnum('type').notNull(),
   title: text('title').notNull(),
-  date: timestamp('date').notNull(),
-  type: calendarEventTypeEnum('type').notNull(),
-  goal: text('goal').notNull(),
-  prepNotes: text('prep_notes'),
-  talkingPoints: jsonb('talking_points').$type<string[]>(),
+  description: text('description'),
+  reminderDate: timestamp('reminder_date').notNull(),
+  status: reminderStatusEnum('status').notNull().default('pending'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
 // Routing rules table

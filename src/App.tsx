@@ -16,7 +16,7 @@ import ConversationHistory from './pages/ConversationHistory'
 import ConversationTranscript from './pages/ConversationTranscript'
 import HistoricSearch from './pages/HistoricSearch'
 import BoardsPage from './pages/Boards'
-import CalendarView from './pages/CalendarView'
+import RemindersView from './pages/RemindersView'
 import ImportData from './pages/ImportData'
 import SignIn from './pages/SignIn'
 import OAuthCallback from './pages/OAuthCallback'
@@ -116,9 +116,9 @@ function AppContent() {
           </ProtectedRoute>
         } />
         <Route path="/kanban" element={<Navigate to="/boards" replace />} />
-        <Route path="/calendar" element={
+        <Route path="/reminders" element={
           <ProtectedRoute>
-            <CalendarView />
+            <RemindersView />
           </ProtectedRoute>
         } />
         <Route path="/import-data" element={
