@@ -192,7 +192,16 @@ export function TodaysProgress({ resolved, total, className }: TodaysProgressPro
           </View>
         )}
       </Flyout.Trigger>
-      <Flyout.Content>
+      <Flyout.Content
+        attributes={{
+          style: {
+            boxShadow: 'none',
+            borderRadius: '16px',
+            border: '1px solid var(--rs-color-border-neutral)',
+            backgroundColor: 'var(--rs-color-background-neutral)',
+          },
+        }}
+      >
         <View padding={4} direction="column" gap={2} backgroundColor='neutral'>
           <View direction="row" gap={0} align="center">
             <Text variant="body-2" weight="bold">

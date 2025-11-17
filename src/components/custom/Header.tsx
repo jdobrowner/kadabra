@@ -125,7 +125,17 @@ export function Header({
                   </button>
                 )}
               </DropdownMenu.Trigger>
-              <DropdownMenu.Content>
+              <DropdownMenu.Content
+                attributes={{
+                  style: {
+                    boxShadow: 'none',
+                    borderRadius: '16px',
+                    border: '1px solid var(--rs-color-border-neutral)',
+                    backgroundColor: 'var(--rs-color-background-neutral)',
+                  },
+                  className: 'styled-dropdown-content',
+                }}
+              >
                 <DropdownMenu.Item
                   onClick={() => {
                     const nextMode = isDark ? 'light' : 'dark'
