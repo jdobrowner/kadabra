@@ -1,6 +1,6 @@
 import { Text, View, Card, Icon } from 'reshaped'
 import { RowCard } from './RowCard'
-import { Bell, Envelope, Phone, ChatCircle, CheckSquare } from '@phosphor-icons/react'
+import { Alarm, Envelope, Phone, ChatCircle, CheckSquare } from '@phosphor-icons/react'
 import { useRemindersStore } from '../../store/useRemindersStore'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -21,7 +21,7 @@ function getReminderTypeIcon(type: Reminder['type']) {
     case 'task':
       return CheckSquare
     default:
-      return Bell
+      return Alarm
   }
 }
 
@@ -76,7 +76,7 @@ export function MiniReminders({ onReminderClick }: MiniRemindersProps) {
     <Card padding={6}>
       <View direction="column" gap={4}>
         <View direction="row" gap={2} align="center">
-          <Bell size={20} weight="bold" />
+          <Alarm size={20} weight="bold" />
           <Text variant="title-4" weight="bold">
             Upcoming Reminders
           </Text>

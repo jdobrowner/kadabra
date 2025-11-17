@@ -4,7 +4,7 @@ import { RowCard } from '../components/custom/RowCard'
 import { useRemindersStore, type Reminder } from '../store/useRemindersStore'
 import { useCustomersStore } from '../store/useCustomersStore'
 import { useEffect, useState } from 'react'
-import { Bell, Envelope, Phone, ChatCircle, CheckSquare, Plus, Check, X, Pencil, Trash } from '@phosphor-icons/react'
+import { Alarm, Envelope, Phone, ChatCircle, CheckSquare, Plus, Check, X, Pencil, Trash } from '@phosphor-icons/react'
 import { StyledDropdown } from '../components/custom/StyledDropdown'
 import { ReminderForm } from '../components/custom/ReminderForm'
 import { AvatarWithInitials } from '../components/custom/AvatarWithInitials'
@@ -20,7 +20,7 @@ function getReminderTypeIcon(type: Reminder['type']) {
     case 'task':
       return CheckSquare
     default:
-      return Bell
+      return Alarm
   }
 }
 
@@ -140,7 +140,7 @@ export default function RemindersView() {
           <View direction="row" gap={4} align="center" attributes={{ style: { flexWrap: 'wrap', justifyContent: 'space-between' } }}>
             <View direction="row" gap={4} align="center" attributes={{ style: { flexWrap: 'wrap' } }}>
               <View direction="row" gap={2} align="center">
-                <Bell size={18} weight="bold" />
+                <Alarm size={18} weight="bold" />
                 <Text variant="body-2" attributes={{ style: { fontWeight: '500' } }}>Filter by:</Text>
               </View>
 

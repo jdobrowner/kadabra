@@ -1,6 +1,6 @@
 import { Text, View, Card } from 'reshaped'
 import { ElevatedCard } from './ElevatedCard'
-import { Columns } from '@phosphor-icons/react'
+import { ChalkboardSimple } from '@phosphor-icons/react'
 import { useMemo } from 'react'
 import { useKanbanStore } from '../../store/useKanbanStore'
 
@@ -29,7 +29,7 @@ export function MiniKanban({ onTaskClick }: MiniKanbanProps) {
     <Card padding={6}>
       <View direction="column" gap={4}>
         <View direction="row" gap={2} align="center">
-          <Columns size={20} weight="bold" />
+          <ChalkboardSimple size={20} weight="bold" />
           <Text variant="title-4" weight="bold">
             Open Tasks
           </Text>

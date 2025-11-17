@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { View, Text, Button } from 'reshaped'
 import {
-  House,
+  SquaresFour,
   Lightning,
   Gear,
   SidebarSimple,
   MagnifyingGlass,
-  Cards,
+  ChalkboardSimple,
+  Alarm,
   Bell,
   Upload,
   Sparkle,
@@ -110,8 +111,8 @@ export function Sidebar() {
   const navItems: NavItem[] = [
     { path: '/triage', icon: <Lightning weight="bold" size={20} />, label: 'Triage' },
     { path: '/search', icon: <MagnifyingGlass weight="bold" size={20} />, label: 'Search' },
-    { path: '/boards', icon: <Cards weight="bold" size={20} />, label: 'Boards' },
-    { path: '/reminders', icon: <Bell weight="bold" size={20} />, label: 'Reminders' },
+    { path: '/boards', icon: <ChalkboardSimple weight="bold" size={20} />, label: 'Boards' },
+    { path: '/reminders', icon: <Alarm weight="bold" size={20} />, label: 'Reminders' },
     ...(isDeveloperOrAdmin
       ? [{ path: '/import-data', icon: <Upload weight="bold" size={20} />, label: 'Import' }]
       : []
@@ -295,10 +296,10 @@ export function Sidebar() {
           )}
         </View>
 
-        {/* Dashboard button */}
-        <SidebarNavButton
-          icon={<House weight="bold" size={20} />}
-          label="Dashboard"
+            {/* Dashboard button */}
+            <SidebarNavButton
+              icon={<SquaresFour weight="bold" size={20} />}
+              label="Dashboard"
           isOpen={isOpen}
           isActive={isActive('/')}
           onClick={(e) => {
