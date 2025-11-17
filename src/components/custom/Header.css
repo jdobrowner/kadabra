@@ -18,20 +18,14 @@
   transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
 }
 
-/* Adjust header when sidebar is closed */
-.app-header.sidebar-closed {
-  left: 64px; /* Match new sidebar closed width */
-  width: calc(100% - 64px);
-}
-
 /* Extended gradient background - matches header positioning */
 .header-gradient-extension {
   transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
 }
 
-.header-gradient-extension.sidebar-closed {
-  left: 64px;
-  width: calc(100% - 64px);
+.header-gradient-extension {
+  left: 0;
+  width: 100vw;
 }
 
 .header-title {
