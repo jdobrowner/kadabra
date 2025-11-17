@@ -4,7 +4,7 @@ import { TodaysProgress } from './TodaysProgress'
 import { useAuthStore } from '../../store/useAuthStore'
 import { useTheme } from 'reshaped'
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 import './Header.css'
 import { LOCAL_STORAGE_KEYS, setStoredValue, getStoredValue } from '../../utils/storage'
 import { isMockEnabled } from '../../lib/config'
@@ -26,43 +26,6 @@ export function Header({
   
   const displayAvatar = userAvatar || user?.avatar
   const displayName = userName || user?.name
-
-  // Sync with isMockEnabled on mount
-  useEffect(() => {
-    setDemoMode(isMockEnabled)
-  }, [])
-
-  const gradientExtensionRef = useRef<HTMLDivElement>(null)
-
-  // Sync gradient extension with sidebar state
-  useEffect(() => {
-    const header = document.querySelector('.app-header')
-    const gradientExtension = gradientExtensionRef.current
-    
-    if (!header || !gradientExtension) return
-
-    const syncClasses = () => {
-      if (header.classList.contains('sidebar-closed')) {
-        gradientExtension.classList.add('sidebar-closed')
-      } else {
-        gradientExtension.classList.remove('sidebar-closed')
-      }
-      if (header.classList.contains('sidebar-transitions')) {
-        gradientExtension.classList.add('sidebar-transitions')
-      } else {
-        gradientExtension.classList.remove('sidebar-transitions')
-      }
-    }
-
-    // Initial sync
-    syncClasses()
-
-    // Watch for changes using MutationObserver
-    const observer = new MutationObserver(syncClasses)
-    observer.observe(header, { attributes: true, attributeFilter: ['class'] })
-
-    return () => observer.disconnect()
-  }, [])
 
   const handleLogout = () => {
     logout()
@@ -184,7 +147,6 @@ export function Header({
       </header>
       {/* Extended gradient background - positioned below header, above main content */}
       <div 
-        ref={gradientExtensionRef}
         className="header-gradient-extension"
         style={{
           position: 'fixed',
