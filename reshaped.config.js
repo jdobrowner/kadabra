@@ -40,10 +40,10 @@ const config = {
       // Typography - customize font families
       fontFamily: {
         body: {
-          family: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+          family: "'Montserrat', sans-serif"
         },
         title: {
-          family: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+          family: "'Montserrat', sans-serif"
         }
       },
       
