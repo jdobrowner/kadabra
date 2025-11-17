@@ -7,15 +7,11 @@
 .app-header {
   position: fixed;
   top: 0;
-  left: 220px; /* Start to the right of sidebar */
+  right: 0;
   z-index: 100;
-  width: calc(100% - 220px);
+  width: 100vw;
   /* Vertical gradient from opaque to transparent (fade at bottom) */
   background: linear-gradient(to bottom, var(--rs-color-background-page) 0%, var(--rs-color-background-page) 30%, transparent 100%) !important;
-}
-
-.app-header.sidebar-transitions {
-  transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
 }
 
 /* Extended gradient background - matches header positioning */

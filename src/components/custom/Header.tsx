@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import './Header.css'
 import { LOCAL_STORAGE_KEYS, setStoredValue, getStoredValue } from '../../utils/storage'
-import { isMockEnabled } from '../../lib/config'
 
 export interface HeaderProps {
   userAvatar?: string
