@@ -26,7 +26,7 @@ export function AIAgentSidebar() {
   const currentCustomer = useCustomersStore((state) => state.currentCustomer)
   const [isCollapsed, setIsCollapsed] = useState(() => {
     const saved = localStorage.getItem('ai-agent-panel-collapsed')
-    return saved === 'true'
+    return saved === 'true' ? true : false
   })
 
   const isCustomerContext = isCustomerContextPath(location.pathname)

@@ -23,41 +23,41 @@
   flex-direction: column;
   gap: 8px;
   min-height: 0;
-  max-height: 40vh;
-  max-height: min(40vh, 320px);
 }
 
 .ai-agent-panel__list-scroll {
-  flex: 1;
-  overflow-y: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 6px;
   padding-right: 4px;
+  overflow: visible;
 }
 
 .ai-agent-panel__chat {
   border-radius: 6px;
-  padding: 4px 8px;
+  padding: 3px 6px;
   cursor: pointer;
   transition: background-color 0.2s ease;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   border: none;
-  background-color: var(--rs-color-background-neutral-faded);
+  background-color: var(--rs-color-background-neutral);
   height: fit-content;
-  min-height: 24px;
-  width: 100%;
+  min-height: 20px;
+  width: fit-content;
 }
 
 .ai-agent-panel__chat.is-active {
   background-color: var(--rs-color-background-primary-faded);
+  color: var(--rs-color-foreground-neutral);
 }
 
-/* Dark mode: selected chat should be lighter */
+/* Dark mode: selected chat should be lighter with adapted font color */
 [data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .ai-agent-panel__chat.is-active {
-  background-color: var(--rs-color-background-elevation-base);
+  background-color: var(--rs-color-background-primary-faded);
+  color: var(--rs-color-foreground-neutral);
 }
 
 .ai-agent-panel__chat:not(.is-active):hover {
@@ -111,6 +111,36 @@
   flex-direction: column;
 }
 
+.ai-agent-panel__textarea textarea {
+  border-color: var(--rs-color-foreground-neutral-faded) !important;
+}
+
+.ai-agent-panel__textarea textarea::placeholder {
+  color: var(--rs-color-foreground-neutral-faded) !important;
+}
+
+.ai-agent-panel__textarea textarea:focus,
+.ai-agent-panel__textarea textarea:focus-visible {
+  outline: none !important;
+  border-color: var(--rs-color-foreground-neutral-faded) !important;
+  box-shadow: none !important;
+}
+
+/* Prevent page scroll when typing in textarea */
+.ai-agent-panel__textarea textarea:focus {
+  position: relative;
+  z-index: 1;
+}
+
+.app-main:has(.ai-agent-panel__textarea textarea:focus) {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.app-content:has(.ai-agent-panel__textarea textarea:focus) {
+  overflow: hidden;
+}
+
 .ai-agent-panel__send-button {
   position: absolute;
   bottom: 10px;
@@ -130,7 +160,29 @@
 .ai-agent-panel__divider {
   width: 100%;
   height: 1px;
+  background-color: var(--rs-color-border-neutral);
+}
+
+/* Dark mode: use faded border color for divider */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .ai-agent-panel__divider {
   background-color: var(--rs-color-border-neutral-faded);
+}
+
+/* Style Reshape Divider component to match border color - same as sidebar border */
+.ai-agent-panel [data-rs-divider],
+.ai-agent-panel [class*="_divider_"],
+.ai-agent-panel [class*="Divider"],
+.ai-agent-panel [class*="divider"] {
+  border-color: var(--rs-color-border-neutral) !important;
+  background-color: var(--rs-color-border-neutral) !important;
+}
+
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .ai-agent-panel [data-rs-divider],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .ai-agent-panel [class*="_divider_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .ai-agent-panel [class*="Divider"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .ai-agent-panel [class*="divider"] {
+  border-color: var(--rs-color-border-neutral-faded) !important;
+  background-color: var(--rs-color-border-neutral-faded) !important;
 }
 
 .ai-agent-panel__message-metadata {

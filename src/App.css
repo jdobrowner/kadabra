@@ -17,6 +17,17 @@
   transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
 }
 
+/* When AI sidebar is present, adjust app-main to account for it */
+.app-layout:has(.app-ai-sidebar:not(.ai-sidebar-collapsed)) .app-main {
+  margin-right: 360px;
+  transition: margin-right 0.3s ease-in-out;
+}
+
+.app-layout:has(.app-ai-sidebar.ai-sidebar-collapsed) .app-main {
+  margin-right: 62px;
+  transition: margin-right 0.3s ease-in-out;
+}
+
 /* Only apply transitions after initial render */
 .app-layout.sidebar-transitions {
   transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
@@ -34,6 +45,12 @@
   align-items: stretch;
   background: var(--rs-color-background-page, #f2efef);
   min-height: 100vh;
+  transition: margin-right 0.3s ease-in-out;
+}
+
+/* Default state: assume AI sidebar is open (will be overridden by :has() if collapsed) */
+.app-layout:has(.app-ai-sidebar) .app-main {
+  margin-right: 360px;
 }
 
 /* Add global padding for all screens */
@@ -44,11 +61,12 @@
   min-width: 0;
 }
 
+
 .app-ai-sidebar {
   width: 360px;
   flex-shrink: 0;
-  padding: 48px 32px 48px 32px;
-  background: var(--rs-color-background-neutral-faded);
+  padding: 24px 32px 48px 32px;
+  background: transparent;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -56,27 +74,30 @@
   position: fixed;
   right: 0;
   top: var(--header-height, 64px);
-  bottom: 0;
-  transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
-  overflow: hidden;
+  height: calc(100vh - var(--header-height, 64px));
+  min-height: calc(100vh - var(--header-height, 64px));
+  transition: transform 0.3s ease-in-out, padding 0.3s ease-in-out;
+  overflow-y: auto;
+  min-width: 360px;
+  z-index: 10;
 }
 
 .app-ai-sidebar.ai-sidebar-collapsed {
-  width: 62px;
-  padding: 48px 8px;
+  transform: translateX(298px);
+  padding: 24px 8px 48px 8px;
 }
 
 .app-ai-sidebar.ai-sidebar-collapsed .ai-agent-panel__header {
   justify-content: center;
 }
 
-/* AI sidebar border - matches sidebar style */
+/* AI sidebar left border - ends 24px above bottom of screen */
 .app-ai-sidebar::before {
   content: '';
   position: absolute;
-  right: 0;
+  left: 0;
   top: 28px;
-  bottom: 28px;
+  bottom: 24px;
   width: 1px;
   background-color: var(--rs-color-border-neutral);
   pointer-events: none;

@@ -26,7 +26,7 @@ function getSuggestedTitle(message: string): string {
   if (!trimmed) {
     return DEFAULT_CHAT_TITLE
   }
-  return trimmed.length > 60 ? `${trimmed.slice(0, 57)}...` : trimmed
+  return trimmed.length > 10 ? `${trimmed.slice(0, 10)}...` : trimmed
 }
 
 export const aiAgentRouter = router({
