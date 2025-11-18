@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { View, Text, Button } from 'reshaped'
 import {
@@ -14,6 +14,10 @@ import {
   Sparkle,
 } from '@phosphor-icons/react'
 import { useAuthStore } from '../../store/useAuthStore'
+import { useCustomersStore } from '../../store/useCustomersStore'
+import { useActionPlansStore } from '../../store/useActionPlansStore'
+import { useConversationsStore } from '../../store/useConversationsStore'
+import { TriageBreadcrumbs } from './Breadcrumbs'
 import './Sidebar.css'
 
 interface NavItem {
@@ -89,6 +93,68 @@ export function Sidebar() {
   const location = useLocation()
   const { user } = useAuthStore()
   const isDeveloperOrAdmin = user?.role === 'admin' || user?.role === 'developer'
+  
+  // Get customer data for breadcrumbs
+  const customers = useCustomersStore((state) => state.customers)
+  const currentCustomer = useCustomersStore((state) => state.currentCustomer)
+  const currentActionPlan = useActionPlansStore((state) => state.currentActionPlan)
+  const currentConversation = useConversationsStore((state) => state.currentConversation)
+  const fetchCustomer = useCustomersStore((state) => state.fetchCustomer)
+  
+  // Extract route parameters for breadcrumbs
+  const breadcrumbData = useMemo(() => {
+    const path = location.pathname
+    
+    // Extract customerId from path
+    const customerMatch = path.match(/\/triage\/customers\/([^/]+)/)
+    const customerId = customerMatch ? customerMatch[1] : null
+    
+    // Extract actionPlanId
+    const actionPlanMatch = path.match(/\/action-plans\/([^/]+)/)
+    const actionPlanId = actionPlanMatch ? actionPlanMatch[1] : null
+    
+    // Extract conversationId
+    const conversationMatch = path.match(/\/conversations\/([^/]+)/)
+    const conversationId = conversationMatch ? conversationMatch[1] : null
+    
+    // Determine if showing conversation history
+    const showConversationHistory = path.includes('/conversations') && !conversationId
+    
+    // Get customer name
+    let customerName: string | undefined
+    if (customerId) {
+      if (currentCustomer && currentCustomer.id === customerId) {
+        customerName = currentCustomer.name
+      } else {
+        customerName = customers.find(c => c.id === customerId)?.name
+      }
+    }
+    
+    // Get conversation date if we have a conversation
+    const conversationDate = currentConversation?.date 
+      ? new Date(currentConversation.date).toLocaleDateString() 
+      : undefined
+    
+    return {
+      customerId,
+      customerName,
+      actionPlanId,
+      conversationId,
+      showConversationHistory,
+      conversationDate
+    }
+  }, [location.pathname, customers, currentCustomer, currentActionPlan, currentConversation])
+
+  // Fetch customer data when route changes (for breadcrumbs)
+  useEffect(() => {
+    if (breadcrumbData.customerId && !currentCustomer) {
+      // Only fetch if we don't have the customer in store
+      const customerExists = customers.find(c => c.id === breadcrumbData.customerId)
+      if (!customerExists) {
+        fetchCustomer(breadcrumbData.customerId)
+      }
+    }
+  }, [breadcrumbData.customerId, currentCustomer, customers, fetchCustomer])
 
   // Mark as rendered after initial mount to enable transitions
   useEffect(() => {
@@ -181,25 +247,29 @@ export function Sidebar() {
     return location.pathname.startsWith(path)
   }
 
+  // Only show breadcrumbs on customer-related pages
+  const showBreadcrumbs = location.pathname.startsWith('/triage/customers/')
+
   return (
-    <aside
-      className={`sidebar ${isOpen ? 'sidebar-open' : 'sidebar-closed'} ${hasRendered ? 'sidebar-transitions' : ''}`}
-      onClick={!isOpen ? handleSidebarClick : undefined}
-    >
-      <View
-        direction="column"
-        gap={2}
-        attributes={{
-          style: {
-            height: '100%',
-            display: 'flex',
-            padding: '16px 10px 16px 8px',
-            position: 'relative',
-          },
-        }}
+    <>
+      <aside
+        className={`sidebar ${isOpen ? 'sidebar-open' : 'sidebar-closed'} ${hasRendered ? 'sidebar-transitions' : ''}`}
+        onClick={!isOpen ? handleSidebarClick : undefined}
       >
-        {/* Sidebar border - doesn't extend to top/bottom */}
-        <div className="sidebar-border" />
+        <View
+          direction="column"
+          gap={2}
+          attributes={{
+            style: {
+              height: '100%',
+              display: 'flex',
+              padding: '16px 10px 16px 8px',
+              position: 'relative',
+            },
+          }}
+        >
+          {/* Sidebar border - doesn't extend to top/bottom */}
+          <div className="sidebar-border" />
         {/* Logo section - spark icon, wordmark, and panel toggle */}
         <View
           direction="row"
@@ -362,6 +432,22 @@ export function Sidebar() {
         </View>
       </View>
     </aside>
+    
+    {/* Breadcrumbs positioned to the right of sidebar */}
+    {showBreadcrumbs && (
+      <div className={`sidebar-breadcrumbs ${isOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
+        <TriageBreadcrumbs
+          customerName={breadcrumbData.customerName}
+          customerId={breadcrumbData.customerId || undefined}
+          actionPlanTitle={breadcrumbData.actionPlanId ? 'Action Plan' : undefined}
+          actionPlanId={breadcrumbData.actionPlanId || undefined}
+          conversationDate={breadcrumbData.conversationDate}
+          conversationId={breadcrumbData.conversationId || undefined}
+          showConversationHistory={breadcrumbData.showConversationHistory}
+        />
+      </div>
+    )}
+    </>
   )
 }
 

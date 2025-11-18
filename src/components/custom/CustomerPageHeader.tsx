@@ -53,7 +53,7 @@ export function CustomerPageHeader({
   const badgeLabel = getBadgeLabel(badge)
 
   return (
-    <View direction="column" gap={2}>
+    <View direction="column" gap={2} attributes={{ style: { marginTop: '-4px' } }}>
       <View direction="row" gap={4} align="center">
         <AvatarWithInitials src={avatar} alt={name} name={name} size={12} />
         <View direction="row" gap={2} align="center" attributes={{ style: { flexWrap: 'wrap', flex: 1 } }}>

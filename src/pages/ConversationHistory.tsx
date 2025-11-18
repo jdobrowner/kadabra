@@ -7,7 +7,6 @@ import { useCustomersStore } from '../store/useCustomersStore'
 import { useActionPlansStore } from '../store/useActionPlansStore'
 import { useConversationsStore } from '../store/useConversationsStore'
 import { useEffect } from 'react'
-import { TriageBreadcrumbs } from '../components/custom/Breadcrumbs'
 import { CustomerPageHeader } from '../components/custom/CustomerPageHeader'
 
 export default function ConversationHistory() {
@@ -66,12 +65,6 @@ export default function ConversationHistory() {
   return (
     <Container>
       <View direction="column" gap={6}>
-        <TriageBreadcrumbs 
-          customerName={customerName} 
-          customerId={customerId}
-          showConversationHistory={true}
-        />
-        
         {customer && (
           <CustomerPageHeader
             customerId={customer.id}

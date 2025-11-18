@@ -260,5 +260,23 @@
   flex-shrink: 0;
 }
 
+/* Breadcrumbs positioned to the right of sidebar */
+.sidebar-breadcrumbs {
+  top: 28px;
+  width: auto;
+  position: fixed;
+  z-index: 100;
+  padding-left: 64px; /* Match main content padding */
+  transition: left 0.3s ease-in-out;
+}
+
+.sidebar-breadcrumbs.sidebar-open {
+  left: 221px; /* Sidebar width (220px) + border (1px) */
+}
+
+.sidebar-breadcrumbs.sidebar-closed {
+  left: 63px; /* Closed sidebar width (62px) + border (1px) */
+}
+
 
 

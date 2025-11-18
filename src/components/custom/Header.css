@@ -21,7 +21,7 @@
   right: 0;
   width: 100vw;
   height: calc(var(--header-height) * 2);
-  background: linear-gradient(to bottom, var(--rs-color-background-page) 0%, var(--rs-color-background-page) 30%, transparent 100%);
+  background: linear-gradient(to bottom, var(--rs-color-background-page) 0%, var(--rs-color-background-page) 50%, transparent 100%);
   pointer-events: none;
   z-index: 50;
 }

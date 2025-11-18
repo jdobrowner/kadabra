@@ -11,7 +11,6 @@ import { trpcVanillaClient } from '../lib/trpc-client'
 import { useConversationsStore } from '../store/useConversationsStore'
 import { useEffect, useState } from 'react'
 import { CustomBadge } from '../components/custom/Badge'
-import { TriageBreadcrumbs } from '../components/custom/Breadcrumbs'
 import { CustomerPageHeader } from '../components/custom/CustomerPageHeader'
 import { useCustomersStore } from '../store/useCustomersStore'
 
@@ -271,13 +270,6 @@ export default function ActionPlan() {
   return (
     <Container>
       <View direction="column" gap={6}>
-        <TriageBreadcrumbs 
-          customerName={customer?.name} 
-          customerId={customerId || actionPlan?.customerId}
-          actionPlanTitle="Action Plan"
-          actionPlanId={actionPlanId}
-        />
-        
         {customer && (
           <CustomerPageHeader
             customerId={customer.id}

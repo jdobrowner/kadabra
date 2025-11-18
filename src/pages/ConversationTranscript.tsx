@@ -8,7 +8,6 @@ import { useConversationsStore } from '../store/useConversationsStore'
 import { useActionPlansStore } from '../store/useActionPlansStore'
 import { useCustomersStore } from '../store/useCustomersStore'
 import { useEffect } from 'react'
-import { TriageBreadcrumbs } from '../components/custom/Breadcrumbs'
 import { CustomerPageHeader } from '../components/custom/CustomerPageHeader'
 
 export default function ConversationTranscript() {
@@ -68,14 +67,6 @@ export default function ConversationTranscript() {
   return (
     <Container>
       <View direction="column" gap={6}>
-        <TriageBreadcrumbs 
-          customerName={customer?.name || conversation?.customer?.name} 
-          customerId={effectiveCustomerId}
-          showConversationHistory={true}
-          conversationDate={conversationDate}
-          conversationId={conversationId}
-        />
-        
         {(customer || conversation?.customer) && (
           <CustomerPageHeader
             customerId={customer?.id || conversation?.customer?.id || ''}

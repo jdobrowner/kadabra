@@ -10,7 +10,6 @@ import { useActionPlansStore } from '../store/useActionPlansStore'
 import { useConversationsStore } from '../store/useConversationsStore'
 import { useEffect, useRef } from 'react'
 import { formatRelativeTime } from '../utils/formatTime'
-import { TriageBreadcrumbs } from '../components/custom/Breadcrumbs'
 import { CommunicationChannels } from '../components/custom/CommunicationChannels'
 import { CustomerPageHeader } from '../components/custom/CustomerPageHeader'
 
@@ -125,8 +124,6 @@ export default function CustomerOverview() {
   return (
     <Container>
       <View direction="column" gap={6}>
-        <TriageBreadcrumbs customerName={customer?.name} customerId={customerId} />
-        
         <CustomerPageHeader
           customerId={customer.id}
           name={customer.name}
