@@ -158,24 +158,26 @@ export default function CustomerOverview() {
           hasActionPlan={!!actionPlan}
           status={actionPlan?.status as any}
           aiRecommendation={customer.actionPlan?.aiRecommendation || actionPlan?.recommendation}
+          actionItems={actionPlan?.actionItems}
+          createdAt={actionPlan?.createdAt}
         />
 
         {mostRecentConversation && customer.lastCommunication && (
           <Card padding={6}>
-            <View direction="column" gap={3}>
-              <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
-                <Text variant="title-5" weight="bold">
-                  Most Recent Conversation
+            <View direction="column" gap={4}>
+              <View direction="column" gap={2}>
+                <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
+                  <h3 style={{ margin: 0 }}>Most Recent Conversation</h3>
+                  <Link to={`/triage/customers/${customer.id}/conversations/${mostRecentConversation.id}`}>
+                    <Button size="small" variant="outline" icon={<ArrowRight />}>
+                      View
+                    </Button>
+                  </Link>
+                </View>
+                <Text variant="body-2" color="neutral-faded">
+                  {customer.lastCommunication.topic || customer.lastCommunication.longTopic}
                 </Text>
-                <Link to={`/triage/customers/${customer.id}/conversations/${mostRecentConversation.id}`}>
-                  <Button size="small" variant="outline" icon={<ArrowRight />}>
-                    View
-                  </Button>
-                </Link>
               </View>
-              <Text variant="body-1" weight="medium">
-                {customer.lastCommunication.topic || customer.lastCommunication.longTopic}
-              </Text>
               <CommunicationChannels 
                 communications={customer.communications.map(comm => ({
                   type: comm.type as any,
@@ -189,45 +191,45 @@ export default function CustomerOverview() {
         )}
 
         <Card padding={6}>
-          <View direction="column" gap={3}>
-            <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
-              <View direction="row" gap={2} align="center">
-                <ChatCircle size={20} weight="bold" />
-                <Text variant="title-5" weight="bold">
-                  Conversation History
-                </Text>
-              </View>
-              {conversations.length > 0 && (
-                <Link to={`/triage/customers/${customer.id}/conversations`}>
-                  <Button size="small" variant="outline" icon={<ArrowRight />}>
-                    View All
-                  </Button>
-                </Link>
-              )}
-            </View>
-            {conversations.length > 0 ? (
-              <View direction="column" gap={2}>
-                <Text variant="body-2" color="neutral-faded">
-                  {conversations.length} {conversations.length === 1 ? 'conversation' : 'conversations'} total
-                </Text>
-                {mostRecentConversation && (
-                  <>
-                    <Text variant="body-2" color="neutral-faded">
-                      Most recent: {formatRelativeTime(mostRecentConversation.date)}
-                    </Text>
-                    {mostRecentConversation.summary && (
-                      <Text variant="body-3" color="neutral-faded">
-                        {mostRecentConversation.summary.substring(0, 150)}...
-                      </Text>
-                    )}
-                  </>
+          <View direction="column" gap={4}>
+            <View direction="column" gap={2}>
+              <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
+                <View direction="row" gap={2} align="center">
+                  <ChatCircle size={20} weight="bold" />
+                  <h3 style={{ margin: 0 }}>Conversation History</h3>
+                </View>
+                {conversations.length > 0 && (
+                  <Link to={`/triage/customers/${customer.id}/conversations`}>
+                    <Button size="small" variant="outline" icon={<ArrowRight />}>
+                      View All
+                    </Button>
+                  </Link>
                 )}
               </View>
-            ) : (
-              <Text variant="body-2" color="neutral-faded">
-                No conversations yet
-              </Text>
-            )}
+              {conversations.length > 0 ? (
+                <View direction="column" gap={2}>
+                  <Text variant="body-2" color="neutral-faded">
+                    {conversations.length} {conversations.length === 1 ? 'conversation' : 'conversations'} total
+                  </Text>
+                  {mostRecentConversation && (
+                    <>
+                      <Text variant="body-2" color="neutral-faded">
+                        Most recent: {formatRelativeTime(mostRecentConversation.date)}
+                      </Text>
+                      {mostRecentConversation.summary && (
+                        <Text variant="body-2" color="neutral-faded">
+                          {mostRecentConversation.summary.substring(0, 150)}...
+                        </Text>
+                      )}
+                    </>
+                  )}
+                </View>
+              ) : (
+                <Text variant="body-2" color="neutral-faded">
+                  No conversations yet
+                </Text>
+              )}
+            </View>
           </View>
         </Card>
       </View>

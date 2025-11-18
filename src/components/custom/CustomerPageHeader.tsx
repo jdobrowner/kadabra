@@ -53,23 +53,23 @@ export function CustomerPageHeader({
   const badgeLabel = getBadgeLabel(badge)
 
   return (
-    <View direction="row" gap={4} align="center">
-      <AvatarWithInitials src={avatar} alt={name} name={name} size={12} />
-      <View direction="column" gap={1} attributes={{ style: { flex: 1 } }}>
-        <View direction="row" gap={2} align="center" attributes={{ style: { flexWrap: 'wrap' } }}>
-          <Text variant="title-2" weight="bold">
+    <View direction="column" gap={2}>
+      <View direction="row" gap={4} align="center">
+        <AvatarWithInitials src={avatar} alt={name} name={name} size={12} />
+        <View direction="row" gap={2} align="center" attributes={{ style: { flexWrap: 'wrap', flex: 1 } }}>
+          <h1 style={{ margin: 0, fontSize: '32px', fontWeight: 700, lineHeight: '1.2' }}>
             {name}
-          </Text>
+          </h1>
           {badgeColor && (
             <CustomBadge color={badgeColor} badgeType={badge}>
               {badgeLabel}
             </CustomBadge>
           )}
         </View>
-        <Text variant="body-1" color="neutral-faded">
-          {companyName}
-        </Text>
       </View>
+      <Text variant="body-1" color="neutral-faded" attributes={{ style: { fontSize: '18px' } }}>
+        {companyName}
+      </Text>
     </View>
   )
 }

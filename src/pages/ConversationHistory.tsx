@@ -95,6 +95,8 @@ export default function ConversationHistory() {
             hasActionPlan={true}
             status={actionPlan.status as any}
             aiRecommendation={customer.actionPlan?.aiRecommendation || actionPlan.recommendation}
+            actionItems={actionPlan.actionItems}
+            createdAt={actionPlan.createdAt}
           />
         )}
 
