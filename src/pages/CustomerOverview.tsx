@@ -1,10 +1,11 @@
 import { Container, View } from 'reshaped'
 import { useParams, Link } from 'react-router-dom'
-import { ChatCircle, ArrowRight } from '@phosphor-icons/react'
+import { ArrowRight, Phone, VideoCamera, Envelope, ChatCircle, Robot, Microphone, Clock } from '@phosphor-icons/react'
 import { CustomerMetadataCard } from '../components/custom/CustomerMetadataCard'
 import { ActionPlanCard } from '../components/custom/ActionPlanCard'
 import { Card, Text, Icon } from 'reshaped'
 import { CustomButton } from '../components/custom/CustomButton'
+import { formatRelativeTime } from '../utils/formatTime'
 import { useAppStore } from '../store/useAppStore'
 import { useCustomersStore } from '../store/useCustomersStore'
 import { useActionPlansStore } from '../store/useActionPlansStore'
@@ -194,74 +195,113 @@ export default function CustomerOverview() {
           avatar={customer.avatar}
         />
 
-        {mostRecentConversation && customer.lastCommunication && (
-          <Card padding={6}>
-            <View direction="column" gap={4}>
-              <View direction="column" gap={2}>
-                <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
-                  <h3 style={{ margin: 0 }}>Most Recent Conversation</h3>
-                  <Link to={`/triage/customers/${customer.id}/conversations/${mostRecentConversation.id}`}>
-                    <CustomButton size="small" variant="outline">
-                      <View direction="row" gap={2} align="center">
-                        <Text>View</Text>
-                        <Icon svg={<ArrowRight weight="bold" />} size={4} />
-                      </View>
-                    </CustomButton>
-                  </Link>
-                </View>
-                <Text variant="body-2" color="neutral-faded">
-                  {customer.lastCommunication.topic || customer.lastCommunication.longTopic}
-                </Text>
-              </View>
-              <CommunicationChannels 
-                communications={customer.communications.map(comm => ({
-                  type: comm.type as any,
-                  count: comm.count,
-                  lastTime: comm.lastTime
-                }))}
-                textColor="neutral-faded"
-              />
-            </View>
-          </Card>
-        )}
-
         <Card padding={6}>
           <View direction="column" gap={4}>
-            <View direction="column" gap={2}>
-              <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
-                <View direction="row" gap={2} align="center">
-                  <ChatCircle size={20} weight="bold" />
-                  <h3 style={{ margin: 0 }}>Conversation History</h3>
-                </View>
-                {conversations.length > 0 && (
-                  <Link to={`/triage/customers/${customer.id}/conversations`}>
-                    <CustomButton size="small" variant="ghost">
+            {/* Header with Stats */}
+            <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
+              <View direction="column" gap={2}>
+                <h3 style={{ margin: 0 }}>Conversation History</h3>
+                {/* Communication Stats */}
+                {customer.communications && customer.communications.length > 0 ? (
+                  <CommunicationChannels 
+                    communications={customer.communications.map(comm => ({
+                      type: comm.type as Communication['type'],
+                      count: comm.count,
+                      lastTime: comm.lastTime
+                    }))}
+                    textColor="neutral-faded"
+                    showTime={false}
+                  />
+                ) : conversations.length > 0 ? (
+                  // Fallback: use computed communications if customer.communications not available
+                  <CommunicationChannels communications={communications} textColor="neutral-faded" showTime={false} />
+                ) : (
+                  <Text variant="body-2" color="neutral-faded">
+                    No conversations yet
+                  </Text>
+                )}
+              </View>
+              {conversations.length > 0 && (
+                <Link to={`/triage/customers/${customer.id}/conversations`}>
+                  <CustomButton variant="ghost">
+                    <View direction="row" gap={2} align="center">
+                      <Text>View All</Text>
+                      <Icon svg={<ArrowRight weight="bold" />} size={4} />
+                    </View>
+                  </CustomButton>
+                </Link>
+              )}
+            </View>
+
+            {/* Most Recent Conversation */}
+            {mostRecentConversation && customer.lastCommunication && (
+              <View direction="column" gap={3} attributes={{ style: { paddingTop: '16px', borderTop: '1px solid var(--rs-color-border-neutral-faded)' } }}>
+                <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
+                  <View direction="column" gap={2} attributes={{ style: { flex: 1 } }}>
+                    <Text variant="body-1" color="neutral-faded" weight="medium">
+                      Most Recent
+                    </Text>
+                    <Text variant="body-2" color="neutral">
+                      {customer.lastCommunication.topic || customer.lastCommunication.longTopic}
+                    </Text>
+                    <View direction="row" gap={2} align="center" attributes={{ style: { flexWrap: 'wrap' } }}>
+                      <View direction="row" gap={1} align="center">
+                        <Icon 
+                          svg={<Clock weight="bold" />} 
+                          attributes={{ 
+                            style: { color: 'var(--rs-color-foreground-neutral-faded)' } 
+                          }} 
+                        />
+                        <Text variant="body-2" color="neutral-faded">
+                          {formatRelativeTime(customer.lastCommunication.time)}
+                        </Text>
+                      </View>
+                      <Text variant="body-2" color="neutral-faded">•</Text>
+                      <View direction="row" gap={1} align="center">
+                        {(() => {
+                          const channelType = mostRecentConversation.channel as Communication['type']
+                          const ChannelIcon = channelType === 'phone' ? Phone :
+                                            channelType === 'video' ? VideoCamera :
+                                            channelType === 'email' ? Envelope :
+                                            channelType === 'sms' ? ChatCircle :
+                                            channelType === 'ai-call' ? Robot :
+                                            channelType === 'voice-message' ? Microphone :
+                                            Phone
+                          const channelLabel = channelType === 'phone' ? 'Call' :
+                                             channelType === 'video' ? 'Video' :
+                                             channelType === 'email' ? 'Email' :
+                                             channelType === 'sms' ? 'SMS' :
+                                             channelType === 'ai-call' ? 'AI Call' :
+                                             channelType === 'voice-message' ? 'Voice Message' :
+                                             'Call'
+                          return (
+                            <>
+                              <Icon 
+                                svg={<ChannelIcon weight="bold" />}
+                                attributes={{ 
+                                  style: { color: 'var(--rs-color-foreground-neutral-faded)' } 
+                                }} 
+                              />
+                              <Text variant="body-2" color="neutral-faded">
+                                {channelLabel}
+                              </Text>
+                            </>
+                          )
+                        })()}
+                      </View>
+                    </View>
+                  </View>
+                  <Link to={`/triage/customers/${customer.id}/conversations/${mostRecentConversation.id}`}>
+                    <CustomButton variant="ghost">
                       <View direction="row" gap={2} align="center">
-                        <Text>View All</Text>
+                        <Text>Transcript</Text>
                         <Icon svg={<ArrowRight weight="bold" />} size={4} />
                       </View>
                     </CustomButton>
                   </Link>
-                )}
+                </View>
               </View>
-              {customer.communications && customer.communications.length > 0 ? (
-                <CommunicationChannels 
-                  communications={customer.communications.map(comm => ({
-                    type: comm.type as Communication['type'],
-                    count: comm.count,
-                    lastTime: comm.lastTime
-                  }))}
-                  textColor="neutral-faded" 
-                />
-              ) : conversations.length > 0 ? (
-                // Fallback: use computed communications if customer.communications not available
-                <CommunicationChannels communications={communications} textColor="neutral-faded" />
-              ) : (
-                <Text variant="body-2" color="neutral-faded">
-                  No conversations yet
-                </Text>
-              )}
-            </View>
+            )}
           </View>
         </Card>
       </View>

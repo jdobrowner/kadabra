@@ -8,6 +8,7 @@ import { Alarm, Envelope, Phone, ChatCircle, CheckSquare, Plus, Check, X, Pencil
 import { StyledDropdown } from '../components/custom/StyledDropdown'
 import { ReminderForm } from '../components/custom/ReminderForm'
 import { AvatarWithInitials } from '../components/custom/AvatarWithInitials'
+import { CustomButton } from '@/components/custom/CustomButton'
 
 function getReminderTypeIcon(type: Reminder['type']) {
   switch (type) {
@@ -199,19 +200,19 @@ export default function RemindersView() {
               </View>
 
               {hasActiveFilters && (
-                <Button variant="outline" size="small" onClick={() => {
+                <CustomButton variant="outline" size="small" onClick={() => {
                   setStatusFilter('all')
                   setTypeFilter('all')
                   setCustomerFilter('all')
                 }}>
                   Clear Filters
-                </Button>
+                </CustomButton>
               )}
             </View>
 
-            <Button variant="solid" color="primary" size="small" icon={<Plus weight="bold" />} onClick={handleCreate}>
+            <CustomButton variant="ghost" size="small" icon={<Plus weight="bold" />} onClick={handleCreate}>
               Create Reminder
-            </Button>
+            </CustomButton>
           </View>
         </Card>
 

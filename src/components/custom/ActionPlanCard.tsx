@@ -85,12 +85,9 @@ export function ActionPlanCard({
         {/* Left column: Content */}
         <View direction="column" gap={4}>
           <View direction="column" gap={2}>
-            <View direction="row" gap={2} align="center">
-              <Icon svg={<Lightning weight="bold" />} size={5} />
-              <h3 style={{ margin: 0 }}>Action Plan</h3>
-            </View>
+            <h3 style={{ margin: 0 }}>Action Plan</h3>
             {aiRecommendation && (
-              <Text variant="body-2" color="neutral-faded">
+              <Text variant="body-2">
                 {aiRecommendation}
               </Text>
             )}

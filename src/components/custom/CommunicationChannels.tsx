@@ -11,6 +11,7 @@ export interface Communication {
 export interface CommunicationChannelsProps {
   communications: Communication[]
   textColor?: 'neutral' | 'neutral-faded'
+  showTime?: boolean
 }
 
 function getCommunicationIcon(type: Communication['type']) {
@@ -32,7 +33,7 @@ function getCommunicationIcon(type: Communication['type']) {
   }
 }
 
-export function CommunicationChannels({ communications, textColor = 'neutral' }: CommunicationChannelsProps) {
+export function CommunicationChannels({ communications, textColor = 'neutral', showTime = true }: CommunicationChannelsProps) {
   // Sort communications by most recent (compare by date)
   const sortedCommunications = [...communications].sort((a, b) => {
     const aDate = new Date(a.lastTime).getTime()
@@ -46,7 +47,7 @@ export function CommunicationChannels({ communications, textColor = 'neutral' }:
 
   return (
     <View direction="row" gap={2} align="center" attributes={{ style: { flexWrap: 'wrap' } }}>
-      {mostRecentTime && (
+      {showTime && mostRecentTime && (
         <>
           <Icon 
             svg={<Clock weight="bold" />} 
