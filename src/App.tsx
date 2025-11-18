@@ -80,22 +80,22 @@ function AppContent() {
             <TriageLeaderboard />
           </ProtectedRoute>
         } />
-        <Route path="/customers/:id" element={
+        <Route path="/triage/customers/:customerId" element={
           <ProtectedRoute>
             <CustomerOverview />
           </ProtectedRoute>
         } />
-        <Route path="/customers/:id/conversations" element={
+        <Route path="/triage/customers/:customerId/conversations" element={
           <ProtectedRoute>
             <ConversationHistory />
           </ProtectedRoute>
         } />
-        <Route path="/action-plans/:id" element={
+        <Route path="/triage/customers/:customerId/action-plans/:actionPlanId" element={
           <ProtectedRoute>
             <ActionPlan />
           </ProtectedRoute>
         } />
-        <Route path="/conversations/:id" element={
+        <Route path="/triage/customers/:customerId/conversations/:conversationId" element={
           <ProtectedRoute>
             <ConversationTranscript />
           </ProtectedRoute>

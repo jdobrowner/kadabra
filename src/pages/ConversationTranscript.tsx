@@ -6,12 +6,20 @@ import { ActionPlanCard } from '../components/custom/ActionPlanCard'
 import { useAppStore } from '../store/useAppStore'
 import { useConversationsStore } from '../store/useConversationsStore'
 import { useActionPlansStore } from '../store/useActionPlansStore'
+import { useCustomersStore } from '../store/useCustomersStore'
 import { useEffect } from 'react'
+import { TriageBreadcrumbs } from '../components/custom/Breadcrumbs'
+import { CustomerPageHeader } from '../components/custom/CustomerPageHeader'
 
 export default function ConversationTranscript() {
-  const { id } = useParams<{ id: string }>()
+  const { customerId, conversationId } = useParams<{ customerId: string; conversationId: string }>()
   const setActiveConversation = useAppStore((state) => state.setActiveConversation)
   const setActiveCustomer = useAppStore((state) => state.setActiveCustomer)
+  
+  // Get customer from store
+  const customer = useCustomersStore((state) => state.currentCustomer)
+  const customerLoading = useCustomersStore((state) => state.currentCustomerLoading)
+  const fetchCustomer = useCustomersStore((state) => state.fetchCustomer)
   
   // Get conversation from store
   const conversation = useConversationsStore((state) => state.currentConversation)
@@ -24,19 +32,23 @@ export default function ConversationTranscript() {
   
   // Fetch conversation on mount
   useEffect(() => {
-    if (id) {
-      setActiveConversation(id)
-      fetchConversation(id)
+    if (conversationId) {
+      setActiveConversation(conversationId)
+      fetchConversation(conversationId)
     }
-  }, [id, setActiveConversation, fetchConversation])
+  }, [conversationId, setActiveConversation, fetchConversation])
   
-  // Fetch action plan when conversation loads
+  // Fetch customer and action plan when conversation loads
   useEffect(() => {
-    if (conversation?.customerId) {
-      setActiveCustomer(conversation.customerId)
-      fetchActionPlanByCustomerId(conversation.customerId)
+    if (customerId || conversation?.customerId) {
+      const id = customerId || conversation?.customerId
+      if (id) {
+        setActiveCustomer(id)
+        fetchCustomer(id)
+        fetchActionPlanByCustomerId(id)
+      }
     }
-  }, [conversation?.customerId, setActiveCustomer, fetchActionPlanByCustomerId])
+  }, [customerId, conversation?.customerId, setActiveCustomer, fetchCustomer, fetchActionPlanByCustomerId])
 
   if (!conversation && !conversationLoading) {
     return (
@@ -50,19 +62,40 @@ export default function ConversationTranscript() {
     )
   }
 
+  const effectiveCustomerId = customerId || conversation?.customerId
+  const conversationDate = conversation?.date ? new Date(conversation.date).toLocaleDateString() : undefined
+
   return (
     <Container>
       <View direction="column" gap={6}>
-        <Link to={conversation?.customerId ? `/customers/${conversation.customerId}/conversations` : '/triage'}>
+        <TriageBreadcrumbs 
+          customerName={customer?.name || conversation?.customer?.name} 
+          customerId={effectiveCustomerId}
+          showConversationHistory={true}
+          conversationDate={conversationDate}
+          conversationId={conversationId}
+        />
+        
+        {(customer || conversation?.customer) && (
+          <CustomerPageHeader
+            customerId={customer?.id || conversation?.customer?.id || ''}
+            name={customer?.name || conversation?.customer?.name || ''}
+            companyName={customer?.companyName || conversation?.customer?.companyName || ''}
+            badge={(actionPlan?.badge as any) || 'no-action'}
+            avatar={customer?.avatar || conversation?.customer?.avatar || ''}
+          />
+        )}
+
+        <Link to={effectiveCustomerId ? `/triage/customers/${effectiveCustomerId}/conversations` : '/triage'}>
           <Button variant="outline" icon={<ArrowLeft />}>
-            Back
+            Back to Conversation History
           </Button>
         </Link>
 
         {actionPlan && conversation && (
           <ActionPlanCard
             actionPlanId={actionPlan.id}
-            customerId={conversation.customerId}
+            customerId={effectiveCustomerId}
             hasActionPlan={true}
             status={actionPlan.status as any}
           />

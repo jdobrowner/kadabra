@@ -43,8 +43,13 @@ export default function Dashboard() {
   const previewCustomers = customers.slice(0, 3)
   const remainingCount = Math.max(0, customers.length - 3)
 
-  const handleActNow = useCallback((actionPlanId: string, _customerId?: string) => {
-    navigate(`/action-plans/${actionPlanId}`)
+  const handleActNow = useCallback((actionPlanId: string, customerId?: string) => {
+    if (customerId) {
+      navigate(`/triage/customers/${customerId}/action-plans/${actionPlanId}`)
+    } else {
+      // Fallback - try to find customer from action plan
+      navigate(`/triage`)
+    }
   }, [navigate])
 
   return (

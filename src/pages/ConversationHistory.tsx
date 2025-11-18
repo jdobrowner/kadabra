@@ -1,16 +1,17 @@
 import { Container, View, Button, Text } from 'reshaped'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft } from '@phosphor-icons/react'
-import { PageHeader } from '../components/custom/PageHeader'
 import { ConversationTimeline } from '../components/custom/ConversationTimeline'
 import { ActionPlanCard } from '../components/custom/ActionPlanCard'
 import { useCustomersStore } from '../store/useCustomersStore'
 import { useActionPlansStore } from '../store/useActionPlansStore'
 import { useConversationsStore } from '../store/useConversationsStore'
 import { useEffect } from 'react'
+import { TriageBreadcrumbs } from '../components/custom/Breadcrumbs'
+import { CustomerPageHeader } from '../components/custom/CustomerPageHeader'
 
 export default function ConversationHistory() {
-  const { id } = useParams<{ id: string }>()
+  const { customerId } = useParams<{ customerId: string }>()
   
   // Get customer from store
   const customer = useCustomersStore((state) => state.currentCustomer)
@@ -19,7 +20,7 @@ export default function ConversationHistory() {
   
   // Get conversations from store
   const conversations = useConversationsStore((state) => 
-    id ? state.conversationsByCustomer[id] || [] : []
+    customerId ? state.conversationsByCustomer[customerId] || [] : []
   )
   const fetchConversationsForCustomer = useConversationsStore((state) => state.fetchConversationsForCustomer)
   
@@ -31,12 +32,12 @@ export default function ConversationHistory() {
   
   // Fetch data on mount
   useEffect(() => {
-    if (id) {
-      fetchCustomer(id)
-      fetchConversationsForCustomer(id)
-      fetchActionPlanByCustomerId(id)
+    if (customerId) {
+      fetchCustomer(customerId)
+      fetchConversationsForCustomer(customerId)
+      fetchActionPlanByCustomerId(customerId)
     }
-  }, [id, fetchCustomer, fetchConversationsForCustomer, fetchActionPlanByCustomerId])
+  }, [customerId, fetchCustomer, fetchConversationsForCustomer, fetchActionPlanByCustomerId])
 
   if (!customer && !customerLoading) {
     return (
@@ -65,16 +66,27 @@ export default function ConversationHistory() {
   return (
     <Container>
       <View direction="column" gap={6}>
-        <Link to={`/customers/${id}`}>
+        <TriageBreadcrumbs 
+          customerName={customerName} 
+          customerId={customerId}
+          showConversationHistory={true}
+        />
+        
+        {customer && (
+          <CustomerPageHeader
+            customerId={customer.id}
+            name={customer.name}
+            companyName={customer.companyName}
+            badge={(actionPlan?.badge as any) || 'no-action'}
+            avatar={customer.avatar}
+          />
+        )}
+
+        <Link to={customerId ? `/triage/customers/${customerId}` : '/triage'}>
           <Button variant="outline" icon={<ArrowLeft />}>
             Back to Customer
           </Button>
         </Link>
-
-        <PageHeader
-          title="Conversation History"
-          subtitle={`Complete communication history with ${customerName ?? 'this customer'}`}
-        />
 
         {actionPlan && customer && (
           <ActionPlanCard
@@ -82,11 +94,12 @@ export default function ConversationHistory() {
             customerId={customer.id}
             hasActionPlan={true}
             status={actionPlan.status as any}
+            aiRecommendation={customer.actionPlan?.aiRecommendation || actionPlan.recommendation}
           />
         )}
 
         {timelineItems.length > 0 ? (
-          <ConversationTimeline conversations={timelineItems} />
+          <ConversationTimeline conversations={timelineItems} customerId={customerId} />
         ) : (
           <View attributes={{ style: { textAlign: 'center', padding: '40px' } }}>
             <Text variant="body-2" color="neutral-faded">

@@ -17,6 +17,7 @@ export interface ConversationTimelineItem {
 
 export interface ConversationTimelineProps {
   conversations: ConversationTimelineItem[]
+  customerId?: string
   onConversationClick?: (_conversationId: string) => void
 }
 
@@ -52,7 +53,7 @@ function getSentimentColor(sentiment?: string): 'positive' | 'critical' | 'neutr
   }
 }
 
-export function ConversationTimeline({ conversations }: ConversationTimelineProps) {
+export function ConversationTimeline({ conversations, customerId }: ConversationTimelineProps) {
   const sortedConversations = [...conversations].sort((a, b) => 
     new Date(b.date).getTime() - new Date(a.date).getTime()
   )
@@ -153,7 +154,7 @@ export function ConversationTimeline({ conversations }: ConversationTimelineProp
                     )}
                   </View>
 
-                  <Link to={`/conversations/${conversation.id}`}>
+                  <Link to={customerId ? `/triage/customers/${customerId}/conversations/${conversation.id}` : `/triage`}>
                     <Text variant="body-2" attributes={{ style: { color: 'var(--rs-color-primary)', cursor: 'pointer' } }}>
                       View Transcript →
                     </Text>

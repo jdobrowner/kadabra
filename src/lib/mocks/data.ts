@@ -1,4 +1,5 @@
 import { daysAgo, isoDate } from './utils'
+import { mockConversations as expandedMockConversations } from '../../data/mockConversations'
 
 const now = new Date()
 
@@ -780,170 +781,22 @@ export const tasks = [
   },
 ]
 
-export const conversations = [
-  {
-    id: 'conv-mock-1',
-    customerId: 'cust-mock-1' as string | null,
-    channel: 'email',
-    date: daysAgo(1),
-    duration: null,
-    messageCount: 1,
-    transcript:
-      'Jamie shared concerns about renewal pricing increases and requested executive alignment.',
-    summary:
-      'Pricing increase triggered executive escalation. Customer needs clarity on billing roadmap.',
-    sentiment: 'negative',
-    intent: 'Renewal risk mitigation',
-    agent: 'Alex Lee',
-    subject: 'Renewal Pricing Concerns',
-    insights: [
-      'High churn risk due to pricing surprise',
-      'Executive sponsor engagement requested',
-    ],
-    coachingSuggestions: ['Prepare ROI justification prior to exec meeting'],
-    keyStats: { contractValue: 480000, renewalDate: daysAgo(-30) },
-    messages: [
-      {
-        role: 'customer',
-        content: 'We need to review the renewal increase before committing.',
-        timestamp: daysAgo(1),
-      },
-      {
-        role: 'assistant',
-        content:
-          'Happy to schedule an executive call and outline the roadmap improvements.',
-        timestamp: daysAgo(1),
-      },
-    ],
-    createdAt: daysAgo(1),
-  },
-  {
-    id: 'conv-mock-2',
-    customerId: 'cust-mock-2',
-    channel: 'chat',
-    date: daysAgo(2),
-    duration: 15,
-    messageCount: 6,
-    transcript:
-      'Discussed analytics add-on capabilities, data retention, and pricing tiers.',
-    summary:
-      'Customer wants analytics add-on. Requested technical deep dive and pricing proposal.',
-    sentiment: 'positive',
-    intent: 'Upsell inquiry',
-    agent: 'Taylor Nguyen',
-    subject: 'Analytics Module Questions',
-    insights: ['Opportunity for 30% ARR expansion', 'Needs integration timeline'],
-    coachingSuggestions: ['Follow up with tailored proposal and case studies'],
-    keyStats: { potentialUpsell: 120000 },
-    messages: null,
-    createdAt: daysAgo(2),
-  },
-  {
-    id: 'conv-mock-3',
-    customerId: 'cust-mock-3',
-    channel: 'voice-message',
-    date: daysAgo(8),
-    duration: 3,
-    messageCount: 1,
-    transcript:
-      'Quick update from Marcus—onboarding is on track, will reach out if any blockers arise.',
-    summary: 'Customer confirmed onboarding progress; no immediate blockers.',
-    sentiment: 'neutral',
-    intent: 'Status update',
-    agent: 'Support Bot',
-    subject: null,
-    insights: ['Positive onboarding momentum'],
-    coachingSuggestions: ['Schedule check-in next week to maintain momentum'],
-    keyStats: null,
-    messages: null,
-    createdAt: daysAgo(8),
-  },
-  {
-    id: 'conv-mock-4',
-    customerId: 'cust-mock-4',
-    channel: 'sms',
-    date: daysAgo(1),
-    duration: 2,
-    messageCount: 4,
-    transcript:
-      'Pilot champion shared rollout readiness checklist and asked for enablement schedule.',
-    summary:
-      'Expansion momentum is strong; needs rollout milestones and training calendar.',
-    sentiment: 'positive',
-    intent: 'Expansion planning',
-    agent: 'Jordan Blake',
-    subject: null,
-    insights: ['Ready to expand to 5 additional plants', 'Requires training plan next week'],
-    coachingSuggestions: ['Provide rollout playbook and align on support resources'],
-    keyStats: { pilotTeams: 3, expansionTeams: 8 },
-    messages: [
-      {
-        role: 'customer',
-        content: 'Pilot outcomes look great—when can we schedule regional training?',
-        timestamp: daysAgo(1),
-      },
-      {
-        role: 'assistant',
-        content: 'We can host workshops starting Monday; sending availability shortly.',
-        timestamp: daysAgo(1),
-      },
-    ],
-    createdAt: daysAgo(1),
-  },
-  {
-    id: 'conv-mock-5',
-    customerId: 'cust-mock-5',
-    channel: 'video',
-    date: daysAgo(14),
-    duration: 45,
-    messageCount: 1,
-    transcript:
-      'Reviewed sustainability reporting dashboards and confirmed resolved support tickets.',
-    summary:
-      'Customer satisfied post-incident; prefers quarterly insights and minimal check-ins.',
-    sentiment: 'neutral',
-    intent: 'Relationship maintenance',
-    agent: 'Priya Patel',
-    subject: 'Quarterly Health Review',
-    insights: ['Stability restored after incident', 'Prefers proactive but lightweight touchpoints'],
-    coachingSuggestions: ['Send quarterly health digest and confirm next QBR date'],
-    keyStats: { csat: 4.6, openTickets: 0 },
-    messages: null,
-    createdAt: daysAgo(14),
-  },
-  {
-    id: 'conv-mock-6',
-    customerId: 'cust-mock-6',
-    channel: 'ai-call',
-    date: daysAgo(0),
-    duration: 12,
-    messageCount: 1,
-    transcript:
-      'AI call captured outage frustrations and requests for SLA credits and RCA delivery.',
-    summary:
-      'Critical retention moment; customer waiting for RCA and compensation.',
-    sentiment: 'negative',
-    intent: 'Retention risk',
-    agent: 'AI Call Assistant',
-    subject: 'Outage Follow-up',
-    insights: ['Needs RCA within 48 hours', 'Requests 2 months service credit'],
-    coachingSuggestions: ['Escalate to engineering leadership and offer good-will credit'],
-    keyStats: { impactedUsers: 320, downtimeMinutes: 95 },
-    messages: [
-      {
-        role: 'customer',
-        content: 'We need the RCA and credits this week or we escalate to procurement.',
-        timestamp: daysAgo(0),
-      },
-      {
-        role: 'assistant',
-        content: 'Engineering is finalizing the RCA; we will deliver within 24 hours.',
-        timestamp: daysAgo(0),
-      },
-    ],
-    createdAt: daysAgo(0),
-  },
-]
+// Map expanded conversations to match customer ID format (1 -> cust-mock-1, 2 -> cust-mock-2, etc.)
+// Only include conversations for customers that exist in the system (cust-mock-1 through cust-mock-6)
+export const conversations = expandedMockConversations
+  .filter((conv) => {
+    const customerIdNum = parseInt(conv.customerId, 10)
+    return !isNaN(customerIdNum) && customerIdNum >= 1 && customerIdNum <= 6
+  })
+  .map((conv) => {
+    const customerIdNum = parseInt(conv.customerId, 10)
+    const mappedCustomerId = `cust-mock-${customerIdNum}` as string | null
+    return {
+      ...conv,
+      customerId: mappedCustomerId,
+      createdAt: conv.date, // Use date as createdAt if not provided
+    }
+  })
 
 export const aiAgentChats = [
   {

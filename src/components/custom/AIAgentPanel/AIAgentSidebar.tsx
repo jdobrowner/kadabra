@@ -5,16 +5,16 @@ import { useAppStore } from '../../../store/useAppStore'
 import { useCustomersStore } from '../../../store/useCustomersStore'
 import { AIAgentPanel } from './AIAgentPanel'
 
-const CUSTOMER_ROUTE_PREFIXES = ['/customers/', '/action-plans/', '/conversations/']
+const CUSTOMER_ROUTE_PREFIXES = ['/triage/customers/']
 
 function isCustomerContextPath(pathname: string) {
   return CUSTOMER_ROUTE_PREFIXES.some((prefix) => pathname.startsWith(prefix))
 }
 
 function extractCustomerIdFromPath(pathname: string): string | null {
-  if (pathname.startsWith('/customers/')) {
+  if (pathname.startsWith('/triage/customers/')) {
     const segments = pathname.split('/')
-    return segments[2] ?? null
+    return segments[3] ?? null // /triage/customers/:customerId
   }
   return null
 }

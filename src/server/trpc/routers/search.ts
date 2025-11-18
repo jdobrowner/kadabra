@@ -71,7 +71,7 @@ export const searchRouter = router({
               id: customer.id,
               title: customer.name,
               subtitle: `${customer.companyName}`,
-              link: `/customers/${customer.id}`,
+              link: `/triage/customers/${customer.id}`,
               date: customer.createdAt.toISOString(),
               metadata: {
                 companyName: customer.companyName,
@@ -101,7 +101,7 @@ export const searchRouter = router({
               id: customer.id,
               title: customer.name,
               subtitle: `${customer.companyName}`,
-              link: `/customers/${customer.id}`,
+              link: `/triage/customers/${customer.id}`,
               date: customer.createdAt.toISOString(),
             })
           }
@@ -143,7 +143,7 @@ export const searchRouter = router({
                 id: conv.id,
                 title: `Conversation with ${customer?.name || 'Customer'}`,
                 subtitle: `${conv.channel} • ${conv.summary?.substring(0, 100) || 'No summary'}...`,
-                link: `/conversations/${conv.id}`,
+                link: conv.customerId ? `/triage/customers/${conv.customerId}/conversations/${conv.id}` : `/triage`,
                 date: conv.date.toISOString(),
               })
             }
@@ -165,7 +165,7 @@ export const searchRouter = router({
                 id: conv.id,
                 title: `Conversation with ${customer?.name || 'Customer'}`,
                 subtitle: `${conv.channel} • ${conv.summary?.substring(0, 100) || 'No summary'}...`,
-                link: `/conversations/${conv.id}`,
+                link: conv.customerId ? `/triage/customers/${conv.customerId}/conversations/${conv.id}` : `/triage`,
                 date: conv.date.toISOString(),
               })
             }
@@ -220,7 +220,7 @@ export const searchRouter = router({
               id: plan.id,
               title: `Action Plan for ${customer?.name || 'Customer'}`,
               subtitle: plan.whatToDo.substring(0, 100) + '...',
-              link: `/action-plans/${plan.id}`,
+              link: plan.customerId ? `/triage/customers/${plan.customerId}/action-plans/${plan.id}` : `/triage`,
               date: plan.createdAt.toISOString(),
             })
           }

@@ -28,11 +28,16 @@ export default function TriageLeaderboard() {
   }
 
   const handleCustomerClick = useCallback((customerId: string) => {
-    navigate(`/customers/${customerId}`)
+    navigate(`/triage/customers/${customerId}`)
   }, [navigate])
 
-  const handleActNow = useCallback((actionPlanId: string, _customerId?: string) => {
-    navigate(`/action-plans/${actionPlanId}`)
+  const handleActNow = useCallback((actionPlanId: string, customerId?: string) => {
+    if (customerId) {
+      navigate(`/triage/customers/${customerId}/action-plans/${actionPlanId}`)
+    } else {
+      // Fallback - try to find customer from action plan
+      navigate(`/triage`)
+    }
   }, [navigate])
 
   return (

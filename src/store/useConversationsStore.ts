@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-// import { trpcVanillaClient } from '../lib/trpc-client' // TODO: Re-enable when getByCustomerId and getById are implemented
+import { trpcVanillaClient } from '../lib/trpc-client'
 
 interface Conversation {
   id: string
@@ -73,8 +73,7 @@ export const useConversationsStore = create<ConversationsState>((set) => ({
     }))
     
     try {
-      // TODO: Implement getByCustomerId in conversations router
-      const result = [] as Conversation[]
+      const result = await trpcVanillaClient.conversations.getByCustomerId.query({ customerId })
       set((state) => ({
         conversationsByCustomer: {
           ...state.conversationsByCustomer,
@@ -100,12 +99,11 @@ export const useConversationsStore = create<ConversationsState>((set) => ({
   },
   
   // Fetch single conversation
-  fetchConversation: async (_id) => {
+  fetchConversation: async (id) => {
     set({ currentConversationLoading: true, currentConversationError: null })
     
     try {
-      // TODO: Implement getById in conversations router
-      const result = null as Conversation | null
+      const result = await trpcVanillaClient.conversations.getById.query({ id })
       set({
         currentConversation: result as Conversation,
         currentConversationLoading: false,

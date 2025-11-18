@@ -11,12 +11,15 @@ import { trpcVanillaClient } from '../lib/trpc-client'
 import { useConversationsStore } from '../store/useConversationsStore'
 import { useEffect, useState } from 'react'
 import { CustomBadge } from '../components/custom/Badge'
+import { TriageBreadcrumbs } from '../components/custom/Breadcrumbs'
+import { CustomerPageHeader } from '../components/custom/CustomerPageHeader'
+import { useCustomersStore } from '../store/useCustomersStore'
 
 // Stable empty array reference
 const EMPTY_ARRAY: never[] = []
 
 export default function ActionPlan() {
-  const { id } = useParams<{ id: string }>()
+  const { customerId, actionPlanId } = useParams<{ customerId: string; actionPlanId: string }>()
   const setActiveActionPlan = useAppStore((state) => state.setActiveActionPlan)
   const setActiveCustomer = useAppStore((state) => state.setActiveCustomer)
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false)
@@ -47,6 +50,10 @@ export default function ActionPlan() {
   const teams = useTeamsStore((state) => state.teams)
   const fetchTeams = useTeamsStore((state) => state.fetchTeams)
   
+  // Get customer from store
+  const customer = useCustomersStore((state) => state.currentCustomer)
+  const fetchCustomer = useCustomersStore((state) => state.fetchCustomer)
+  
   // Get conversations from store
   const conversations = useConversationsStore((state) => 
     actionPlan?.customerId ? (state.conversationsByCustomer[actionPlan.customerId] ?? EMPTY_ARRAY) : EMPTY_ARRAY
@@ -55,19 +62,21 @@ export default function ActionPlan() {
   
   // Fetch action plan on mount
   useEffect(() => {
-    if (id) {
-      setActiveActionPlan(id)
-      fetchActionPlan(id)
+    if (actionPlanId) {
+      setActiveActionPlan(actionPlanId)
+      fetchActionPlan(actionPlanId)
     }
-  }, [id, setActiveActionPlan, fetchActionPlan])
+  }, [actionPlanId, setActiveActionPlan, fetchActionPlan])
   
-  // Fetch conversations and set active customer when action plan loads
+  // Fetch customer and conversations when customerId or action plan loads
   useEffect(() => {
-    if (actionPlan?.customerId) {
-      setActiveCustomer(actionPlan.customerId)
-      fetchConversationsForCustomer(actionPlan.customerId)
+    const effectiveCustomerId = customerId || actionPlan?.customerId
+    if (effectiveCustomerId) {
+      setActiveCustomer(effectiveCustomerId)
+      fetchCustomer(effectiveCustomerId)
+      fetchConversationsForCustomer(effectiveCustomerId)
     }
-  }, [actionPlan?.customerId, setActiveCustomer, fetchConversationsForCustomer])
+  }, [customerId, actionPlan?.customerId, setActiveCustomer, fetchCustomer, fetchConversationsForCustomer])
 
   useEffect(() => {
     fetchBoards()
@@ -141,10 +150,10 @@ export default function ActionPlan() {
   }, [promotionBoardId, promotionColumnId, promotionTeamId])
   
   const handleMarkComplete = async () => {
-    if (!id) return
+    if (!actionPlanId) return
     setIsUpdatingStatus(true)
     try {
-      await markActionPlanComplete(id)
+      await markActionPlanComplete(actionPlanId)
     } catch (error) {
       console.error('Failed to mark action plan complete:', error)
     } finally {
@@ -153,10 +162,10 @@ export default function ActionPlan() {
   }
 
   const handleMarkIncomplete = async () => {
-    if (!id) return
+    if (!actionPlanId) return
     setIsUpdatingStatus(true)
     try {
-      await markActionPlanIncomplete(id)
+      await markActionPlanIncomplete(actionPlanId)
     } catch (error) {
       console.error('Failed to mark action plan incomplete:', error)
     } finally {
@@ -208,7 +217,6 @@ export default function ActionPlan() {
   }
   
   const lastConversation = conversations.length > 0 ? conversations[0] : null
-  const customer = actionPlan?.customer
   const selectedBoardMeta = boards.find((board) => board.id === promotionBoardId)
   const promotionButtonLabel = actionPlan?.boardCard ? 'Update board card' : 'Promote to board'
 
@@ -262,26 +270,42 @@ export default function ActionPlan() {
 
   return (
     <Container>
+      <View direction="column" gap={6}>
+        <TriageBreadcrumbs 
+          customerName={customer?.name} 
+          customerId={customerId || actionPlan?.customerId}
+          actionPlanTitle="Action Plan"
+          actionPlanId={actionPlanId}
+        />
+        
+        {customer && (
+          <CustomerPageHeader
+            customerId={customer.id}
+            name={customer.name}
+            companyName={customer.companyName}
+            badge={(actionPlan?.badge as any) || 'no-action'}
+            avatar={customer.avatar}
+          />
+        )}
+      </View>
+      
       <View
         direction="row"
         gap={6}
         align="stretch"
-        attributes={{ style: { flexWrap: 'wrap', alignItems: 'flex-start' } }}
+        attributes={{ style: { flexWrap: 'wrap', alignItems: 'flex-start', marginTop: '24px' } }}
       >
         <View direction="column" gap={6} attributes={{ style: { flex: 1, minWidth: 0 } }}>
           {/* Header */}
           <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
             <View direction="row" gap={3} align="center">
-              <Link to={customer ? `/customers/${customer.id}` : '/triage'}>
+              <Link to={customer && customerId ? `/triage/customers/${customerId}` : '/triage'}>
                 <Button variant="outline" icon={<ArrowLeft />}>
                   Back
                 </Button>
               </Link>
               <View direction="column" gap={1}>
                 <View direction="row" gap={2} align="center">
-                  <Text variant="title-3" weight="bold">
-                    {customer?.companyName || 'Customer'} - Recommended Action Plan
-                  </Text>
                   {actionPlan.badge && (
                     <CustomBadge color={getBadgeColor(actionPlan.badge) as any} badgeType={actionPlan.badge as any}>
                       {getBadgeLabel(actionPlan.badge)}
@@ -533,10 +557,10 @@ export default function ActionPlan() {
                   </View>
                   
                   <View direction="row" gap={2}>
-                    <Link to={`/conversations/${lastConversation.id}`}>
+                    <Link to={`/triage/customers/${actionPlan.customerId}/conversations/${lastConversation.id}`}>
                       <Button size="small">View Details</Button>
                     </Link>
-                    <Link to={`/customers/${actionPlan.customerId}/conversations`}>
+                    <Link to={`/triage/customers/${actionPlan.customerId}/conversations`}>
                       <Button size="small" variant="outline">Call History</Button>
                     </Link>
                   </View>

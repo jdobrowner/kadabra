@@ -504,7 +504,7 @@ export const mockHandlers: MockHandlers = {
             id: customer.id,
             title: `${customer.name} • ${customer.companyName}`,
             subtitle: `Risk: ${customer.riskScore ?? 0} | Opportunity: ${customer.opportunityScore ?? 0}`,
-            link: `/customers/${customer.id}`,
+            link: `/triage/customers/${customer.id}`,
             date: customer.updatedAt,
             metadata: {
               badge: getActiveActionPlan(customer.id)?.badge ?? null,
@@ -526,7 +526,7 @@ export const mockHandlers: MockHandlers = {
             id: plan.id,
             title: `${customer.name} • ${plan.badge.toUpperCase()}`,
             subtitle: plan.recommendation ?? plan.whatToDo,
-            link: `/action-plans/${plan.id}`,
+            link: plan.customerId ? `/triage/customers/${plan.customerId}/action-plans/${plan.id}` : `/triage`,
             date: plan.updatedAt,
             metadata: {
               status: plan.status,
@@ -548,7 +548,7 @@ export const mockHandlers: MockHandlers = {
             id: conversation.id,
             title: `${customer.name} • ${conversation.channel}`,
             subtitle: conversation.summary || conversation.transcript.slice(0, 80),
-            link: `/conversations/${conversation.id}`,
+            link: conversation.customerId ? `/triage/customers/${conversation.customerId}/conversations/${conversation.id}` : `/triage`,
             date: conversation.date,
             metadata: {
               sentiment: conversation.sentiment,
