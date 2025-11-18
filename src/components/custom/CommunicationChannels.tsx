@@ -71,6 +71,7 @@ export function CommunicationChannels({ communications, textColor = 'neutral', s
                      comm.type === 'ai-call' ? (comm.count === 1 ? 'AI Call' : 'AI Calls') :
                      comm.type === 'voice-message' ? (comm.count === 1 ? 'Voice Message' : 'Voice Messages') :
                      'SMS'
+        const isLast = index === sortedCommunications.length - 1
         return (
           <View key={`${comm.type}-${index}`} direction="row" gap={1} align="center">
             <Icon 
@@ -82,7 +83,9 @@ export function CommunicationChannels({ communications, textColor = 'neutral', s
             <Text variant="body-2" color={textColor}>
               {comm.count} {label}
             </Text>
-            <Text variant="body-2" color={textColor}>•</Text>
+            {!isLast && (
+              <Text variant="body-2" color={textColor}>•</Text>
+            )}
           </View>
         )
       })}
