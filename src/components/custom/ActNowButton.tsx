@@ -1,5 +1,5 @@
 import type React from 'react'
-import { Button } from 'reshaped'
+import { CustomButton } from './CustomButton'
 import { Lightning } from '@phosphor-icons/react'
 import './ActNowButton.css'
 
@@ -30,7 +30,7 @@ export function ActNowButton({
     : `act-now-button ${className}`.trim()
 
   return (
-    <Button
+    <CustomButton
       className={buttonClassName}
       onClick={onClick}
       fullWidth={fullWidth}
@@ -38,9 +38,10 @@ export function ActNowButton({
       loading={loading}
       icon={<Lightning weight="fill" />}
       size={size}
+      variant="solid"
     >
       {displayChildren}
-    </Button>
+    </CustomButton>
   )
 }
 

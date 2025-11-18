@@ -117,9 +117,39 @@ body {
 
 /* Target Reshaped's text span class specifically - this is what actually works */
 /* Reshaped buttons use nested spans with CSS module classes like _text_1vxzk_1 */
-[data-rs-theme~="kadabra"] [class*="_text_"] {
-  font-size: 16px !important; /* Match ActNowButton font size */
-  font-weight: 700 !important; /* Bold text (bolder than ActNowButton's 600) */
+/* Default font-weight for solid buttons */
+[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="solid"] [class*="_text_"],
+[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="solid"] [class*="_text_"],
+[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="solid"] [class*="_text_"] {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+}
+
+/* Secondary (outline) and ghost buttons - lighter font weight */
+/* Target both the button element and the text spans for maximum coverage */
+[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="outline"],
+[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="outline"],
+[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="outline"],
+[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="ghost"],
+[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="ghost"],
+[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="ghost"] {
+  font-weight: 600 !important;
+}
+
+[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="outline"] [class*="_text_"],
+[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="outline"] [class*="_text_"],
+[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="outline"] [class*="_text_"],
+[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="ghost"] [class*="_text_"],
+[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="ghost"] [class*="_text_"],
+[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="ghost"] [class*="_text_"],
+[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="outline"] [class*="_text_"] *,
+[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="outline"] [class*="_text_"] *,
+[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="outline"] [class*="_text_"] *,
+[data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="ghost"] [class*="_text_"] *,
+[data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="ghost"] [class*="_text_"] *,
+[data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="ghost"] [class*="_text_"] * {
+  font-size: 16px !important;
+  font-weight: 600 !important;
 }
 
 /* Primary button - dark gray background with soft white text */

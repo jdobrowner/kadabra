@@ -1,10 +1,11 @@
-import { Container, View, Button, Text, Icon, Card } from 'reshaped'
+import { Container, View, Text, Icon, Card } from 'reshaped'
 import { WelcomeStats } from '../components/custom/WelcomeStats'
 import { PageHeader } from '../components/custom/PageHeader'
 import { CustomerCardHorizontal } from '../components/custom/CustomerCardHorizontal'
 import { MiniReminders } from '../components/custom/MiniReminders'
 import { MiniKanban } from '../components/custom/MiniKanban'
 import { SecondaryButton } from '../components/custom/SecondaryButton'
+import { GhostButton } from '../components/custom/GhostButton'
 import { useDashboardStore } from '../store/useDashboardStore'
 import { useCustomersStore } from '../store/useCustomersStore'
 import { Link, useNavigate } from 'react-router-dom'
@@ -86,12 +87,12 @@ export default function Dashboard() {
                     <h3 style={{ margin: 0 }}>Customer Triage Leaderboard</h3>
                   </View>
                   <Link to="/triage">
-                    <Button variant="ghost" size="small">
+                    <GhostButton>
                       <View direction="row" gap={2} align="center">
                         <Text>View All</Text>
                         <Icon svg={<ArrowRight weight="bold" />} size={4} />
                       </View>
-                    </Button>
+                    </GhostButton>
                   </Link>
                 </View>
                 <Text variant="body-2" color="neutral-faded">
@@ -122,8 +123,9 @@ export default function Dashboard() {
                 <Link to="/triage" style={{ width: '100%' }}>
                   <SecondaryButton
                     attributes={{ 
-                      style: { width: '100%' }
-                    }}
+                      style: { width: '100%' },
+                      'data-icon-size': '16px'
+                    } as any}
                     size="large"
                     color="primary"
                     icon={<Plus weight="bold" />}
