@@ -278,6 +278,14 @@ export default function ActionPlan() {
             badge={(actionPlan?.badge as any) || 'no-action'}
             avatar={customer.avatar}
             pageName="Action Plan"
+            rightContent={
+              <View direction="row" gap={2} align="center">
+                <Text variant="body-2" color="neutral-faded">Assigned to:</Text>
+                <Button size="small" variant="outline" icon={<User />}>
+                  + Assign
+                </Button>
+              </View>
+            }
           />
         )}
       </View>
@@ -289,32 +297,6 @@ export default function ActionPlan() {
         attributes={{ style: { flexWrap: 'wrap', alignItems: 'flex-start', marginTop: '24px' } }}
       >
         <View direction="column" gap={6} attributes={{ style: { flex: 1, minWidth: 0 } }}>
-          {/* Header */}
-          <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
-            <View direction="row" gap={3} align="center">
-              <Link to={customer && customerId ? `/triage/customers/${customerId}` : '/triage'}>
-                <Button variant="outline" icon={<ArrowLeft />}>
-                  Back
-                </Button>
-              </Link>
-              <View direction="column" gap={1}>
-                <View direction="row" gap={2} align="center">
-                  {actionPlan.badge && (
-                    <CustomBadge color={getBadgeColor(actionPlan.badge) as any} badgeType={actionPlan.badge as any}>
-                      {getBadgeLabel(actionPlan.badge)}
-                    </CustomBadge>
-                  )}
-                </View>
-              </View>
-            </View>
-            <View direction="row" gap={2} align="center">
-              <Text variant="body-2" color="neutral-faded">Assigned to:</Text>
-              <Button size="small" variant="outline" icon={<User />}>
-                + Assign
-              </Button>
-            </View>
-          </View>
-
         <View direction="column" gap={4}>
           {/* AI Strategy Recommendation Card */}
           <Card padding={6}>

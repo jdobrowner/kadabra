@@ -1,3 +1,4 @@
+import React from 'react'
 import { View, Text } from 'reshaped'
 import { CustomBadge } from './Badge'
 import { AvatarWithInitials } from './AvatarWithInitials'
@@ -9,6 +10,7 @@ export interface CustomerPageHeaderProps {
   badge: 'at-risk' | 'opportunity' | 'lead' | 'follow-up' | 'no-action'
   avatar: string
   pageName?: string
+  rightContent?: React.ReactNode
 }
 
 function getBadgeColor(badge: CustomerPageHeaderProps['badge']): 'primary' | 'critical' | 'positive' | 'warning' | 'neutral' | null {
@@ -49,29 +51,37 @@ export function CustomerPageHeader({
   companyName,
   badge,
   avatar,
-  pageName
+  pageName,
+  rightContent
 }: CustomerPageHeaderProps) {
   const badgeColor = getBadgeColor(badge)
   const badgeLabel = getBadgeLabel(badge)
 
   return (
-    <View direction="row" gap={4} align="center">
-      <AvatarWithInitials src={avatar} alt={name} name={name} size={12} />
-      <View direction="column" gap={0} attributes={{ style: { flex: 1 } }}>
-        <View direction="row" gap={4} align="center" attributes={{ style: { flexWrap: 'wrap' } }}>
-          <h1 style={{ margin: 0, fontSize: '32px', fontWeight: 700, lineHeight: '1.2' }}>
-            {pageName ? `${name} • ${pageName}` : name}
-          </h1>
-          {badgeColor && (
-            <CustomBadge color={badgeColor} badgeType={badge}>
-              {badgeLabel}
-            </CustomBadge>
-          )}
+    <View direction="row" gap={4} align="center" attributes={{ style: { justifyContent: 'space-between', width: '100%' } }}>
+      <View direction="row" gap={4} align="center" attributes={{ style: { flex: 1, minWidth: 0 } }}>
+        <AvatarWithInitials src={avatar} alt={name} name={name} size={12} />
+        <View direction="column" gap={0} attributes={{ style: { flex: 1, minWidth: 0 } }}>
+          <View direction="row" gap={4} align="center" attributes={{ style: { flexWrap: 'wrap' } }}>
+            <h1 style={{ margin: 0, fontSize: '32px', fontWeight: 700, lineHeight: '1.2' }}>
+              {pageName ? `${name} • ${pageName}` : name}
+            </h1>
+            {badgeColor && (
+              <CustomBadge color={badgeColor} badgeType={badge}>
+                {badgeLabel}
+              </CustomBadge>
+            )}
+          </View>
+          <Text variant="body-1" color="neutral-faded">
+            {companyName}
+          </Text>
         </View>
-        <Text variant="body-1" color="neutral-faded">
-          {companyName}
-        </Text>
       </View>
+      {rightContent && (
+        <View attributes={{ style: { flexShrink: 0 } }}>
+          {rightContent}
+        </View>
+      )}
     </View>
   )
 }
