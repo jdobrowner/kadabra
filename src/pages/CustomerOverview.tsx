@@ -10,8 +10,7 @@ import { useCustomersStore } from '../store/useCustomersStore'
 import { useActionPlansStore } from '../store/useActionPlansStore'
 import { useConversationsStore } from '../store/useConversationsStore'
 import { useEffect, useRef } from 'react'
-import { formatRelativeTime } from '../utils/formatTime'
-import { CommunicationChannels } from '../components/custom/CommunicationChannels'
+import { CommunicationChannels, type Communication } from '../components/custom/CommunicationChannels'
 import { CustomerPageHeader } from '../components/custom/CustomerPageHeader'
 
 // Stable empty array reference to prevent infinite loops in Zustand selectors
@@ -21,22 +20,25 @@ export default function CustomerOverview() {
   const { customerId } = useParams<{ customerId: string }>()
   const setActiveCustomer = useAppStore((state) => state.setActiveCustomer)
   
-  // Get customer from store
-  const customer = useCustomersStore((state) => state.currentCustomer)
+  // Get customers list and current customer from store
+  // Prefer customer from list if available (same data source as customer cards)
+  const customers = useCustomersStore((state) => state.customers)
+  const currentCustomer = useCustomersStore((state) => state.currentCustomer)
   const customerLoading = useCustomersStore((state) => state.currentCustomerLoading)
   const fetchCustomer = useCustomersStore((state) => state.fetchCustomer)
   
+  // Use customer from list if available, otherwise use currentCustomer
+  const customer = customerId 
+    ? (customers.find(c => c.id === customerId) || currentCustomer)
+    : currentCustomer
+  
   // Get action plan from store
   const actionPlan = useActionPlansStore((state) => state.currentActionPlan)
-  const actionPlanLoading = useActionPlansStore((state) => state.currentActionPlanLoading)
   const fetchActionPlanByCustomerId = useActionPlansStore((state) => state.fetchActionPlanByCustomerId)
   
   // Get conversations from store - use stable empty array reference to prevent infinite loops
   const conversations = useConversationsStore((state) => 
     customerId ? (state.conversationsByCustomer[customerId] ?? EMPTY_ARRAY) : EMPTY_ARRAY
-  )
-  const conversationsLoading = useConversationsStore((state) => 
-    customerId ? (state.conversationsLoading[customerId] ?? false) : false
   )
   const fetchConversationsForCustomer = useConversationsStore((state) => state.fetchConversationsForCustomer)
   
@@ -99,11 +101,50 @@ export default function CustomerOverview() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customerId]) // Only depend on customerId - Zustand functions are stable and don't need to be in deps
 
-  const lastConversation = conversations.length > 0 ? conversations[0] : null
   const sortedConversations = [...conversations].sort((a, b) => 
     new Date(b.date).getTime() - new Date(a.date).getTime()
   )
   const mostRecentConversation = sortedConversations.length > 0 ? sortedConversations[0] : null
+
+  // Use customer.communications directly (same as CustomerCard) - now fetched by getById endpoint
+  // Fallback to calculating from conversations if communications not available
+  const communications: Communication[] = customer?.communications && customer.communications.length > 0
+    ? customer.communications.map(comm => ({
+        type: comm.type as Communication['type'],
+        count: comm.count,
+        lastTime: comm.lastTime
+      }))
+    : (() => {
+        // Fallback: calculate from conversations if communications not available
+        const commMap = new Map<string, { count: number; lastTime: string }>()
+        
+        conversations.forEach((conv) => {
+          const channel = conv.channel as Communication['type']
+          // Handle all communication types including ai-call
+          if (channel === 'phone' || channel === 'email' || channel === 'sms' || channel === 'voice-message' || channel === 'ai-call' || channel === 'video') {
+            const existing = commMap.get(channel)
+            if (existing) {
+              const existingDate = new Date(existing.lastTime).getTime()
+              const currentDate = new Date(conv.date).getTime()
+              commMap.set(channel, {
+                count: existing.count + 1,
+                lastTime: currentDate > existingDate ? conv.date : existing.lastTime
+              })
+            } else {
+              commMap.set(channel, {
+                count: 1,
+                lastTime: conv.date
+              })
+            }
+          }
+        })
+        
+        return Array.from(commMap.entries()).map(([type, data]) => ({
+          type: type as Communication['type'],
+          count: data.count,
+          lastTime: data.lastTime
+        }))
+      })()
 
   if (!customer && !customerLoading) {
     return (
@@ -202,24 +243,18 @@ export default function CustomerOverview() {
                   </Link>
                 )}
               </View>
-              {conversations.length > 0 ? (
-                <View direction="column" gap={2}>
-                  <Text variant="body-2" color="neutral-faded">
-                    {conversations.length} {conversations.length === 1 ? 'conversation' : 'conversations'} total
-                  </Text>
-                  {mostRecentConversation && (
-                    <>
-                      <Text variant="body-2" color="neutral-faded">
-                        Most recent: {formatRelativeTime(mostRecentConversation.date)}
-                      </Text>
-                      {mostRecentConversation.summary && (
-                        <Text variant="body-2" color="neutral-faded">
-                          {mostRecentConversation.summary.substring(0, 150)}...
-                        </Text>
-                      )}
-                    </>
-                  )}
-                </View>
+              {customer.communications && customer.communications.length > 0 ? (
+                <CommunicationChannels 
+                  communications={customer.communications.map(comm => ({
+                    type: comm.type as Communication['type'],
+                    count: comm.count,
+                    lastTime: comm.lastTime
+                  }))}
+                  textColor="neutral-faded" 
+                />
+              ) : conversations.length > 0 ? (
+                // Fallback: use computed communications if customer.communications not available
+                <CommunicationChannels communications={communications} textColor="neutral-faded" />
               ) : (
                 <Text variant="body-2" color="neutral-faded">
                   No conversations yet

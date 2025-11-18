@@ -280,21 +280,48 @@ export const customersRouter = router({
         })
       }
       
-      // Get aggregate counts
-      const [conversationsCount] = await db
-        .select({ count: sql<number>`count(*)` })
-        .from(conversations)
-        .where(eq(conversations.customerId, customer.id))
+      // Get communications, last communication, and active action plan (same as list endpoint)
+      const [
+        communicationsRows,
+        lastCommRows,
+        activePlans,
+        conversationsCount,
+        tasksCount,
+        actionPlansCount,
+      ] = await Promise.all([
+        db
+          .select()
+          .from(communications)
+          .where(eq(communications.customerId, customer.id)),
+        db
+          .select()
+          .from(lastCommunications)
+          .where(eq(lastCommunications.customerId, customer.id))
+          .limit(1),
+        db
+          .select()
+          .from(actionPlans)
+          .where(and(
+            eq(actionPlans.customerId, customer.id),
+            eq(actionPlans.status, 'active')
+          ))
+          .limit(1),
+        db
+          .select({ count: sql<number>`count(*)` })
+          .from(conversations)
+          .where(eq(conversations.customerId, customer.id)),
+        db
+          .select({ count: sql<number>`count(*)` })
+          .from(tasks)
+          .where(eq(tasks.customerId, customer.id)),
+        db
+          .select({ count: sql<number>`count(*)` })
+          .from(actionPlans)
+          .where(eq(actionPlans.customerId, customer.id)),
+      ])
       
-      const [tasksCount] = await db
-        .select({ count: sql<number>`count(*)` })
-        .from(tasks)
-        .where(eq(tasks.customerId, customer.id))
-      
-      const [actionPlansCount] = await db
-        .select({ count: sql<number>`count(*)` })
-        .from(actionPlans)
-        .where(eq(actionPlans.customerId, customer.id))
+      const [lastComm] = lastCommRows
+      const [activePlan] = activePlans
       
       return {
         id: customer.id,
@@ -304,12 +331,29 @@ export const customersRouter = router({
         phone: customer.phone,
         riskScore: customer.riskScore,
         opportunityScore: customer.opportunityScore,
+        communications: communicationsRows.map(c => ({
+          type: c.type,
+          count: c.count,
+          lastTime: c.lastTime.toISOString(),
+        })),
+        lastCommunication: lastComm ? {
+          type: lastComm.type,
+          time: lastComm.time.toISOString(),
+          topic: lastComm.topic,
+          shortTopic: lastComm.shortTopic,
+          longTopic: lastComm.longTopic,
+        } : undefined,
+        actionPlan: activePlan ? {
+          id: activePlan.id,
+          badge: activePlan.badge,
+          aiRecommendation: activePlan.recommendation || activePlan.whatToDo,
+        } : null,
         avatar: customer.avatar,
         createdAt: customer.createdAt.toISOString(),
         updatedAt: customer.updatedAt.toISOString(),
-        totalConversations: Number(conversationsCount?.count || 0),
-        totalTasks: Number(tasksCount?.count || 0),
-        totalActionPlans: Number(actionPlansCount?.count || 0),
+        totalConversations: Number(conversationsCount?.[0]?.count || 0),
+        totalTasks: Number(tasksCount?.[0]?.count || 0),
+        totalActionPlans: Number(actionPlansCount?.[0]?.count || 0),
       }
     }),
 })
