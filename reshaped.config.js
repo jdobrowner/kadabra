@@ -8,6 +8,7 @@ const config = {
         // Brand colors - override Reshaped's primary colors (dark gray primary for buttons)
         foregroundPrimary: { hex: "#f2efef", hexDark: "#f2efef" }, // Soft white text on dark buttons
         borderPrimary: { hex: "#202020", hexDark: "#ffffff" },
+        borderPrimaryFaded: { hex: "#706e6b", hexDark: "#b5b5b5" }, // Secondary text color for secondary button borders
         backgroundPrimary: { hex: "#202020", hexDark: "#ffffff" }, // Dark gray primary buttons
         backgroundPrimaryFaded: { hex: "#f5f5f5", hexDark: "#2d2d2d" },
         

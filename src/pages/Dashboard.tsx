@@ -4,11 +4,12 @@ import { PageHeader } from '../components/custom/PageHeader'
 import { CustomerCardHorizontal } from '../components/custom/CustomerCardHorizontal'
 import { MiniReminders } from '../components/custom/MiniReminders'
 import { MiniKanban } from '../components/custom/MiniKanban'
+import { SecondaryButton } from '../components/custom/SecondaryButton'
 import { useDashboardStore } from '../store/useDashboardStore'
 import { useCustomersStore } from '../store/useCustomersStore'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useCallback } from 'react'
-import { Lightning } from '@phosphor-icons/react'
+import { Lightning, Plus, ArrowRight } from '@phosphor-icons/react'
 import './Dashboard.css'
 
 export default function Dashboard() {
@@ -39,6 +40,7 @@ export default function Dashboard() {
   
   // Get first 3 customers for preview
   const previewCustomers = customers.slice(0, 3)
+  const remainingCount = Math.max(0, customers.length - 3)
 
   const handleActNow = useCallback((actionPlanId: string, _customerId?: string) => {
     navigate(`/action-plans/${actionPlanId}`)
@@ -76,11 +78,21 @@ export default function Dashboard() {
           <Card padding={6}>
             <View direction="column" gap={4}>
               <View direction="column" gap={2}>
-                <View direction="row" gap={2} align="center">
-                  <div>
-                    <Icon svg={<Lightning weight='fill' />} size={5} />
-                  </div>
-                  <h3 style={{ margin: 0 }}>Customer Triage Leaderboard</h3>
+                <View direction="row" gap={2} align="center" attributes={{ style: { justifyContent: 'space-between', width: '100%' } }}>
+                  <View direction="row" gap={2} align="center">
+                    <div>
+                      <Icon svg={<Lightning weight='fill' />} size={5} />
+                    </div>
+                    <h3 style={{ margin: 0 }}>Customer Triage Leaderboard</h3>
+                  </View>
+                  <Link to="/triage">
+                    <Button variant="ghost" size="small">
+                      <View direction="row" gap={2} align="center">
+                        <Text>View All</Text>
+                        <Icon svg={<ArrowRight weight="bold" />} size={4} />
+                      </View>
+                    </Button>
+                  </Link>
                 </View>
                 <Text variant="body-2" color="neutral-faded">
                   Top 3 to act on today
@@ -106,11 +118,20 @@ export default function Dashboard() {
                 ))}
               </View>
 
-              <Link to="/triage" style={{ width: '100%' }}>
-                <Button attributes={{ style: { width: '100%' } }} size="large" variant="solid" color="primary">
-                  View All →
-                </Button>
-              </Link>
+              {remainingCount > 0 && (
+                <Link to="/triage" style={{ width: '100%' }}>
+                  <SecondaryButton
+                    attributes={{ 
+                      style: { width: '100%' }
+                    }}
+                    size="large"
+                    color="primary"
+                    icon={<Plus weight="bold" />}
+                  >
+                    {remainingCount} more
+                  </SecondaryButton>
+                </Link>
+              )}
             </View>
           </Card>
         </div>

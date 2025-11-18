@@ -144,6 +144,8 @@ body {
   color: var(--rs-color-foreground-primary) !important;
 }
 
+/* Secondary button styling is handled by SecondaryButton component via inline styles */
+
 [data-rs-theme~="kadabra"] button[data-rs-button][data-rs-variant="solid"][class*="--color-primary"] svg,
 [data-rs-theme~="kadabra"] [data-rs-button][data-rs-variant="solid"][class*="--color-primary"] svg,
 [data-rs-theme~="kadabra"] a[data-rs-button][data-rs-variant="solid"][class*="--color-primary"] svg {

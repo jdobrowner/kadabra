@@ -225,8 +225,8 @@
       "hexDark": "#ffffff"
     },
     "borderPrimaryFaded": {
-      "hex": "#dedcfb",
-      "hexDark": "#323164"
+      "hex": "#706e6b",
+      "hexDark": "#b5b5b5"
     },
     "foregroundPrimary": {
       "hex": "#f2efef",
