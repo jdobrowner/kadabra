@@ -2,7 +2,6 @@ import { Container, View, Button, Text } from 'reshaped'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft } from '@phosphor-icons/react'
 import { ConversationTranscript as ConversationTranscriptComponent } from '../components/custom/ConversationTranscript'
-import { ActionPlanCard } from '../components/custom/ActionPlanCard'
 import { useAppStore } from '../store/useAppStore'
 import { useConversationsStore } from '../store/useConversationsStore'
 import { useActionPlansStore } from '../store/useActionPlansStore'
@@ -83,18 +82,6 @@ export default function ConversationTranscript() {
             Back to Conversation History
           </Button>
         </Link>
-
-        {actionPlan && conversation && (
-          <ActionPlanCard
-            actionPlanId={actionPlan.id}
-            customerId={effectiveCustomerId}
-            hasActionPlan={true}
-            status={actionPlan.status as any}
-            aiRecommendation={customer?.actionPlan?.aiRecommendation || actionPlan.recommendation}
-            actionItems={actionPlan.actionItems}
-            createdAt={actionPlan.createdAt}
-          />
-        )}
 
         {conversation && (
           <ConversationTranscriptComponent conversation={{

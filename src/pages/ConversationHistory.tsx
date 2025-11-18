@@ -2,7 +2,6 @@ import { Container, View, Button, Text } from 'reshaped'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft } from '@phosphor-icons/react'
 import { ConversationTimeline } from '../components/custom/ConversationTimeline'
-import { ActionPlanCard } from '../components/custom/ActionPlanCard'
 import { useCustomersStore } from '../store/useCustomersStore'
 import { useActionPlansStore } from '../store/useActionPlansStore'
 import { useConversationsStore } from '../store/useConversationsStore'
@@ -81,18 +80,6 @@ export default function ConversationHistory() {
             Back to Customer
           </Button>
         </Link>
-
-        {actionPlan && customer && (
-          <ActionPlanCard
-            actionPlanId={actionPlan.id}
-            customerId={customer.id}
-            hasActionPlan={true}
-            status={actionPlan.status as any}
-            aiRecommendation={customer.actionPlan?.aiRecommendation || actionPlan.recommendation}
-            actionItems={actionPlan.actionItems}
-            createdAt={actionPlan.createdAt}
-          />
-        )}
 
         {timelineItems.length > 0 ? (
           <ConversationTimeline conversations={timelineItems} customerId={customerId} />
