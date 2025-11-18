@@ -20,12 +20,10 @@
 /* When AI sidebar is present, adjust app-main to account for it */
 .app-layout:has(.app-ai-sidebar:not(.ai-sidebar-collapsed)) .app-main {
   margin-right: 360px;
-  transition: margin-right 0.3s ease-in-out;
 }
 
 .app-layout:has(.app-ai-sidebar.ai-sidebar-collapsed) .app-main {
   margin-right: 62px;
-  transition: margin-right 0.3s ease-in-out;
 }
 
 /* Only apply transitions after initial render */

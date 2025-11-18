@@ -57,7 +57,9 @@ export function CustomerMetadataCard({
         {/* Contact info */}
         {(email || phone) && (
           <View direction="column" gap={2}>
-            <h3 style={{ margin: 0 }}>Contact Info</h3>
+            <Text variant="title-5" weight="bold">
+              Contact Info
+            </Text>
             {email && (
               <View direction="row" gap={2} align="center">
                 <Envelope size={16} />

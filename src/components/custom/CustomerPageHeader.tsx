@@ -8,6 +8,7 @@ export interface CustomerPageHeaderProps {
   companyName: string
   badge: 'at-risk' | 'opportunity' | 'lead' | 'follow-up' | 'no-action'
   avatar: string
+  pageName?: string
 }
 
 function getBadgeColor(badge: CustomerPageHeaderProps['badge']): 'primary' | 'critical' | 'positive' | 'warning' | 'neutral' | null {
@@ -47,7 +48,8 @@ export function CustomerPageHeader({
   name,
   companyName,
   badge,
-  avatar
+  avatar,
+  pageName
 }: CustomerPageHeaderProps) {
   const badgeColor = getBadgeColor(badge)
   const badgeLabel = getBadgeLabel(badge)
@@ -58,7 +60,7 @@ export function CustomerPageHeader({
       <View direction="column" gap={0} attributes={{ style: { flex: 1 } }}>
         <View direction="row" gap={4} align="center" attributes={{ style: { flexWrap: 'wrap' } }}>
           <h1 style={{ margin: 0, fontSize: '32px', fontWeight: 700, lineHeight: '1.2' }}>
-            {name}
+            {pageName ? `${name} • ${pageName}` : name}
           </h1>
           {badgeColor && (
             <CustomBadge color={badgeColor} badgeType={badge}>

@@ -85,7 +85,9 @@ export function ActionPlanCard({
         {/* Left column: Content */}
         <View direction="column" gap={4}>
           <View direction="column" gap={2}>
-            <h3 style={{ margin: 0 }}>Action Plan</h3>
+            <Text variant="title-5" weight="bold">
+              Action Plan
+            </Text>
             {aiRecommendation && (
               <Text variant="body-2">
                 {aiRecommendation}

@@ -173,6 +173,7 @@ export default function CustomerOverview() {
           companyName={customer.companyName}
           badge={(actionPlan?.badge as any) || 'no-action'}
           avatar={customer.avatar}
+          pageName="Customer Overview"
         />
 
         <ActionPlanCard
@@ -200,7 +201,9 @@ export default function CustomerOverview() {
             {/* Header with Stats */}
             <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
               <View direction="column" gap={2}>
-                <h3 style={{ margin: 0 }}>Conversation History</h3>
+                <Text variant="title-5" weight="bold">
+                  Conversation History
+                </Text>
                 {/* Communication Stats */}
                 {customer.communications && customer.communications.length > 0 ? (
                   <CommunicationChannels 
@@ -238,7 +241,7 @@ export default function CustomerOverview() {
               <View direction="column" gap={3} attributes={{ style: { paddingTop: '16px', borderTop: '1px solid var(--rs-color-border-neutral-faded)' } }}>
                 <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
                   <View direction="column" gap={2} attributes={{ style: { flex: 1 } }}>
-                    <Text variant="body-1" color="neutral-faded" weight="medium">
+                    <Text variant="title-5" color="neutral-faded" weight="bold">
                       Most Recent
                     </Text>
                     <Text variant="body-2" color="neutral">

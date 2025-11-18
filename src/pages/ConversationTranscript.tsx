@@ -74,6 +74,7 @@ export default function ConversationTranscript() {
             companyName={customer?.companyName || conversation?.customer?.companyName || ''}
             badge={(actionPlan?.badge as any) || 'no-action'}
             avatar={customer?.avatar || conversation?.customer?.avatar || ''}
+            pageName="Conversation Transcript"
           />
         )}
 
