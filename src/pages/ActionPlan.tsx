@@ -300,27 +300,27 @@ export default function ActionPlan() {
         <View direction="column" gap={4}>
           {/* AI Strategy Recommendation Card */}
           <Card padding={6}>
-            <View direction="column" gap={4}>
-              <View direction="row" gap={2} align="center">
+            <View direction="column" gap={5}>
+              <View direction="row" gap={3} align="center">
                 <Lightbulb size={20} weight="bold" />
                 <Text variant="title-5" weight="bold">
                   AI Strategy Recommendation
                 </Text>
               </View>
               
-              <View direction="column" gap={3}>
-                <View direction="column" gap={1}>
-                  <Text variant="body-1" weight="medium" color="primary">
+              <View direction="column" gap={4}>
+                <View direction="column" gap={2}>
+                  <Text variant="body-1" weight="semibold" color="neutral">
                     {actionPlan.recommendation || actionPlan.whatToDo.substring(0, 100)}
                   </Text>
-                  <Text variant="body-3" color="neutral-faded">
+                  <Text variant="body-2" color="neutral-faded" attributes={{ style: { lineHeight: '1.6' } }}>
                     {actionPlan.whatToDo}
                   </Text>
                 </View>
                 
-                <View direction="column" gap={2}>
-                  <Text variant="body-2" weight="medium">Why this strategy:</Text>
-                  <Text variant="body-3" color="neutral-faded">
+                <View direction="column" gap={2} attributes={{ style: { paddingTop: '8px', borderTop: '1px solid var(--rs-color-border-neutral-faded)' } }}>
+                  <Text variant="body-2" weight="semibold" color="neutral">Why this strategy:</Text>
+                  <Text variant="body-2" color="neutral-faded" attributes={{ style: { lineHeight: '1.6' } }}>
                     {actionPlan.whyStrategy}
                   </Text>
                 </View>
@@ -330,43 +330,45 @@ export default function ActionPlan() {
 
           {/* Board Promotion */}
           <Card padding={6}>
-            <View direction="column" gap={4}>
-              <View direction="row" justify="space-between" align="center">
-                <View direction="column" gap={1}>
+            <View direction="column" gap={5}>
+              <View direction="row" justify="space-between" align="start" wrap>
+                <View direction="column" gap={2} attributes={{ style: { flex: 1, minWidth: 0 } }}>
                   <Text variant="title-5" weight="bold">
                     Board assignment & routing
                   </Text>
-                  <Text variant="caption-1" color="neutral-faded">
+                  <Text variant="body-3" color="neutral-faded">
                     Sync this action plan with the right team board so work can be tracked.
                   </Text>
                 </View>
                 {actionPlan.boardCard && (
-                  <Text variant="caption-1" color="primary">
-                    {actionPlan.boardCard.boardName} → {actionPlan.boardCard.columnName}
-                  </Text>
+                  <View attributes={{ style: { flexShrink: 0 } }}>
+                    <Text variant="body-2" weight="medium" color="primary">
+                      {actionPlan.boardCard.boardName} → {actionPlan.boardCard.columnName}
+                    </Text>
+                  </View>
                 )}
               </View>
 
               {actionPlan.boardCard && (
-                <View direction="row" gap={2} align="center" wrap>
+                <View direction="row" gap={3} align="center" wrap attributes={{ style: { paddingTop: '8px', borderTop: '1px solid var(--rs-color-border-neutral-faded)' } }}>
                   <Link to={`/boards/${actionPlan.boardCard.boardId}`}>
                     <Button size="small" variant="outline">
                       View board
                     </Button>
                   </Link>
-                  <Text variant="caption-1" color="neutral-faded">
+                  <Text variant="body-3" color="neutral-faded">
                     Card status: {actionPlan.boardCard.status === 'done' ? 'Done' : 'Active'}
                   </Text>
                 </View>
               )}
 
-              <View direction="column" gap={3}>
-                <View direction="column" gap={1}>
-                  <Text variant="caption-1" weight="medium">
+              <View direction="column" gap={4} attributes={{ style: { paddingTop: actionPlan.boardCard ? '16px' : '8px', borderTop: actionPlan.boardCard ? '1px solid var(--rs-color-border-neutral-faded)' : 'none' } }}>
+                <View direction="column" gap={2}>
+                  <Text variant="body-2" weight="semibold" color="neutral">
                     Board
                   </Text>
                   {boardsLoading || boards.length === 0 ? (
-                    <Text variant="caption-1" color="neutral-faded">
+                    <Text variant="body-3" color="neutral-faded">
                       {boardsLoading ? 'Loading boards…' : 'No boards available'}
                     </Text>
                   ) : (
@@ -390,23 +392,23 @@ export default function ActionPlan() {
                     </StyledDropdown>
                   )}
                   {selectedBoardMeta && (
-                    <Text variant="caption-1" color="neutral-faded">
+                    <Text variant="body-3" color="neutral-faded">
                       {selectedBoardMeta.cardType.toUpperCase()} •{' '}
                       {selectedBoardMeta.visibility === 'org' ? 'Org-wide' : 'Team only'}
                     </Text>
                   )}
                 </View>
 
-                <View direction="column" gap={1}>
-                  <Text variant="caption-1" weight="medium">
+                <View direction="column" gap={2}>
+                  <Text variant="body-2" weight="semibold" color="neutral">
                     Column
                   </Text>
                   {columnsLoading ? (
-                    <Text variant="caption-1" color="neutral-faded">
+                    <Text variant="body-3" color="neutral-faded">
                       Loading columns…
                     </Text>
                   ) : promotionColumns.length === 0 ? (
-                    <Text variant="caption-1" color="neutral-faded">
+                    <Text variant="body-3" color="neutral-faded">
                       This board has no columns yet. Configure columns in Settings → Boards.
                     </Text>
                   ) : (
@@ -431,8 +433,8 @@ export default function ActionPlan() {
                   )}
                 </View>
 
-                <View direction="column" gap={1}>
-                  <Text variant="caption-1" weight="medium">
+                <View direction="column" gap={2}>
+                  <Text variant="body-2" weight="semibold" color="neutral">
                     Assign team (optional)
                   </Text>
                   <StyledDropdown
@@ -460,12 +462,12 @@ export default function ActionPlan() {
               </View>
 
               {promotionStatus === 'success' && (
-                <Text variant="caption-1" color="positive">
+                <Text variant="body-3" color="positive" weight="medium">
                   Action plan synced with {selectedBoardMeta?.name ?? 'board'} successfully.
                 </Text>
               )}
               {promotionStatus === 'error' && promotionError && (
-                <Text variant="caption-1" color="critical">
+                <Text variant="body-3" color="critical" weight="medium">
                   {promotionError}
                 </Text>
               )}
@@ -490,43 +492,43 @@ export default function ActionPlan() {
 
           {/* Most Recent Call Card */}
           <Card padding={6}>
-            <View direction="column" gap={4}>
-              <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
-                <View direction="row" gap={2} align="center">
+            <View direction="column" gap={5}>
+              <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }} wrap>
+                <View direction="row" gap={3} align="center">
                   <Phone size={20} weight="bold" />
                   <Text variant="title-5" weight="bold">
                     Most Recent Call
                   </Text>
                 </View>
                 {lastConversation && (
-                  <Text variant="caption-1" color="neutral-faded">
+                  <Text variant="body-3" color="neutral-faded">
                     {new Date(lastConversation.date).toLocaleDateString()}, {new Date(lastConversation.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </Text>
                 )}
               </View>
               
               {lastConversation ? (
-                <View direction="column" gap={3}>
-                  <View direction="row" gap={4}>
-                    <View direction="column" gap={1}>
-                      <Text variant="caption-1" color="neutral-faded">Duration</Text>
-                      <Text variant="body-2">{lastConversation.duration ? `${Math.floor(lastConversation.duration / 60)}m ${lastConversation.duration % 60}s` : 'N/A'}</Text>
+                <View direction="column" gap={4}>
+                  <View direction="row" gap={6} wrap>
+                    <View direction="column" gap={2}>
+                      <Text variant="body-3" color="neutral-faded">Duration</Text>
+                      <Text variant="body-2" weight="medium">{lastConversation.duration ? `${Math.floor(lastConversation.duration / 60)}m ${lastConversation.duration % 60}s` : 'N/A'}</Text>
                     </View>
-                    <View direction="column" gap={1}>
-                      <Text variant="caption-1" color="neutral-faded">Caller</Text>
-                      <Text variant="body-2">{customer?.name || 'Unknown'}</Text>
+                    <View direction="column" gap={2}>
+                      <Text variant="body-3" color="neutral-faded">Caller</Text>
+                      <Text variant="body-2" weight="medium">{customer?.name || 'Unknown'}</Text>
                     </View>
-                    <View direction="column" gap={1}>
-                      <Text variant="caption-1" color="neutral-faded">Sentiment</Text>
+                    <View direction="column" gap={2}>
+                      <Text variant="body-3" color="neutral-faded">Sentiment</Text>
                       <CustomBadge color={lastConversation.sentiment === 'negative' ? 'critical' : lastConversation.sentiment === 'positive' ? 'positive' : 'neutral'}>
                         {lastConversation.sentiment || 'Neutral'}
                       </CustomBadge>
                     </View>
                   </View>
                   
-                  <View direction="column" gap={2}>
-                    <Text variant="body-2" weight="medium">Call Summary:</Text>
-                    <Text variant="body-3" color="neutral-faded">
+                  <View direction="column" gap={2} attributes={{ style: { paddingTop: '8px', borderTop: '1px solid var(--rs-color-border-neutral-faded)' } }}>
+                    <Text variant="body-2" weight="semibold" color="neutral">Call Summary:</Text>
+                    <Text variant="body-2" color="neutral-faded" attributes={{ style: { lineHeight: '1.6' } }}>
                       {lastConversation.summary || 'No summary available'}
                     </Text>
                   </View>
@@ -550,27 +552,27 @@ export default function ActionPlan() {
 
           {/* Call Back Card */}
           <Card padding={6}>
-            <View direction="column" gap={4}>
-              <View direction="row" gap={2} align="center">
+            <View direction="column" gap={5}>
+              <View direction="row" gap={3} align="center">
                 <Phone size={20} weight="bold" />
                 <Text variant="title-5" weight="bold">
                   Call Back
                 </Text>
               </View>
               
-              <View direction="column" gap={3}>
-                <Text variant="body-2" weight="medium">Conversation Outline:</Text>
-                <View direction="column" gap={3}>
+              <View direction="column" gap={4}>
+                <Text variant="body-2" weight="semibold" color="neutral">Conversation Outline:</Text>
+                <View direction="column" gap={4}>
                   {actionPlan.actionItems && actionPlan.actionItems.length > 0 ? (
                     actionPlan.actionItems.map((item, index) => (
-                      <View key={item.id} direction="row" gap={3} align="start">
-                        <Text variant="body-2" weight="bold" color="primary">
+                      <View key={item.id} direction="row" gap={3} align="start" attributes={{ style: { paddingTop: index > 0 ? '12px' : '0', borderTop: index > 0 ? '1px solid var(--rs-color-border-neutral-faded)' : 'none' } }}>
+                        <Text variant="body-2" weight="bold" color="primary" attributes={{ style: { flexShrink: 0, marginTop: '2px' } }}>
                           {index + 1}.
                         </Text>
-                        <View direction="column" gap={2} attributes={{ style: { flex: 1 } }}>
-                          <View direction="column" gap={1}>
-                            <Text variant="body-2">{item.title}</Text>
-                            <Text variant="body-3" color="neutral-faded">{item.description}</Text>
+                        <View direction="column" gap={3} attributes={{ style: { flex: 1 } }}>
+                          <View direction="column" gap={2}>
+                            <Text variant="body-2" weight="medium">{item.title}</Text>
+                            <Text variant="body-2" color="neutral-faded" attributes={{ style: { lineHeight: '1.6' } }}>{item.description}</Text>
                           </View>
                           <Button
                             size="small"
@@ -587,12 +589,12 @@ export default function ActionPlan() {
                       </View>
                     ))
                   ) : (
-                    <Text variant="body-3" color="neutral-faded">No action items defined</Text>
+                    <Text variant="body-2" color="neutral-faded">No action items defined</Text>
                   )}
                 </View>
               </View>
               
-              <View direction="row" gap={2}>
+              <View direction="row" gap={2} attributes={{ style: { paddingTop: '8px', borderTop: '1px solid var(--rs-color-border-neutral-faded)' } }}>
                 <Button size="small" variant="outline" icon={<Copy />} onClick={handleCopyOutline}>
                   {copied ? 'Copied!' : 'Copy'}
                 </Button>
@@ -605,46 +607,50 @@ export default function ActionPlan() {
 
           {/* Create Case Card */}
           <Card padding={6}>
-            <View direction="column" gap={4}>
-              <View direction="row" gap={2} align="center">
+            <View direction="column" gap={5}>
+              <View direction="row" gap={3} align="center">
                 <Plus size={20} weight="bold" />
                 <Text variant="title-5" weight="bold">
                   Create Case
                 </Text>
               </View>
               
-              <View direction="column" gap={3}>
-                <View direction="column" gap={1}>
-                  <Text variant="caption-1" color="neutral-faded">Contact</Text>
-                  <Text variant="body-2">{customer?.name || 'N/A'}</Text>
+              <View direction="column" gap={4}>
+                <View direction="row" gap={6} wrap>
+                  <View direction="column" gap={2} attributes={{ style: { flex: '1 1 200px' } }}>
+                    <Text variant="body-3" color="neutral-faded">Contact</Text>
+                    <Text variant="body-2" weight="medium">{customer?.name || 'N/A'}</Text>
+                  </View>
+                  <View direction="column" gap={2} attributes={{ style: { flex: '1 1 200px' } }}>
+                    <Text variant="body-3" color="neutral-faded">Account</Text>
+                    <Text variant="body-2" weight="medium">{customer?.companyName || 'N/A'}</Text>
+                  </View>
                 </View>
-                <View direction="column" gap={1}>
-                  <Text variant="caption-1" color="neutral-faded">Account</Text>
-                  <Text variant="body-2">{customer?.companyName || 'N/A'}</Text>
+                <View direction="column" gap={2}>
+                  <Text variant="body-3" color="neutral-faded">Subject</Text>
+                  <Text variant="body-2" weight="medium">Follow-up on service concerns</Text>
                 </View>
-                <View direction="column" gap={1}>
-                  <Text variant="caption-1" color="neutral-faded">Subject</Text>
-                  <Text variant="body-2">Follow-up on service concerns</Text>
-                </View>
-                <View direction="column" gap={1}>
-                  <Text variant="caption-1" color="neutral-faded">Description</Text>
-                  <Text variant="body-3" color="neutral-faded">
+                <View direction="column" gap={2}>
+                  <Text variant="body-3" color="neutral-faded">Description</Text>
+                  <Text variant="body-2" color="neutral-faded" attributes={{ style: { lineHeight: '1.6' } }}>
                     {lastConversation?.summary || actionPlan.whyStrategy || 'Customer requires follow-up based on recent interactions.'}
                   </Text>
                 </View>
-                <View direction="column" gap={1}>
-                  <Text variant="caption-1" color="neutral-faded">Priority</Text>
-                  <CustomBadge color={actionPlan.badge === 'at-risk' ? 'critical' : 'warning'}>
-                    High
-                  </CustomBadge>
-                </View>
-                <View direction="column" gap={1}>
-                  <Text variant="caption-1" color="neutral-faded">Origin</Text>
-                  <Text variant="body-2">Phone (Mindi)</Text>
+                <View direction="row" gap={6} wrap>
+                  <View direction="column" gap={2}>
+                    <Text variant="body-3" color="neutral-faded">Priority</Text>
+                    <CustomBadge color={actionPlan.badge === 'at-risk' ? 'critical' : 'warning'}>
+                      High
+                    </CustomBadge>
+                  </View>
+                  <View direction="column" gap={2}>
+                    <Text variant="body-3" color="neutral-faded">Origin</Text>
+                    <Text variant="body-2" weight="medium">Phone (Mindi)</Text>
+                  </View>
                 </View>
               </View>
               
-              <Button icon={<CheckCircle />}>
+              <Button icon={<CheckCircle />} attributes={{ style: { marginTop: '8px' } }}>
                 ✓ Create Case
               </Button>
             </View>
@@ -653,30 +659,33 @@ export default function ActionPlan() {
 
         {/* Action Status Bar */}
         <Card padding={6}>
-          <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
-            <View direction="column" gap={1}>
+          <View direction="row" gap={4} align="center" attributes={{ style: { justifyContent: 'space-between' } }} wrap>
+            <View direction="column" gap={2} attributes={{ style: { flex: 1, minWidth: 0 } }}>
               <Text variant="title-5" weight="bold">Action Status</Text>
-              <Text variant="body-3" color="neutral-faded">
+              <Text variant="body-2" color="neutral-faded">
                 Complete this action to move to the next customer interaction
               </Text>
             </View>
-            {(actionPlan.status === 'active' || actionPlan.status === 'completed') && (
-              <Button 
-                onClick={actionPlan.status === 'completed' ? handleMarkIncomplete : handleMarkComplete}
-                disabled={isUpdatingStatus}
-                icon={<CheckCircle />}
-                variant={actionPlan.status === 'completed' ? 'outline' : undefined}
-              >
-                {isUpdatingStatus
-                  ? 'Updating...'
-                  : actionPlan.status === 'completed'
-                    ? 'Mark Action as Incomplete'
-                    : '✓ Mark Action as Complete'}
-              </Button>
-            )}
-            {actionPlan.status === 'completed' && !isUpdatingStatus && (
-              <CustomBadge color="positive">Completed</CustomBadge>
-            )}
+            <View direction="row" gap={3} align="center" attributes={{ style: { flexShrink: 0 } }}>
+              {actionPlan.status === 'completed' && !isUpdatingStatus && (
+                <CustomBadge color="positive">Completed</CustomBadge>
+              )}
+              {(actionPlan.status === 'active' || actionPlan.status === 'completed') && (
+                <Button 
+                  onClick={actionPlan.status === 'completed' ? handleMarkIncomplete : handleMarkComplete}
+                  disabled={isUpdatingStatus}
+                  icon={<CheckCircle />}
+                  variant={actionPlan.status === 'completed' ? 'outline' : undefined}
+                  color={actionPlan.status === 'active' ? 'positive' : undefined}
+                >
+                  {isUpdatingStatus
+                    ? 'Updating...'
+                    : actionPlan.status === 'completed'
+                      ? 'Mark Action as Incomplete'
+                      : '✓ Mark Action as Complete'}
+                </Button>
+              )}
+            </View>
           </View>
         </Card>
       </View>
