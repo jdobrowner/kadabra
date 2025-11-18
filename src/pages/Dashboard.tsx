@@ -89,7 +89,7 @@ export default function Dashboard() {
                     <div>
                       <Icon svg={<Lightning weight='fill' />} size={5} />
                     </div>
-                    <h3 style={{ margin: 0 }}>Customer Triage Leaderboard</h3>
+                    <h3 style={{ margin: 0, fontSize: '22px' }}>Customer Triage Leaderboard</h3>
                   </View>
                   <Link to="/triage">
                     <GhostButton>
