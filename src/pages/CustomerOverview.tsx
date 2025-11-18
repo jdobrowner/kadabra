@@ -5,6 +5,7 @@ import { CustomerMetadataCard } from '../components/custom/CustomerMetadataCard'
 import { ActionPlanCard } from '../components/custom/ActionPlanCard'
 import { Card, Text, Icon } from 'reshaped'
 import { CustomButton } from '../components/custom/CustomButton'
+import { CustomBadge } from '../components/custom/Badge'
 import { formatRelativeTime } from '../utils/formatTime'
 import { useAppStore } from '../store/useAppStore'
 import { useCustomersStore } from '../store/useCustomersStore'
@@ -238,13 +239,13 @@ export default function CustomerOverview() {
 
             {/* Most Recent Conversation */}
             {mostRecentConversation && customer.lastCommunication && (
-              <View direction="column" gap={3} attributes={{ style: { paddingTop: '16px', borderTop: '1px solid var(--rs-color-border-neutral-faded)' } }}>
-                <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
-                  <View direction="column" gap={2} attributes={{ style: { flex: 1 } }}>
+              <View direction="column" gap={4} attributes={{ style: { paddingTop: '16px', borderTop: '1px solid var(--rs-color-border-neutral-faded)' } }}>
+                <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }} wrap>
+                  <View direction="column" gap={2} attributes={{ style: { flex: 1, minWidth: 0 } }}>
                     <Text variant="title-5" color="neutral-faded" weight="bold">
                       Most Recent
                     </Text>
-                    <Text variant="body-2" color="neutral">
+                    <Text variant="body-2" color="neutral" weight="medium">
                       {customer.lastCommunication.topic || customer.lastCommunication.longTopic}
                     </Text>
                     <View direction="row" gap={2} align="center" attributes={{ style: { flexWrap: 'wrap' } }}>
@@ -255,11 +256,11 @@ export default function CustomerOverview() {
                             style: { color: 'var(--rs-color-foreground-neutral-faded)' } 
                           }} 
                         />
-                        <Text variant="body-2" color="neutral-faded">
+                        <Text variant="body-3" color="neutral-faded">
                           {formatRelativeTime(customer.lastCommunication.time)}
                         </Text>
                       </View>
-                      <Text variant="body-2" color="neutral-faded">•</Text>
+                      <Text variant="body-3" color="neutral-faded">•</Text>
                       <View direction="row" gap={1} align="center">
                         {(() => {
                           const channelType = mostRecentConversation.channel as Communication['type']
@@ -285,7 +286,7 @@ export default function CustomerOverview() {
                                   style: { color: 'var(--rs-color-foreground-neutral-faded)' } 
                                 }} 
                               />
-                              <Text variant="body-2" color="neutral-faded">
+                              <Text variant="body-3" color="neutral-faded">
                                 {channelLabel}
                               </Text>
                             </>
@@ -303,6 +304,47 @@ export default function CustomerOverview() {
                     </CustomButton>
                   </Link>
                 </View>
+
+                {/* Additional Details */}
+                {(mostRecentConversation.duration || mostRecentConversation.sentiment || mostRecentConversation.summary) && (
+                  <View direction="column" gap={4}>
+                    {(mostRecentConversation.duration || mostRecentConversation.sentiment) && (
+                      <View direction="row" gap={6} wrap>
+                        {mostRecentConversation.duration && (
+                          <View direction="column" gap={2}>
+                            <Text variant="body-3" color="neutral-faded">Duration</Text>
+                            <Text variant="body-2" weight="medium">
+                              {`${Math.floor(mostRecentConversation.duration / 60)}m ${mostRecentConversation.duration % 60}s`}
+                            </Text>
+                          </View>
+                        )}
+                        {mostRecentConversation.sentiment && (
+                          <View direction="column" gap={2}>
+                            <Text variant="body-3" color="neutral-faded">Sentiment</Text>
+                            <CustomBadge 
+                              color={
+                                mostRecentConversation.sentiment === 'negative' ? 'critical' : 
+                                mostRecentConversation.sentiment === 'positive' ? 'positive' : 
+                                'neutral'
+                              }
+                            >
+                              {mostRecentConversation.sentiment || 'Neutral'}
+                            </CustomBadge>
+                          </View>
+                        )}
+                      </View>
+                    )}
+                    
+                    {mostRecentConversation.summary && (
+                      <View direction="column" gap={2} attributes={{ style: { paddingTop: mostRecentConversation.duration || mostRecentConversation.sentiment ? '8px' : '0', borderTop: (mostRecentConversation.duration || mostRecentConversation.sentiment) ? '1px solid var(--rs-color-border-neutral-faded)' : 'none' } }}>
+                        <Text variant="body-2" weight="semibold" color="neutral">Summary:</Text>
+                        <Text variant="body-2" color="neutral-faded" attributes={{ style: { lineHeight: '1.6' } }}>
+                          {mostRecentConversation.summary}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                )}
               </View>
             )}
           </View>
