@@ -15,7 +15,7 @@ export interface CustomerMetadataCardProps {
 export function CustomerMetadataCard({
   id: _id, // eslint-disable-line @typescript-eslint/no-unused-vars
   name: _name, // eslint-disable-line @typescript-eslint/no-unused-vars
-  companyName,
+  companyName: _companyName, // eslint-disable-line @typescript-eslint/no-unused-vars
   email,
   phone,
   badge: _badge, // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -54,20 +54,10 @@ export function CustomerMetadataCard({
       </View>
 
       <View direction="column" gap={4}>
-        {/* Company name with label */}
-        <View direction="column" gap={1}>
-          <Text variant="body-2" color="neutral-faded" weight="medium">
-            Company
-          </Text>
-          <Text variant="body-2">{companyName}</Text>
-        </View>
-
         {/* Contact info */}
         {(email || phone) && (
           <View direction="column" gap={2}>
-            <Text variant="body-2" color="neutral-faded" weight="medium">
-              Contact Info
-            </Text>
+            <h3 style={{ margin: 0 }}>Contact Info</h3>
             {email && (
               <View direction="row" gap={2} align="center">
                 <Envelope size={16} />

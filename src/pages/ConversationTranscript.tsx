@@ -71,6 +71,7 @@ export default function ConversationTranscript() {
           <CustomerPageHeader
             customerId={customer?.id || conversation?.customer?.id || ''}
             name={customer?.name || conversation?.customer?.name || ''}
+            companyName={customer?.companyName || conversation?.customer?.companyName || ''}
             badge={(actionPlan?.badge as any) || 'no-action'}
             avatar={customer?.avatar || conversation?.customer?.avatar || ''}
           />
