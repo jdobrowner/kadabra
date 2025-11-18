@@ -110,7 +110,7 @@ export function Sidebar() {
 
   const navItems: NavItem[] = [
     { path: '/triage', icon: <Lightning weight="bold" size={20} />, label: 'Triage' },
-    { path: '/search', icon: <ListMagnifyingGlass weight="bold" size={20} />, label: 'Search' },
+    { path: '/history', icon: <ListMagnifyingGlass weight="bold" size={20} />, label: 'History' },
     { path: '/boards', icon: <ChalkboardSimple weight="bold" size={20} />, label: 'Boards' },
     { path: '/reminders', icon: <Alarm weight="bold" size={20} />, label: 'Reminders' },
     ...(isDeveloperOrAdmin

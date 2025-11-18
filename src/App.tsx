@@ -100,7 +100,7 @@ function AppContent() {
             <ConversationTranscript />
           </ProtectedRoute>
         } />
-        <Route path="/search" element={
+        <Route path="/history" element={
           <ProtectedRoute>
             <HistoricSearch />
           </ProtectedRoute>

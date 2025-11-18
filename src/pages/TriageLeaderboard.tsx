@@ -57,8 +57,19 @@ export default function TriageLeaderboard() {
           onClear={handleClearFilters}
         />
 
-        <Grid columns={{ s: 1, m: 2, l: 3 }} gap={4} attributes={{ style: { alignItems: 'stretch' } }}>
-              {customers.map(customer => (
+        <Grid 
+          columns={{ s: 1, m: 2, l: 3 }} 
+          gap={4} 
+          attributes={{ 
+            style: { 
+              alignItems: 'stretch',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))'
+            } 
+          }}
+        >
+              {customers
+                .filter(customer => customer.actionPlan?.id) // Only show customers with action plans
+                .map(customer => (
                 <div
                   key={customer.id}
                   onClick={() => handleCustomerClick(customer.id)}
@@ -81,7 +92,7 @@ export default function TriageLeaderboard() {
               ))}
             </Grid>
 
-            {customers && customers.length === 0 && (
+            {customers.filter(customer => customer.actionPlan?.id).length === 0 && (
               <View attributes={{ style: { textAlign: 'center', padding: '40px' } }}>
                 <Text color="neutral-faded">No customers found matching your filters.</Text>
               </View>

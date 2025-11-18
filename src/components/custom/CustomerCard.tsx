@@ -84,10 +84,20 @@ export function CustomerCard({
         gap={4} 
         attributes={{ style: { height: '100%', display: 'flex', flexDirection: 'column' } }}
       >
-        <View direction="row" gap={4} align="start" attributes={{ style: { justifyContent: 'space-between', alignItems: 'flex-start' } }}>
-          <View direction="row" gap={3} align="center" attributes={{ style: { flex: 1, minWidth: 0 } }}>
+        <View 
+          direction="row" 
+          gap={4} 
+          align="start" 
+          attributes={{ 
+            style: { 
+              position: 'relative',
+              width: '100%'
+            } 
+          }}
+        >
+          <View direction="row" gap={3} align="center" attributes={{ style: { flex: 1, minWidth: 0, width: '100%' } }}>
             <AvatarWithInitials src={avatar} alt={name} name={name} size={14} />
-            <View direction="column" gap={1}>
+            <View direction="column" gap={1} attributes={{ style: { flex: 1, minWidth: 0 } }}>
               <Text variant="title-5">
                 {name}
               </Text>
@@ -98,10 +108,17 @@ export function CustomerCard({
           </View>
           
           {badgeColor && badge !== 'no-action' && (
-            <View attributes={{ style: { flexShrink: 0, marginLeft: '8px' } }}>
-            <CustomBadge color={badgeColor} badgeType={badge}>
-              {badgeLabel}
-            </CustomBadge>
+            <View attributes={{ 
+              style: { 
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                zIndex: 10
+              } 
+            }}>
+              <CustomBadge color={badgeColor} badgeType={badge}>
+                {badgeLabel}
+              </CustomBadge>
             </View>
           )}
         </View>
