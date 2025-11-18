@@ -75,16 +75,18 @@ export function MiniReminders({ onReminderClick }: MiniRemindersProps) {
   return (
     <Card padding={6}>
       <View direction="column" gap={4}>
-        <View direction="row" gap={2} align="center">
-          <Alarm size={20} weight="bold" />
-          <Text variant="title-4" weight="bold">
-            Upcoming Reminders
-          </Text>
+        <View direction="column" gap={2}>
+          <View direction="row" gap={2} align="center">
+            <div>
+              <Icon svg={<Alarm weight="bold" size={20} />} size={5} />
+            </div>
+            <h3 style={{ margin: 0, fontSize: '20px' }}>Upcoming Reminders</h3>
+          </View>
         </View>
 
         {displayReminders.length === 0 ? (
           <Text variant="body-2" color="neutral-faded">
-            No upcoming reminders
+            No reminders scheduled
           </Text>
         ) : (
           <View direction="column" gap={0}>
