@@ -82,7 +82,7 @@ function SidebarNavButton({ icon, label, isOpen, isActive, onClick, ariaLabel }:
 }
 
 export function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
   const [hasRendered, setHasRendered] = useState(false)
   const [showPanelToggle, setShowPanelToggle] = useState(false)
   const navigate = useNavigate()
@@ -258,12 +258,11 @@ export function Sidebar() {
             {isOpen && (
               <Text
                 variant="body-2"
-                weight="medium"
                 attributes={{
                   style: {
                     fontFamily: '"Courier New", monospace',
                     fontSize: '22px',
-                    fontWeight: 600,
+                    fontWeight: '600',
                     color: '#202020',
                     marginLeft: '-8px',
                   },
