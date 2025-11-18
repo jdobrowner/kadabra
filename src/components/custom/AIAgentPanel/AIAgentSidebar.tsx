@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { View, Text } from 'reshaped'
 import { useAppStore } from '../../../store/useAppStore'
@@ -24,6 +24,10 @@ export function AIAgentSidebar() {
   const activeCustomerId = useAppStore((state) => state.activeCustomerId)
   const customers = useCustomersStore((state) => state.customers)
   const currentCustomer = useCustomersStore((state) => state.currentCustomer)
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    const saved = localStorage.getItem('ai-agent-panel-collapsed')
+    return saved === 'true'
+  })
 
   const isCustomerContext = isCustomerContextPath(location.pathname)
   const derivedCustomerId =
@@ -42,13 +46,12 @@ export function AIAgentSidebar() {
   }
 
   return (
-    <div className="app-ai-sidebar">
-      <View direction="column" gap={3}>
-        <Text variant="caption-1" color="neutral-faded">
-          AI Assistant
-        </Text>
-        <AIAgentPanel customerId={derivedCustomerId} customerName={customerName} />
-      </View>
+    <div className={`app-ai-sidebar ${isCollapsed ? 'ai-sidebar-collapsed' : ''}`}>
+      <AIAgentPanel 
+        customerId={derivedCustomerId} 
+        customerName={customerName}
+        onCollapseChange={setIsCollapsed}
+      />
     </div>
   )
 }

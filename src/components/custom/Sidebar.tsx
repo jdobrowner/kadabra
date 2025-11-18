@@ -331,7 +331,7 @@ export function Sidebar() {
                 attributes={{
                   style: {
                     fontFamily: '"Courier New", monospace',
-                    fontSize: '22px',
+                    fontSize: '20px',
                     fontWeight: '600',
                     color: '#202020',
                     marginLeft: '-8px',

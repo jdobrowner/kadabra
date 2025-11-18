@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Card, View, Text, Button, Icon, Loader, TextArea, DropdownMenu } from 'reshaped'
-import { Plus, Trash, PaperPlaneTilt } from '@phosphor-icons/react'
+import { Card, View, Text, Button, Icon, Loader, TextArea } from 'reshaped'
+import { Plus, PaperPlaneTilt, X, CaretLeft, CaretRight } from '@phosphor-icons/react'
 import { useAiAgentStore } from '../../../store/useAIAgentStore'
 import { formatRelativeTime } from '../../../utils/formatTime'
 import './AIAgentPanel.css'
@@ -9,9 +9,10 @@ interface AIAgentPanelProps {
   customerId: string
   customerName?: string
   className?: string
+  onCollapseChange?: (isCollapsed: boolean) => void
 }
 
-export function AIAgentPanel({ customerId, customerName, className }: AIAgentPanelProps) {
+export function AIAgentPanel({ customerId, customerName, className, onCollapseChange }: AIAgentPanelProps) {
   const {
     chats,
     chatsLoading,
@@ -33,6 +34,14 @@ export function AIAgentPanel({ customerId, customerName, className }: AIAgentPan
   const [localError, setLocalError] = useState<string | null>(null)
   const [creating, setCreating] = useState(false)
   const [deletingChatId, setDeletingChatId] = useState<string | null>(null)
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    const saved = localStorage.getItem('ai-agent-panel-collapsed')
+    return saved === 'true'
+  })
+
+  useEffect(() => {
+    onCollapseChange?.(isCollapsed)
+  }, [isCollapsed, onCollapseChange])
 
   useEffect(() => {
     let isMounted = true
@@ -148,45 +157,72 @@ export function AIAgentPanel({ customerId, customerName, className }: AIAgentPan
     setComposerValue(value ?? '')
   }
 
+  const handleToggleCollapse = useCallback(() => {
+    const newCollapsed = !isCollapsed
+    setIsCollapsed(newCollapsed)
+    localStorage.setItem('ai-agent-panel-collapsed', String(newCollapsed))
+    onCollapseChange?.(newCollapsed)
+  }, [isCollapsed, onCollapseChange])
+
   const panelClasses = className ? `ai-agent-panel ${className}` : 'ai-agent-panel'
   const shouldShowEmptyState = chats.length === 0
 
   return (
-    <Card padding={4} className={panelClasses}>
-      <View direction="column" gap={4} attributes={{ style: { flex: 1, minHeight: 0 } }}>
-        <View direction="row" justify="space-between" align="center">
-          <View direction="column" gap={1}>
-            <Text variant="title-6" weight="medium">
-              AI Assistant
-            </Text>
-            <Text variant="caption-1" color="neutral-faded">
-              {customerName ? `Focused on ${customerName}` : 'Customer insights and next steps'}
-            </Text>
-          </View>
+    <>
+      <View direction="row" justify="space-between" align="center" className="ai-agent-panel__header">
+        {!isCollapsed && (
+          <>
+            <View direction="row" align="center" gap={3} attributes={{ style: { flex: 1 } }}>
+              <Button
+                variant="ghost"
+                size="small"
+                icon={<CaretLeft weight="bold" />}
+                onClick={handleToggleCollapse}
+                attributes={{ style: { flexShrink: 0 } }}
+              />
+              <Text variant="caption-1" color="neutral-faded">
+                {customerName ? `Focused on ${customerName}` : 'Customer insights and next steps'}
+              </Text>
+            </View>
+            <Button
+              size="small"
+              variant="outline"
+              icon={<Plus weight="bold" />}
+              loading={creating}
+              onClick={handleCreateChat}
+              attributes={{ style: { flexShrink: 0 } }}
+            >
+              New Chat
+            </Button>
+          </>
+        )}
+        {isCollapsed && (
           <Button
+            variant="ghost"
             size="small"
-            variant="outline"
-            icon={<Plus weight="bold" />}
-            loading={creating}
-            onClick={handleCreateChat}
-          >
-            New Chat
-          </Button>
-        </View>
-
-        {localError && (
-          <Text variant="caption-1" color="critical">
-            {localError}
-          </Text>
+            icon={<CaretRight weight="bold" />}
+            onClick={handleToggleCollapse}
+            attributes={{ style: { flexShrink: 0 } }}
+          />
         )}
+      </View>
 
-        {chatsError && (
-          <Text variant="caption-1" color="critical">
-            {chatsError.message}
-          </Text>
-        )}
+      {!isCollapsed && (
+        <Card padding={4} className={panelClasses}>
+          <View direction="column" gap={4} attributes={{ style: { flex: 1, minHeight: 0 } }}>
+            {localError && (
+              <Text variant="caption-1" color="critical">
+                {localError}
+              </Text>
+            )}
 
-        <View className="ai-agent-panel__body" attributes={{ style: { flex: 1, minHeight: 0 } }}>
+            {chatsError && (
+              <Text variant="caption-1" color="critical">
+                {chatsError.message}
+              </Text>
+            )}
+
+            <View className="ai-agent-panel__body" attributes={{ style: { flex: 1, minHeight: 0 } }}>
           <View className="ai-agent-panel__list">
             <Text variant="body-3" weight="medium">
               Chats
@@ -215,52 +251,45 @@ export function AIAgentPanel({ customerId, customerName, className }: AIAgentPan
               {chats.map((chat) => (
                 <View
                   key={chat.id}
-                  direction="column"
-                  gap={1}
+                  direction="row"
+                  align="center"
+                  justify="space-between"
+                  gap={2}
                   className={`ai-agent-panel__chat${chat.id === activeChatId ? ' is-active' : ''}`}
                   attributes={{
                     onClick: () => handleSelectChat(chat.id),
                     style: { cursor: 'pointer' },
                   }}
                 >
-                  <View direction="row" justify="space-between" align="center">
-                    <Text variant="body-3" weight="medium" attributes={{ style: { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' } }}>
-                      {chat.title}
-                    </Text>
-                    <DropdownMenu position="bottom-end">
-                      <DropdownMenu.Trigger>
-                        {(attrs) => (
-                          <Button
-                            {...attrs}
-                            variant="ghost"
-                            icon={<Trash size={16} />}
-                            size="small"
-                            onClick={(event) => event.stopPropagation()}
-                            loading={deletingChatId === chat.id}
-                          />
-                        )}
-                      </DropdownMenu.Trigger>
-                      <DropdownMenu.Content>
-                        <DropdownMenu.Item
-                          onClick={(event) => {
-                            event.stopPropagation()
-                            handleDeleteChat(chat.id)
-                          }}
-                        >
-                          <View direction="row" gap={2} align="center">
-                            <Icon svg={<Trash weight="bold" />} size={4} />
-                            <Text>Delete chat</Text>
-                          </View>
-                        </DropdownMenu.Item>
-                      </DropdownMenu.Content>
-                    </DropdownMenu>
-                  </View>
-                  <Text variant="caption-1" color="neutral-faded">
-                    {chat.messageCount > 0 ? `${chat.messageCount} messages` : 'No messages yet'}
+                  <Text 
+                    variant="caption-1" 
+                    weight="medium" 
+                    attributes={{ 
+                      style: { 
+                        overflow: 'hidden', 
+                        textOverflow: 'ellipsis', 
+                        whiteSpace: 'nowrap',
+                        flex: 1,
+                        fontSize: '12px',
+                        lineHeight: '16px'
+                      } 
+                    }}
+                  >
+                    {chat.title}
                   </Text>
-                  <Text variant="caption-1" color="neutral-faded">
-                    Updated {formatRelativeTime(chat.lastMessageAt)}
-                  </Text>
+                  <Button
+                    variant="ghost"
+                    icon={<X size={14} weight="bold" />}
+                    size="small"
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      handleDeleteChat(chat.id)
+                    }}
+                    loading={deletingChatId === chat.id}
+                    attributes={{
+                      style: { flexShrink: 0, padding: '2px' }
+                    }}
+                  />
                 </View>
               ))}
             </View>
@@ -329,7 +358,7 @@ export function AIAgentPanel({ customerId, customerName, className }: AIAgentPan
                 </View>
 
                 <form className="ai-agent-panel__composer" onSubmit={handleSendMessage}>
-                  <View direction="column" gap={2}>
+                  <View className="ai-agent-panel__composer-wrapper">
                     <TextArea
                       name="ai-assistant-input"
                       placeholder="Ask a question about this customer..."
@@ -338,23 +367,17 @@ export function AIAgentPanel({ customerId, customerName, className }: AIAgentPan
                       disabled={sendingMessage}
                       inputAttributes={{
                         rows: 2,
-                        style: { resize: 'vertical' },
+                        style: { resize: 'vertical', paddingRight: '48px' },
                       }}
                     />
-                    <View direction="row" justify="space-between" align="center">
-                      <Text variant="caption-1" color="neutral-faded">
-                        Responses use the latest customer context.
-                      </Text>
-                      <Button
-                        type="submit"
-                        variant="solid"
-                        icon={<PaperPlaneTilt weight="bold" />}
-                        disabled={sendingMessage || !composerValue.trim()}
-                        loading={sendingMessage}
-                      >
-                        Send
-                      </Button>
-                    </View>
+                    <Button
+                      type="submit"
+                      variant="ghost"
+                      icon={<PaperPlaneTilt weight="bold" />}
+                      disabled={sendingMessage || !composerValue.trim()}
+                      loading={sendingMessage}
+                      className="ai-agent-panel__send-button"
+                    />
                   </View>
                 </form>
               </>
@@ -363,6 +386,8 @@ export function AIAgentPanel({ customerId, customerName, className }: AIAgentPan
         </View>
       </View>
     </Card>
+      )}
+    </>
   )
 }
 

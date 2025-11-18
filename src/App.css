@@ -48,12 +48,43 @@
   width: 360px;
   flex-shrink: 0;
   padding: 48px 32px 48px 32px;
-  border-left: 1px solid var(--rs-color-border-neutral-faded);
-  background: transparent;
+  background: var(--rs-color-background-neutral-faded);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  position: fixed;
+  right: 0;
+  top: var(--header-height, 64px);
+  bottom: 0;
+  transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.app-ai-sidebar.ai-sidebar-collapsed {
+  width: 62px;
+  padding: 48px 8px;
+}
+
+.app-ai-sidebar.ai-sidebar-collapsed .ai-agent-panel__header {
+  justify-content: center;
+}
+
+/* AI sidebar border - matches sidebar style */
+.app-ai-sidebar::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 28px;
+  bottom: 28px;
+  width: 1px;
+  background-color: var(--rs-color-border-neutral);
+  pointer-events: none;
+}
+
+/* Dark mode: use faded border color */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .app-ai-sidebar::before {
+  background-color: var(--rs-color-border-neutral-faded);
 }
 
 .app-ai-sidebar > .rs-view {
