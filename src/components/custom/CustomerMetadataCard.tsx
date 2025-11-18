@@ -1,6 +1,6 @@
-import { Card, Text, View } from 'reshaped'
-import { Phone, Envelope } from '@phosphor-icons/react'
-import { formatRelativeTime } from '../../utils/formatTime'
+import { Card, Text, View, Button, Icon } from 'reshaped'
+import { Phone, Envelope, DotsThree } from '@phosphor-icons/react'
+import { CustomBadge } from './Badge'
 
 export interface CustomerMetadataCardProps {
   id: string
@@ -10,36 +10,64 @@ export interface CustomerMetadataCardProps {
   phone?: string
   badge: 'at-risk' | 'opportunity' | 'lead' | 'follow-up' | 'no-action'
   avatar: string
-  riskScore?: number
-  opportunityScore?: number
-  totalConversations?: number
-  totalTasks?: number
-  totalActionPlans?: number
-  createdAt?: string
-  updatedAt?: string
 }
 
 export function CustomerMetadataCard({
   id: _id, // eslint-disable-line @typescript-eslint/no-unused-vars
   name: _name, // eslint-disable-line @typescript-eslint/no-unused-vars
-  companyName: _companyName, // eslint-disable-line @typescript-eslint/no-unused-vars
+  companyName,
   email,
   phone,
   badge: _badge, // eslint-disable-line @typescript-eslint/no-unused-vars
-  avatar: _avatar, // eslint-disable-line @typescript-eslint/no-unused-vars
-  riskScore,
-  opportunityScore,
-  totalConversations,
-  totalTasks,
-  totalActionPlans,
-  createdAt,
-  updatedAt
+  avatar: _avatar // eslint-disable-line @typescript-eslint/no-unused-vars
 }: CustomerMetadataCardProps) {
   return (
-    <Card padding={6}>
+    <Card padding={6} attributes={{ style: { position: 'relative' } }}>
+      {/* Top right: Salesforce badge and 3 dots menu */}
+      <View 
+        direction="row" 
+        gap={2} 
+        align="center"
+        attributes={{
+          style: {
+            position: 'absolute',
+            top: '16px',
+            right: '22px',
+            display: 'flex',
+            alignItems: 'center'
+          }
+        }}
+      >
+        <CustomBadge color="primary">
+          Synced to Salesforce
+        </CustomBadge>
+        <Button
+          variant="ghost"
+          icon={<Icon svg={<DotsThree weight="bold" />} size={6} />}
+          attributes={{
+            'aria-label': 'More options',
+            style: {
+              padding: '8px'
+            }
+          }}
+        />
+      </View>
+
       <View direction="column" gap={4}>
+        {/* Company name with label */}
+        <View direction="column" gap={1}>
+          <Text variant="body-2" color="neutral-faded" weight="medium">
+            Company
+          </Text>
+          <Text variant="body-2">{companyName}</Text>
+        </View>
+
+        {/* Contact info */}
         {(email || phone) && (
           <View direction="column" gap={2}>
+            <Text variant="body-2" color="neutral-faded" weight="medium">
+              Contact Info
+            </Text>
             {email && (
               <View direction="row" gap={2} align="center">
                 <Envelope size={16} />
@@ -50,91 +78,6 @@ export function CustomerMetadataCard({
               <View direction="row" gap={2} align="center">
                 <Phone size={16} />
                 <Text variant="body-2">{phone}</Text>
-              </View>
-            )}
-          </View>
-        )}
-
-        {(riskScore !== undefined || opportunityScore !== undefined) && (
-          <View direction="column" gap={2}>
-            {riskScore !== undefined && (
-              <View direction="row" gap={2} align="center" justify="space-between">
-                <Text variant="body-2" color="neutral-faded">
-                  Risk Score
-                </Text>
-                <Text variant="body-2" weight="medium">
-                  {riskScore}
-                </Text>
-              </View>
-            )}
-            {opportunityScore !== undefined && (
-              <View direction="row" gap={2} align="center" justify="space-between">
-                <Text variant="body-2" color="neutral-faded">
-                  Opportunity Score
-                </Text>
-                <Text variant="body-2" weight="medium">
-                  {opportunityScore}
-                </Text>
-              </View>
-            )}
-          </View>
-        )}
-
-        {(totalConversations !== undefined || totalTasks !== undefined || totalActionPlans !== undefined) && (
-          <View direction="column" gap={2}>
-            {totalConversations !== undefined && (
-              <View direction="row" gap={2} align="center" justify="space-between">
-                <Text variant="body-2" color="neutral-faded">
-                  Total Conversations
-                </Text>
-                <Text variant="body-2" weight="medium">
-                  {totalConversations}
-                </Text>
-              </View>
-            )}
-            {totalTasks !== undefined && (
-              <View direction="row" gap={2} align="center" justify="space-between">
-                <Text variant="body-2" color="neutral-faded">
-                  Total Tasks
-                </Text>
-                <Text variant="body-2" weight="medium">
-                  {totalTasks}
-                </Text>
-              </View>
-            )}
-            {totalActionPlans !== undefined && (
-              <View direction="row" gap={2} align="center" justify="space-between">
-                <Text variant="body-2" color="neutral-faded">
-                  Total Action Plans
-                </Text>
-                <Text variant="body-2" weight="medium">
-                  {totalActionPlans}
-                </Text>
-              </View>
-            )}
-          </View>
-        )}
-
-        {(createdAt || updatedAt) && (
-          <View direction="column" gap={2}>
-            {createdAt && (
-              <View direction="row" gap={2} align="center" justify="space-between">
-                <Text variant="body-2" color="neutral-faded">
-                  Created
-                </Text>
-                <Text variant="body-2" color="neutral-faded">
-                  {formatRelativeTime(createdAt)}
-                </Text>
-              </View>
-            )}
-            {updatedAt && (
-              <View direction="row" gap={2} align="center" justify="space-between">
-                <Text variant="body-2" color="neutral-faded">
-                  Last Updated
-                </Text>
-                <Text variant="body-2" color="neutral-faded">
-                  {formatRelativeTime(updatedAt)}
-                </Text>
               </View>
             )}
           </View>

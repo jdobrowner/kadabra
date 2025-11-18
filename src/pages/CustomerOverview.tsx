@@ -1,9 +1,10 @@
-import { Container, View, Button, Icon } from 'reshaped'
+import { Container, View } from 'reshaped'
 import { useParams, Link } from 'react-router-dom'
 import { ChatCircle, ArrowRight } from '@phosphor-icons/react'
 import { CustomerMetadataCard } from '../components/custom/CustomerMetadataCard'
 import { ActionPlanCard } from '../components/custom/ActionPlanCard'
-import { Card, Text } from 'reshaped'
+import { Card, Text, Icon } from 'reshaped'
+import { CustomButton } from '../components/custom/CustomButton'
 import { useAppStore } from '../store/useAppStore'
 import { useCustomersStore } from '../store/useCustomersStore'
 import { useActionPlansStore } from '../store/useActionPlansStore'
@@ -127,26 +128,8 @@ export default function CustomerOverview() {
         <CustomerPageHeader
           customerId={customer.id}
           name={customer.name}
-          companyName={customer.companyName}
           badge={(actionPlan?.badge as any) || 'no-action'}
           avatar={customer.avatar}
-        />
-
-        <CustomerMetadataCard
-          id={customer.id}
-          name={customer.name}
-          companyName={customer.companyName}
-          email={customer.email}
-          phone={customer.phone}
-          badge={(actionPlan?.badge as any) || 'no-action'}
-          avatar={customer.avatar}
-          riskScore={customer.riskScore}
-          opportunityScore={customer.opportunityScore}
-          totalConversations={customer.totalConversations}
-          totalTasks={customer.totalTasks}
-          totalActionPlans={customer.totalActionPlans}
-          createdAt={customer.createdAt}
-          updatedAt={customer.updatedAt}
         />
 
         <ActionPlanCard
@@ -159,6 +142,16 @@ export default function CustomerOverview() {
           createdAt={actionPlan?.createdAt}
         />
 
+        <CustomerMetadataCard
+          id={customer.id}
+          name={customer.name}
+          companyName={customer.companyName}
+          email={customer.email}
+          phone={customer.phone}
+          badge={(actionPlan?.badge as any) || 'no-action'}
+          avatar={customer.avatar}
+        />
+
         {mostRecentConversation && customer.lastCommunication && (
           <Card padding={6}>
             <View direction="column" gap={4}>
@@ -166,9 +159,12 @@ export default function CustomerOverview() {
                 <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between' } }}>
                   <h3 style={{ margin: 0 }}>Most Recent Conversation</h3>
                   <Link to={`/triage/customers/${customer.id}/conversations/${mostRecentConversation.id}`}>
-                    <Button size="small" variant="outline" icon={<ArrowRight />}>
-                      View
-                    </Button>
+                    <CustomButton size="small" variant="outline">
+                      <View direction="row" gap={2} align="center">
+                        <Text>View</Text>
+                        <Icon svg={<ArrowRight weight="bold" />} size={4} />
+                      </View>
+                    </CustomButton>
                   </Link>
                 </View>
                 <Text variant="body-2" color="neutral-faded">
@@ -197,9 +193,12 @@ export default function CustomerOverview() {
                 </View>
                 {conversations.length > 0 && (
                   <Link to={`/triage/customers/${customer.id}/conversations`}>
-                    <Button size="small" variant="outline" icon={<ArrowRight />}>
-                      View All
-                    </Button>
+                    <CustomButton size="small" variant="ghost">
+                      <View direction="row" gap={2} align="center">
+                        <Text>View All</Text>
+                        <Icon svg={<ArrowRight weight="bold" />} size={4} />
+                      </View>
+                    </CustomButton>
                   </Link>
                 )}
               </View>

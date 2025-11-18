@@ -69,7 +69,6 @@ export default function ConversationHistory() {
           <CustomerPageHeader
             customerId={customer.id}
             name={customer.name}
-            companyName={customer.companyName}
             badge={(actionPlan?.badge as any) || 'no-action'}
             avatar={customer.avatar}
           />
