@@ -97,10 +97,9 @@ export function CustomerCardHorizontal({
                 </CustomBadge>
               )}
             </View>
-            <View direction="row" gap={2} align="center" attributes={{ style: { flexWrap: 'wrap' } }}>
+            <View direction="row" gap={2}>
               <CommunicationChannels communications={communications} textColor="neutral-faded" />
-              <Text variant="body-2" color="neutral">•</Text>
-              <Text variant="body-2" color="neutral">
+              <Text variant="body-2" color="neutral" attributes={{ style: { fontWeight: '500' } }}>
                 {topic}
               </Text>
             </View>

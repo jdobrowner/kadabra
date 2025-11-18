@@ -81,9 +81,7 @@ export function CommunicationChannels({ communications, textColor = 'neutral' }:
             <Text variant="body-2" color={textColor}>
               {comm.count} {label}
             </Text>
-            {index < sortedCommunications.length - 1 && (
-              <Text variant="body-2" color={textColor}>•</Text>
-            )}
+            <Text variant="body-2" color={textColor}>•</Text>
           </View>
         )
       })}
