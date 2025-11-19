@@ -420,22 +420,9 @@ export default function ActionPlan() {
                         <Text variant="body-2" weight="bold" color="primary" attributes={{ style: { flexShrink: 0, marginTop: '2px' } }}>
                           {index + 1}.
                         </Text>
-                        <View direction="column" gap={3} attributes={{ style: { flex: 1 } }}>
-                          <View direction="column" gap={2}>
-                            <Text variant="body-2" weight="medium">{item.title}</Text>
-                            <Text variant="body-2" color="neutral-faded" attributes={{ style: { lineHeight: '1.6' } }}>{item.description}</Text>
-                          </View>
-                          <CustomButton
-                            size="small"
-                            variant="outline"
-                            icon={<Bell weight="bold" />}
-                            onClick={() => {
-                              setSelectedActionItemId(item.id)
-                              setShowReminderForm(true)
-                            }}
-                          >
-                            Create Reminder
-                          </CustomButton>
+                        <View direction="column" gap={2} attributes={{ style: { flex: 1 } }}>
+                          <Text variant="body-2" weight="medium">{item.title}</Text>
+                          <Text variant="body-2" color="neutral-faded" attributes={{ style: { lineHeight: '1.6' } }}>{item.description}</Text>
                         </View>
                       </View>
                     ))
@@ -443,15 +430,6 @@ export default function ActionPlan() {
                     <Text variant="body-2" color="neutral-faded">No action items defined</Text>
                   )}
                 </View>
-              </View>
-              
-              <View direction="row" gap={2} attributes={{ style: { paddingTop: '8px', borderTop: '1px solid var(--rs-color-border-neutral-faded)' } }}>
-                <CustomButton size="small" variant="outline" icon={<Copy />} onClick={handleCopyOutline}>
-                  {copied ? 'Copied!' : 'Copy'}
-                </CustomButton>
-                <CustomButton size="small" icon={<Phone />}>
-                  Schedule Call
-                </CustomButton>
               </View>
             </View>
           </Card>
