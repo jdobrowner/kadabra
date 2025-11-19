@@ -113,17 +113,45 @@
   opacity: 0.5 !important;
 }
 
+/* Purple - pale purple background with darker purple text/icon */
+.custom-badge-purple,
+.custom-badge[data-custom-color="purple"],
+.custom-badge[data-rs-color="purple"],
+.custom-badge[data-rs-color="purple"][class*="_root_"],
+.custom-badge[class*="--color-purple"] {
+  --rs-color-background-primary: rgba(139, 92, 246, 0.1) !important;
+  --rs-color-on-background-primary: #8b5cf6 !important;
+  background: rgba(139, 92, 246, 0.1) !important;
+  color: #8b5cf6 !important;
+}
+
+/* Dark mode: Less contrasted purple badges */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge-purple,
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[data-custom-color="purple"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[data-rs-color="purple"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[data-rs-color="purple"][class*="_root_"],
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .custom-badge[class*="--color-purple"] {
+  --rs-color-background-primary: rgba(139, 92, 246, 0.08) !important;
+  --rs-color-on-background-primary: rgba(139, 92, 246, 0.7) !important;
+  background: rgba(139, 92, 246, 0.08) !important;
+  color: rgba(139, 92, 246, 0.7) !important;
+}
+
 /* Ensure all nested elements inherit the color */
+.custom-badge-purple *,
+.custom-badge[data-custom-color="purple"] *,
 .custom-badge[data-rs-color="primary"] *,
 .custom-badge[data-rs-color="critical"] *,
 .custom-badge[data-rs-color="positive"] *,
 .custom-badge[data-rs-color="warning"] *,
 .custom-badge[data-rs-color="neutral"] *,
+.custom-badge[data-rs-color="purple"] *,
 .custom-badge[class*="--color-primary"] *,
 .custom-badge[class*="--color-critical"] *,
 .custom-badge[class*="--color-positive"] *,
 .custom-badge[class*="--color-warning"] *,
-.custom-badge[class*="--color-neutral"] * {
+.custom-badge[class*="--color-neutral"] *,
+.custom-badge[class*="--color-purple"] * {
   color: inherit !important;
   fill: currentColor !important;
 }

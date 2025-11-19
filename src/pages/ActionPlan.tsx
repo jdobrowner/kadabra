@@ -1,8 +1,9 @@
-import { Container, View, Button, Card, Text, Loader } from 'reshaped'
+import { Container, View, Card, Text, Loader } from 'reshaped'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Lightbulb, Phone, User, Copy, CheckCircle, Plus, Bell } from '@phosphor-icons/react'
+import { ArrowLeft, Lightbulb, Phone, User, Copy, CheckCircle, Plus, Bell, FileText, Lightning } from '@phosphor-icons/react'
 import { StyledDropdown } from '../components/custom/StyledDropdown'
 import { ReminderForm } from '../components/custom/ReminderForm'
+import { CustomButton } from '../components/custom/CustomButton'
 import { useAppStore } from '../store/useAppStore'
 import { useActionPlansStore } from '../store/useActionPlansStore'
 import { useBoardsStore, type BoardColumn } from '../store/useBoardsStore'
@@ -281,23 +282,30 @@ export default function ActionPlan() {
             rightContent={
               <View direction="row" gap={2} align="center">
                 <Text variant="body-2" color="neutral-faded">Assigned to:</Text>
-                <Button size="small" variant="outline" icon={<User />}>
+                <CustomButton size="small" variant="outline" icon={<User />}>
                   + Assign
-                </Button>
+                </CustomButton>
               </View>
             }
           />
         )}
       </View>
       
-      <View
-        direction="row"
-        gap={6}
-        align="stretch"
-        attributes={{ style: { flexWrap: 'wrap', alignItems: 'flex-start', marginTop: '24px' } }}
-      >
-        <View direction="column" gap={6} attributes={{ style: { flex: 1, minWidth: 0 } }}>
-        <View direction="column" gap={4}>
+      <View direction="column" gap={6} attributes={{ style: { marginTop: '24px' } }}>
+        {/* 2-column grid for cards */}
+        <View 
+          direction="row" 
+          gap={6} 
+          align="stretch"
+          attributes={{ 
+            style: { 
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: '24px',
+              alignItems: 'start'
+            } 
+          }}
+        >
           {/* AI Strategy Recommendation Card */}
           <Card padding={6}>
             <View direction="column" gap={5}>
@@ -373,10 +381,10 @@ export default function ActionPlan() {
                   
                   <View direction="row" gap={2}>
                     <Link to={`/triage/customers/${actionPlan.customerId}/conversations/${lastConversation.id}`}>
-                      <Button size="small">View Details</Button>
+                      <CustomButton size="small">View Details</CustomButton>
                     </Link>
                     <Link to={`/triage/customers/${actionPlan.customerId}/conversations`}>
-                      <Button size="small" variant="outline">Call History</Button>
+                      <CustomButton size="small" variant="outline">Call History</CustomButton>
                     </Link>
                   </View>
                 </View>
@@ -391,11 +399,16 @@ export default function ActionPlan() {
           {/* Call Back Card */}
           <Card padding={6}>
             <View direction="column" gap={5}>
-              <View direction="row" gap={3} align="center">
-                <Phone size={20} weight="bold" />
-                <Text variant="title-5" weight="bold">
-                  Call Back
-                </Text>
+              <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between', width: '100%' } }}>
+                <View direction="row" gap={3} align="center">
+                  <Phone size={20} weight="bold" />
+                  <Text variant="title-5" weight="bold">
+                    Call Back
+                  </Text>
+                </View>
+                <CustomBadge color="purple" icon={Lightning}>
+                  Action Item
+                </CustomBadge>
               </View>
               
               <View direction="column" gap={4}>
@@ -412,7 +425,7 @@ export default function ActionPlan() {
                             <Text variant="body-2" weight="medium">{item.title}</Text>
                             <Text variant="body-2" color="neutral-faded" attributes={{ style: { lineHeight: '1.6' } }}>{item.description}</Text>
                           </View>
-                          <Button
+                          <CustomButton
                             size="small"
                             variant="outline"
                             icon={<Bell weight="bold" />}
@@ -422,7 +435,7 @@ export default function ActionPlan() {
                             }}
                           >
                             Create Reminder
-                          </Button>
+                          </CustomButton>
                         </View>
                       </View>
                     ))
@@ -433,12 +446,12 @@ export default function ActionPlan() {
               </View>
               
               <View direction="row" gap={2} attributes={{ style: { paddingTop: '8px', borderTop: '1px solid var(--rs-color-border-neutral-faded)' } }}>
-                <Button size="small" variant="outline" icon={<Copy />} onClick={handleCopyOutline}>
+                <CustomButton size="small" variant="outline" icon={<Copy />} onClick={handleCopyOutline}>
                   {copied ? 'Copied!' : 'Copy'}
-                </Button>
-                <Button size="small" icon={<Phone />}>
+                </CustomButton>
+                <CustomButton size="small" icon={<Phone />}>
                   Schedule Call
-                </Button>
+                </CustomButton>
               </View>
             </View>
           </Card>
@@ -446,11 +459,16 @@ export default function ActionPlan() {
           {/* Create Case Card */}
           <Card padding={6}>
             <View direction="column" gap={5}>
-              <View direction="row" gap={3} align="center">
-                <Plus size={20} weight="bold" />
-                <Text variant="title-5" weight="bold">
-                  Create Case
-                </Text>
+              <View direction="row" gap={3} align="center" attributes={{ style: { justifyContent: 'space-between', width: '100%' } }}>
+                <View direction="row" gap={3} align="center">
+                  <FileText size={20} weight="bold" />
+                  <Text variant="title-5" weight="bold">
+                    Create Case
+                  </Text>
+                </View>
+                <CustomBadge color="purple" icon={Lightning}>
+                  Action Item
+                </CustomBadge>
               </View>
               
               <View direction="column" gap={4}>
@@ -488,14 +506,14 @@ export default function ActionPlan() {
                 </View>
               </View>
               
-              <Button icon={<CheckCircle />} attributes={{ style: { marginTop: '8px' } }}>
-                ✓ Create Case
-              </Button>
+              <CustomButton color="primary" icon={<CheckCircle />} attributes={{ style: { marginTop: '8px' } }}>
+                Create Case
+              </CustomButton>
             </View>
           </Card>
         </View>
 
-        {/* Action Status Bar */}
+        {/* Action Status Bar - Full Width */}
         <Card padding={6}>
           <View direction="row" gap={4} align="center" attributes={{ style: { justifyContent: 'space-between' } }} wrap>
             <View direction="column" gap={2} attributes={{ style: { flex: 1, minWidth: 0 } }}>
@@ -509,7 +527,7 @@ export default function ActionPlan() {
                 <CustomBadge color="positive">Completed</CustomBadge>
               )}
               {(actionPlan.status === 'active' || actionPlan.status === 'completed') && (
-                <Button 
+                <CustomButton 
                   onClick={actionPlan.status === 'completed' ? handleMarkIncomplete : handleMarkComplete}
                   disabled={isUpdatingStatus}
                   icon={<CheckCircle />}
@@ -520,14 +538,12 @@ export default function ActionPlan() {
                     ? 'Updating...'
                     : actionPlan.status === 'completed'
                       ? 'Mark Action as Incomplete'
-                      : '✓ Mark Action as Complete'}
-                </Button>
+                      : 'Mark Action as Complete'}
+                </CustomButton>
               )}
             </View>
           </View>
         </Card>
-      </View>
-
       </View>
 
       {/* Reminder Form Modal */}

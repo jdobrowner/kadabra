@@ -17,7 +17,7 @@ export interface BadgeProps {
   children: React.ReactNode
   icon?: Icon
   badgeType?: BadgeType
-  color?: 'primary' | 'critical' | 'positive' | 'warning' | 'neutral'
+  color?: 'primary' | 'critical' | 'positive' | 'warning' | 'neutral' | 'purple'
   size?: 'small' | 'medium' | 'large'
 }
 
@@ -52,15 +52,21 @@ export function CustomBadge({
   ))
   BoldIcon.displayName = 'BoldIcon'
   
+  // For purple color, use primary as the base color and add custom attribute
+  const badgeColor = color === 'purple' ? 'primary' : color
+  
   return (
     <Badge
-      className="custom-badge"
-      color={color}
+      className={`custom-badge ${color === 'purple' ? 'custom-badge-purple' : ''}`}
+      color={badgeColor}
       variant="solid"
       rounded
       size={size}
       icon={size === 'small' ? undefined : BoldIcon}
-      attributes={{ 'data-size': size }}
+      attributes={{ 
+        'data-size': size,
+        'data-custom-color': color === 'purple' ? 'purple' : undefined
+      }}
     >
       {children}
     </Badge>
