@@ -17,6 +17,16 @@
   fill: var(--rs-color-background-neutral) !important;
 }
 
+/* Dark mode: white text and icon */
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .act-now-button {
+  color: #ffffff !important;
+}
+
+[data-rs-theme~="kadabra"][data-rs-color-mode="dark"] .act-now-button svg {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
 .act-now-button {
   background: linear-gradient(135deg, #5a77eb 0%, #8b5cf6 40%, #a855f7 100%) !important;
 }
