@@ -19,7 +19,20 @@ This document contains a carefully sequenced series of prompts designed to build
 ```markdown
 I need you to build **Action Plan** - a premium AI-powered customer triage and action planning application. This is a React + TypeScript + Vite application with a sophisticated, modern UI.
 
-**CRITICAL INSTRUCTION**: I am giving you creative freedom on the design. The requirements below are guidelines, but I want you to use your expertise to make this look like a $50k enterprise SaaS product. Use the attached screenshots (if any) as inspiration for the layout and vibe. If no screenshots are attached, aim for a clean, glassmorphism-inspired aesthetic similar to Craft.do or Linear.
+**CRITICAL INSTRUCTION**: I am giving you FULL creative freedom on the design aesthetics. The requirements below are functional specifications, but YOU decide on:
+- Color palette (choose colors that convey: at-risk/danger, opportunity/growth, action items/workflow, and professional primary colors)
+- Typography (choose a modern, professional font family)
+- Spacing, shadows, and visual hierarchy
+- Component styling and micro-interactions
+
+Use the attached screenshots (if any) as inspiration for the layout and vibe. If no screenshots are attached, aim for a clean, modern aesthetic inspired by premium SaaS products like Craft.do, Linear, or Notion. The goal: make this feel like a $50k+ enterprise product.
+
+**Design Principles to Follow**:
+- **Glassmorphism**: Use subtle transparency and backdrop blur effects on cards and surfaces
+- **Premium Enterprise Feel**: Clean, professional, confidence-inspiring
+- **Dark Mode Native**: Both light and dark modes should feel intentionally designed, not as an afterthought
+- **Smooth Interactions**: 200-300ms transitions, subtle hover effects, skeleton loading states
+- **Generous Whitespace**: Use an 8px grid system for consistency
 
 ## 1. Project Setup
 
@@ -31,124 +44,25 @@ cd action-plan
 npm install
 npm install tailwindcss postcss autoprefixer
 npm install react-router-dom zustand date-fns
-npm install @phosphor-icons/react
+npm install @phosphor-icons/react lucide-react
 npx tailwindcss init -p
 ```
 
-### Tailwind Configuration
+### Styling Approach
 
-Configure `tailwind.config.js`:
+- Use **Tailwind CSS** as your base utility framework
+- Extend Tailwind config with your chosen color palette and design tokens
+- Use **CSS variables** for theme switching (light/dark mode)
+- Apply `darkMode: 'class'` in Tailwind config for dark mode support
+- Choose a modern font from Google Fonts (e.g., Inter, Noto Sans, or similar)
 
-```javascript
-export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: 'class',
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Noto Sans', 'system-ui', 'sans-serif'],
-      },
-      colors: {
-        primary: {
-          DEFAULT: '#3B82F6',
-          hover: '#2563EB',
-          dark: '#60A5FA',
-        },
-        risk: {
-          DEFAULT: '#EF4444',
-          dark: '#F87171',
-        },
-        opportunity: {
-          DEFAULT: '#10B981',
-          dark: '#34D399',
-        },
-        action: {
-          DEFAULT: '#8B5CF6',
-          hover: '#7C3AED',
-          dark: '#A78BFA',
-        },
-      },
-    },
-  },
-  plugins: [],
-}
-```
-
-### CSS Variables for Dark Mode
-
-Create `src/index.css`:
-
-```css
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap');
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  /* Light mode */
-  --color-primary: #3B82F6;
-  --color-primary-hover: #2563EB;
-  
-  --color-risk: #EF4444;
-  --color-risk-gradient: linear-gradient(135deg, #EF4444, #F97316);
-  
-  --color-opportunity: #10B981;
-  --color-opportunity-gradient: linear-gradient(135deg, #10B981, #14B8A6);
-  
-  --color-action-item: #8B5CF6;
-  --color-action-item-hover: #7C3AED;
-  
-  --color-background: #FFFFFF;
-  --color-surface: #F9FAFB;
-  --color-surface-elevated: #FFFFFF;
-  
-  --color-text-primary: #111827;
-  --color-text-secondary: #6B7280;
-  --color-text-tertiary: #9CA3AF;
-  
-  --color-border: #E5E7EB;
-  --color-border-hover: #D1D5DB;
-  
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-}
-
-.dark {
-  /* Dark mode */
-  --color-primary: #60A5FA;
-  --color-primary-hover: #3B82F6;
-  
-  --color-risk: #F87171;
-  --color-risk-gradient: linear-gradient(135deg, #F87171, #FB923C);
-  
-  --color-opportunity: #34D399;
-  --color-opportunity-gradient: linear-gradient(135deg, #34D399, #2DD4BF);
-  
-  --color-action-item: #A78BFA;
-  --color-action-item-hover: #8B5CF6;
-  
-  --color-background: #0F172A;
-  --color-surface: #1E293B;
-  --color-surface-elevated: #334155;
-  
-  --color-text-primary: #F1F5F9;
-  --color-text-secondary: #CBD5E1;
-  --color-text-tertiary: #94A3B8;
-  
-  --color-border: #334155;
-  --color-border-hover: #475569;
-  
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
-}
-
-* {
-  transition: background-color 200ms ease-in-out, border-color 200ms ease-in-out;
-}
-```
+**Color Semantic Requirements** (you choose the exact colors):
+- **Primary**: Main brand color for buttons, links, highlights
+- **Risk/At-Risk**: For customers with high risk scores (typically warm: red/orange tones)
+- **Opportunity**: For customers with high opportunity scores (typically cool: green/teal tones)
+- **Action Items**: For action plan elements (suggestion: purple/violet for distinction)
+- **Neutral/Surface**: Backgrounds, cards, borders (light and dark variants)
+- **Text**: Primary, secondary, tertiary text colors
 
 ## 2. Data Layer (Zustand Stores)
 
@@ -358,7 +272,7 @@ interface Team {
 **Styling**: 
 - Hover effect with subtle elevation
 - Glassmorphism on cards
-- Purple accent for action items
+- Use your chosen color system to distinguish badge types
 
 ### 4.2. Customer Overview (`/triage/customers/:id`)
 
@@ -417,36 +331,28 @@ interface Team {
 
 ## 5. Polish & Details
 
-### Glassmorphism Components
+### Visual Design Standards
 
-Create reusable components with glassmorphism:
+**Glassmorphism**:
+- Apply subtle transparency and backdrop blur to cards and elevated surfaces
+- Use appropriate opacity values for light and dark modes
+- Add subtle borders that complement your color palette
 
-```css
-.glass-card {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: var(--shadow-lg);
-}
+**Animations**:
+- Smooth page transitions (200-300ms ease-in-out)
+- Hover effects with subtle elevation changes
+- Animated progress bars with smooth fill animations
+- Skeleton loading states (not spinners)
 
-.dark .glass-card {
-  background: rgba(30, 41, 59, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-```
+**Responsive Design**:
+- Desktop-first approach (optimized for 1440px+ screens)
+- Tablet: Collapsible sidebars, adaptive layouts
+- Mobile: Out of scope for Phase 1
 
-### Animations
-
-- Smooth page transitions (200-300ms)
-- Hover effects with subtle elevation
-- Progress bar animations
-- Skeleton loading states
-
-### Responsive
-
-- Desktop-first (optimized for 1440px+)
-- Tablet: Collapsible sidebars
-- Mobile: Future scope
+**Empty States**:
+- Helpful illustrations or icons
+- Clear CTAs guiding users to take action
+- Friendly, encouraging copy
 
 ## 6. Routing
 
@@ -478,17 +384,16 @@ Set up React Router:
 ## 8. Deliverables
 
 Provide complete, production-ready code with:
-- Clean component structure (separate files)
-- Proper TypeScript types (no `any`)
-- Tailwind + CSS variables for styling
-- Working navigation and routing
-- Mock data loaded into stores
-- Dark mode fully functional
-- User switcher functional
-- All stores persisting to localStorage
-- Premium aesthetic
+- **Clean architecture**: Separate files for components, stores, types, and utilities
+- **TypeScript excellence**: Proper types, no `any`, full type safety
+- **Styling**: Tailwind CSS + CSS variables for theming
+- **Working navigation**: React Router with all specified routes
+- **Data layer**: Mock data loaded into Zustand stores with localStorage persistence
+- **Dark mode**: Fully functional theme toggle with seamless switching
+- **User experience**: User switcher, smooth transitions, responsive feedback
+- **Premium aesthetic**: This should look and feel like a $50k+ enterprise SaaS product
 
-Make it look AMAZING. This should feel like a $50k enterprise SaaS product.
+**Remember**: You have FULL creative control over the visual design. Make bold, confident design decisions. The functional requirements are clear—the aesthetic is yours to define.
 ```
 
 ---
@@ -563,9 +468,11 @@ Update to show: `[Customer Name] > [Conversation Date]`
 
 ### 5. Styling
 
+- Apply your established design system to conversation views
 - Use glassmorphism for message bubbles
-- Smooth scroll animations
-- Syntax highlighting for insights
+- Smooth scroll animations for transcript area
+- Clear visual distinction between message roles (assistant/customer/agent)
+- Color-coded sentiment badges consistent with your palette
 ```
 
 ---
@@ -645,8 +552,9 @@ Generate mock data:
 **Features**:
 - Drag-and-drop cards (use `@dnd-kit/core` or `react-beautiful-dnd`)
 - Click card → detail modal
-- WIP limit indicators
+- WIP limit indicators (visual warning when exceeded)
 - Assign to user/team
+- Apply your established design system for consistency
 
 ### 3. Notifications
 
@@ -659,10 +567,11 @@ Generate mock data:
 ### 4. Dashboard Updates
 
 Update `/` (Dashboard):
-- Welcome stats (3 cards)
-- Customer Triage Preview (top 3)
-- Upcoming Reminders (next 5)
-- Your Assigned Cards (5 most recent)
+- Welcome stats (3 cards showing key metrics)
+- Customer Triage Preview (top 3 highest-priority customers)
+- Upcoming Reminders (next 5 reminders with due dates)
+- Your Assigned Cards (5 most recent assigned cards)
+- Maintain your established visual design system across all widgets
 ```
 
 ---
@@ -707,13 +616,14 @@ Final step: **Settings** and **Admin Features**.
   - Manage columns (add, reorder, rename, WIP limits, delete)
   - Team permissions (grant Edit/View access)
 
-### 4. Polish
+### 4. Polish & Final Touches
 
-- Loading states (skeleton screens)
-- Empty states with CTAs
-- Error boundaries
-- Accessibility (ARIA labels)
-- Final aesthetic pass
+- **Loading states**: Skeleton screens (not spinners) that match your design system
+- **Empty states**: Helpful CTAs with illustrations or icons
+- **Error boundaries**: Graceful error handling with user-friendly messages
+- **Accessibility**: ARIA labels, keyboard navigation, focus states
+- **Final aesthetic pass**: Ensure consistency across all pages and components
+- **Micro-interactions**: Button hover states, smooth transitions, delightful details
 
 ### 5. README
 
