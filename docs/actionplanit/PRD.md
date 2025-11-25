@@ -697,6 +697,7 @@ interface Notification {
   - Opportunity: Green/Teal gradient
   - Action Items: Purple/Violet
   - Neutral: Grays with high contrast
+- **Dark Mode**: Full support with CSS variables (see 6.4)
 - **Typography**: Noto Sans from Google Fonts
 - **Spacing**: Generous whitespace, 8px grid system
 
@@ -707,7 +708,98 @@ interface Notification {
 - **Empty States**: Helpful CTAs and illustrations
 - **Error States**: Clear, actionable error messages
 
-### 6.3. Responsive Behavior
+### 6.3. Dark Mode Implementation
+**Strategy**: Use CSS variables for all colors to enable seamless theme switching.
+
+**Implementation**:
+```css
+:root {
+  /* Light mode (default) */
+  --color-primary: #3B82F6;
+  --color-primary-hover: #2563EB;
+  
+  --color-risk: #EF4444;
+  --color-risk-gradient: linear-gradient(135deg, #EF4444, #F97316);
+  
+  --color-opportunity: #10B981;
+  --color-opportunity-gradient: linear-gradient(135deg, #10B981, #14B8A6);
+  
+  --color-action-item: #8B5CF6;
+  --color-action-item-hover: #7C3AED;
+  
+  --color-background: #FFFFFF;
+  --color-surface: #F9FAFB;
+  --color-surface-elevated: #FFFFFF;
+  
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-text-tertiary: #9CA3AF;
+  
+  --color-border: #E5E7EB;
+  --color-border-hover: #D1D5DB;
+  
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+[data-theme="dark"] {
+  /* Dark mode overrides */
+  --color-primary: #60A5FA;
+  --color-primary-hover: #3B82F6;
+  
+  --color-risk: #F87171;
+  --color-risk-gradient: linear-gradient(135deg, #F87171, #FB923C);
+  
+  --color-opportunity: #34D399;
+  --color-opportunity-gradient: linear-gradient(135deg, #34D399, #2DD4BF);
+  
+  --color-action-item: #A78BFA;
+  --color-action-item-hover: #8B5CF6;
+  
+  --color-background: #0F172A;
+  --color-surface: #1E293B;
+  --color-surface-elevated: #334155;
+  
+  --color-text-primary: #F1F5F9;
+  --color-text-secondary: #CBD5E1;
+  --color-text-tertiary: #94A3B8;
+  
+  --color-border: #334155;
+  --color-border-hover: #475569;
+  
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+}
+```
+
+**Usage in Components**:
+```css
+.card {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+.button-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.button-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+```
+
+**Theme Toggle**:
+- User preference stored in localStorage
+- Apply theme by setting `data-theme="dark"` on `<html>` element
+- Smooth transition between themes (200ms)
+- Respect system preference on first load: `prefers-color-scheme: dark`
+
+### 6.4. Responsive Behavior
 - **Desktop-First**: Optimized for 1440px+ screens
 - **Tablet**: Collapsible sidebars, stacked layouts
 - **Mobile**: (Future scope for Phase 2)
