@@ -305,35 +305,32 @@ interface Notification {
 ### 3.1. Application Shell
 
 #### Sidebar Navigation
-- **State**: Collapsed by default (icon-only), expands on hover/click
-- **Persistence**: Collapse state saved to localStorage
-- **Navigation Items**:
-  - Dashboard (`/`)
-  - Triage (`/triage`)
-  - History (`/history`)
-  - Boards (`/boards`)
-  - Reminders (`/reminders`)
-  - Import Data (`/import-data`) - Admin/Developer only
-  - Settings (`/settings`)
-- **Contextual Breadcrumbs**: 
-  - Appear right of sidebar ONLY on `/triage/customers/*` routes
-  - Format: `Customer Name > Action Plan` or `Customer Name > Conversation Date`
-- **Branding**: Sparkle icon + "ACTIONPLANIT" wordmark (visible when expanded)
+- **Sidebar (Collapsible)**:
+  - **State**: Collapsed by default (icon only), expands on hover/click.
+  - **Navigation Items** (top to bottom):
+    - **Triage** (Home): `/triage`
+    - **History**: `/history`
+    - **Boards**: `/boards`
+    - **Reminders**: `/reminders`
+    - **Import** (Admin/Dev only): `/import-data`
+    - *(spacer)*
+    - **Notifications**: Bell icon with badge (bottom section)
+    - **Settings**: `/settings` (bottom)
+  - **Contextual Breadcrumbs**:
+    - Appears to the right of the sidebar only on customer-related pages (`/triage/customers/...`).
+    - Shows: Customer Name > Action Plan / Conversation Date.
+  - **Visuals**: "Sparkle" logo, "ACTIONPLANIT" wordmark (visible when open).
 
 #### Header Bar
-- **Today's Progress Widget**:
-  - Animated progress bar
-  - Metric: "X / Y resolved" (team-wide, not individual)
-  - Flyout on hover showing details
-- **Notifications Bell**:
-  - Badge with unread count
-  - Dropdown list of recent notifications
-  - Click notification → navigate to deep link
-- **User Menu**:
-  - Avatar with dropdown
-  - Theme toggle (Light/Dark)
-  - Demo Mode toggle (Phase 1 only)
-  - Sign Out
+- **Header**:
+  - **Right Side**:
+    - **Today's Progress**: A flyout component showing team and individual progress. Animated progress bar.
+      - Hover flyout displays: "Team Progress: X / Y resolved" and "Your Progress: X / Y resolved"
+    - **User Avatar**: Dropdown menu with:
+      - **User Switcher**: Dropdown to switch between mock users (for testing different roles/teams)
+      - **Theme Toggle**: Light/Dark mode.
+      - **Demo Mode Toggle**: Switch between demo/real data (persisted in local storage).
+      - **Sign Out**.
 
 #### AI Agent Sidebar (Contextual)
 - **Visibility Rule**: ONLY appears on `/triage/customers/:id/*` routes
@@ -347,25 +344,25 @@ interface Notification {
 
 **Layout**: Grid with 4 primary widgets
 
-1. **Welcome Stats** (3 cards)
-   - Customers Analyzed (last 24h)
-   - Action Plans Created (last 24h)
-   - Urgent Action Plans (active)
+1.  **Welcome Stats** (3 cards)
+    - Customers Analyzed (last 24h)
+    - Action Plans Created (last 24h)
+    - Urgent Action Plans (active)
 
-2. **Customer Triage Preview**
-   - Top 3 highest-priority customers
-   - "View All" link to `/triage`
-   - Columns: Customer, Badge, Last Contact, AI Recommendation
+2.  **Customer Triage Preview**
+    - Top 3 highest-priority customers
+    - "View All" link to `/triage`
+    - Columns: Customer, Badge, Last Contact, AI Recommendation
 
-3. **Upcoming Reminders**
-   - Next 5 upcoming reminders
-   - Shows: Icon, Title, Customer, Relative Time
-   - Click → navigate to `/reminders`
+3.  **Upcoming Reminders**
+    - Next 5 upcoming reminders
+    - Shows: Icon, Title, Customer, Relative Time
+    - Click → navigate to `/reminders`
 
-4. **Your Assigned Cards**
-   - 5 most recently updated cards assigned to current user
-   - Shows: Card ID, Title, Board Name
-   - Click → navigate to board
+4.  **Your Assigned Cards**
+    - 5 most recently updated cards assigned to current user
+    - Shows: Card ID, Title, Board Name
+    - Click → navigate to board
 
 **Critical**: NO "Recent Activity" feed, NO "Mini Calendar"
 
@@ -411,22 +408,22 @@ interface Notification {
 **Route**: `/triage/customers/:id/action-plans/:planId`
 
 **Sections**:
-1. **Header**: Customer context, badge, status
-2. **Strategy**: Full "Why this strategy?" explanation
-3. **Action Items List**: 
-   - Each item shows type-specific details:
-     - **Email**: Subject line, draft preview, recipient
-     - **Call**: Phone number, talking points, suggested duration
-     - **Text**: Draft message preview
-     - **Create Card**: Card type, suggested board, priority
-   - Status toggles
-   - **Execute buttons** (type-specific):
-     - Email: "Draft Email" → modal with AI-generated email (subject, body, to/cc)
-     - Call: "Start Call" → opens dialer with talking points sidebar
-     - Text: "Draft Text" → modal with AI-generated SMS
-     - Create Card: "Create Card" → opens board card creation with pre-filled data
-   - **Set Reminder**: Add reminder scheduling to any action item
-4. **Context**: Related conversations, customer history
+1.  **Header**: Customer context, badge, status
+2.  **Strategy**: Full "Why this strategy?" explanation
+3.  **Action Items List**: 
+    - Each item shows type-specific details:
+      - **Email**: Subject line, draft preview, recipient
+      - **Call**: Phone number, talking points, suggested duration
+      - **Text**: Draft message preview
+      - **Create Card**: Card type, suggested board, priority
+    - Status toggles
+    - **Execute buttons** (type-specific):
+      - Email: "Draft Email" → modal with AI-generated email (subject, body, to/cc)
+      - Call: "Start Call" → opens dialer with talking points sidebar
+      - Text: "Draft Text" → modal with AI-generated SMS
+      - Create Card: "Create Card" → opens board card creation with pre-filled data
+    - **Set Reminder**: Add reminder scheduling to any action item
+4.  **Context**: Related conversations, customer history
 
 **Enhancement**: Action items should be hyper-specific with rich context (e.g., Email action with subject "Re: March 15th billing overcharge" and draft referencing specific complaint)
 
@@ -508,12 +505,12 @@ interface Notification {
   - **Complete**: Mark action item as completed
 
 **User Flow Example**:
-1. User views action plan for Customer A
-2. Action item: "Email John about renewal" (EmailActionItem)
-3. User clicks "Set Reminder" → picks tomorrow 9am
-4. Tomorrow at 9am, item appears in `/reminders` with "Overdue" or "Due Now" badge
-5. User clicks "Execute" → email draft modal opens
-6. User sends email → action item marked complete, reminder auto-dismissed
+1.  User views action plan for Customer A
+2.  Action item: "Email John about renewal" (EmailActionItem)
+3.  User clicks "Set Reminder" → picks tomorrow 9am
+4.  Tomorrow at 9am, item appears in `/reminders` with "Overdue" or "Due Now" badge
+5.  User clicks "Execute" → email draft modal opens
+6.  User sends email → action item marked complete, reminder auto-dismissed
 
 ### 3.9. Boards (Kanban Workspace)
 
@@ -580,19 +577,18 @@ interface Notification {
 #### API Keys Tab (Developer/Admin Only)
 - Manage API keys for integrations
 
-### 3.11. Notifications System
-
-**Notification Types**:
-1. **Card Assigned**: "Card #ABC123 assigned to you on [Board Name]"
-2. **Action Plan Assigned**: "New action plan for [Customer Name]" (future)
-3. **Reminder Due**: "[Reminder Title] is due in 1 hour"
-4. **Mention**: "@mentioned in [Context]" (future)
-
-**UI Elements**:
-- Bell icon in header
-- Badge with unread count
-- Dropdown panel with recent notifications
-- Click notification → navigate to deep link
+### 3.11. Notifications & Alerts
+- **Purpose**: Notify users of important events.
+- **Notification Types**:
+  - **Card Assigned**: When a board card is assigned to the user.
+  - **Action Plan Assigned**: When an action plan is assigned to the user (future).
+  - **Reminder Due**: When a reminder is coming up soon.
+  - **Mention**: When mentioned in a comment (future).
+- **Display**: 
+  - **Bell Icon**: In the sidebar bottom section, above Settings icon.
+  - **Badge**: Unread count.
+  - **Dropdown**: List of recent notifications.
+- **Behavior**: Clicking a notification navigates to the relevant page (deep link).
 - Mark as read (auto on click)
 
 ### 3.12. Today's Progress Widget
@@ -679,11 +675,14 @@ interface Notification {
 ### 5.4. Mock Data Requirements
 - **Customers**: 15-20 with varied risk/opportunity scores
 - **Teams**: 3-4 (e.g., "Customer Support", "Sales", "Technical Support", "Account Management")
+- **Users**: 8-10 users across different teams with varied roles (admin/developer/member)
+  - Include user switcher in UI to test different user experiences
+  - Users should belong to different teams
 - **Boards**: 2-3 with 3-5 columns each
-- **Reminders**: 8-12 (mix of upcoming, today, overdue)
+- **Reminders**: 8-12 per user (mix of upcoming, today, overdue) - user-specific
 - **Conversations**: 3-7 per customer
-- **Action Plans**: 1 per customer (some completed, some active)
-- **Notifications**: 3-5 unread
+- **Action Plans**: 1 per customer for ~70% of customers (some completed, some active, ~30% have no action plans)
+- **Notifications**: 3-5 unread per user
 
 ---
 
@@ -696,8 +695,9 @@ interface Notification {
   - Primary: Professional blue
   - Risk: Red/Orange gradient
   - Opportunity: Green/Teal gradient
+  - Action Items: Purple/Violet
   - Neutral: Grays with high contrast
-- **Typography**: Modern sans-serif (Inter, Roboto, or similar)
+- **Typography**: Noto Sans from Google Fonts
 - **Spacing**: Generous whitespace, 8px grid system
 
 ### 6.2. Interaction Patterns
